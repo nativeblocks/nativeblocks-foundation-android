@@ -11,6 +11,7 @@ import io.nativeblocks.core.api.NativeblocksFrame
 import io.nativeblocks.core.api.NativeblocksLoading
 import io.nativeblocks.core.api.NativeblocksManager
 import io.nativeblocks.core.api.provider.logger.INativeLogger
+import io.nativeblocks.foundation.integration.consumer.block.FoundationBlockProvider
 import io.nativeblocks.wandkit.liveKit
 import kotlinx.coroutines.launch
 
@@ -39,6 +40,8 @@ class MainActivity : ComponentActivity() {
             */
         )
         NativeblocksManager.getInstance().liveKit()
+
+        FoundationBlockProvider.provideBlocks()
 
         lifecycleScope.launch {
             NativeblocksManager.getInstance().getScaffold({
