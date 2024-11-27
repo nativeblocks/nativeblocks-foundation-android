@@ -19,6 +19,7 @@ import io.nativeblocks.compiler.type.NativeBlockProp
 import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
+import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.util.findAlignmentHorizontal
 import io.nativeblocks.core.util.findArrangementVertical
 import io.nativeblocks.core.util.shapeMapper
@@ -27,11 +28,13 @@ import io.nativeblocks.core.util.widthAndHeight
 @NativeBlock(
     keyType = "NATIVE_COLUMN",
     name = "Native Column",
-    description = "Nativeblocks column block"
+    description = "Nativeblocks column block",
+    version = 2
 )
 @Composable
 fun NativeColumn(
     @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
@@ -39,16 +42,29 @@ fun NativeColumn(
         ]
     ) width: String = "wrap",
     @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
         ]
     ) height: String = "wrap",
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) paddingStart: Double = 0.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) paddingTop: Double = 0.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) paddingEnd: Double = 0.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) paddingBottom: Double = 0.0,
+    @NativeBlockProp(
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
+    ) paddingStart: Double = 0.0,
+    @NativeBlockProp(
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
+    ) paddingTop: Double = 0.0,
+    @NativeBlockProp(
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
+    ) paddingEnd: Double = 0.0,
+    @NativeBlockProp(
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
+    ) paddingBottom: Double = 0.0,
     @NativeBlockProp(valuePicker = NativeBlockValuePicker.COLOR_PICKER) background: String = "#00000000",
     @NativeBlockProp(
         valuePicker = NativeBlockValuePicker.DROPDOWN,
@@ -57,10 +73,22 @@ fun NativeColumn(
             NativeBlockValuePickerOption("LTR", "LTR")
         ]
     ) direction: String = "LTR",
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) radiusTopStart: Double = 0.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) radiusTopEnd: Double = 0.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) radiusBottomStart: Double = 0.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) radiusBottomEnd: Double = 0.0,
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+    ) radiusTopStart: Double = 0.0,
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+    ) radiusTopEnd: Double = 0.0,
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+    ) radiusBottomStart: Double = 0.0,
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+    ) radiusBottomEnd: Double = 0.0,
     @NativeBlockProp(
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -83,7 +111,6 @@ fun NativeColumn(
     @NativeBlockEvent onClick: (() -> Unit)? = null,
     @NativeBlockSlot content: @Composable (index: BlockIndex) -> Unit
 ) {
-
     val shape = shapeMapper(
         "rectangle",
         radiusTopStart.toString(),

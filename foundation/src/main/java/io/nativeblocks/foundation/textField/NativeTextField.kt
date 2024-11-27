@@ -42,7 +42,8 @@ import kotlin.math.roundToInt
 @NativeBlock(
     keyType = "NATIVE_TEXT_FIELD",
     name = "Native TextField",
-    description = "Nativeblocks textField block"
+    description = "Nativeblocks textField block",
+    version = 2
 )
 @Composable
 fun NativeTextField(

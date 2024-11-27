@@ -11,6 +11,7 @@ import io.nativeblocks.compiler.type.NativeBlockData
 import io.nativeblocks.compiler.type.NativeBlockProp
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
+import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.util.fontFamilyMapper
 import io.nativeblocks.core.util.fontWeightMapper
 import io.nativeblocks.core.util.textAlignmentMapper
@@ -21,12 +22,14 @@ import io.nativeblocks.core.util.widthAndHeight
 @NativeBlock(
     keyType = "NATIVE_TEXT",
     name = "Native Text",
-    description = "Nativeblocks text block"
+    description = "Nativeblocks text block",
+    version = 2
 )
 @Composable
 fun NativeText(
     @NativeBlockData text: String,
     @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
@@ -34,15 +37,24 @@ fun NativeText(
         ]
     ) width: String = "wrap",
     @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
         ]
     ) height: String = "wrap",
-    @NativeBlockProp fontFamily: String = "default",
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) fontSize: Double = 14.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.COLOR_PICKER) textColor: String = "#ffffffff",
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Font")
+    ) fontFamily: String = "default",
+    @NativeBlockProp(
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        valuePickerGroup = NativeBlockValuePickerPosition("Font")
+    ) fontSize: Double = 14.0,
+    @NativeBlockProp(
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
+        valuePickerGroup = NativeBlockValuePickerPosition("Font")
+    ) textColor: String = "#ffffffff",
     @NativeBlockProp(
         valuePicker = NativeBlockValuePicker.DROPDOWN,
         valuePickerOptions = [
@@ -50,7 +62,8 @@ fun NativeText(
             NativeBlockValuePickerOption("center", "center"),
             NativeBlockValuePickerOption("end", "end"),
             NativeBlockValuePickerOption("justify", "justify")
-        ]
+        ],
+        valuePickerGroup = NativeBlockValuePickerPosition("Font")
     ) textAlign: String = "start",
     @NativeBlockProp(
         valuePicker = NativeBlockValuePicker.DROPDOWN,
@@ -64,7 +77,8 @@ fun NativeText(
             NativeBlockValuePickerOption("bold", "bold"),
             NativeBlockValuePickerOption("extraBold", "extraBold"),
             NativeBlockValuePickerOption("black", "black")
-        ]
+        ],
+        valuePickerGroup = NativeBlockValuePickerPosition("Font")
     ) fontWeight: String = "normal",
     @NativeBlockProp(
         valuePicker = NativeBlockValuePicker.DROPDOWN,
@@ -72,10 +86,17 @@ fun NativeText(
             NativeBlockValuePickerOption("clip", "clip"),
             NativeBlockValuePickerOption("ellipsis", "ellipsis"),
             NativeBlockValuePickerOption("visible", "visible")
-        ]
+        ],
+        valuePickerGroup = NativeBlockValuePickerPosition("Font")
     ) overflow: String = "clip",
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) minLines: Int = 1,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) maxLines: Int = 9999,
+    @NativeBlockProp(
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        valuePickerGroup = NativeBlockValuePickerPosition("Font")
+    ) minLines: Int = 1,
+    @NativeBlockProp(
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        valuePickerGroup = NativeBlockValuePickerPosition("Font")
+    ) maxLines: Int = 9999,
 ) {
     val textStyle = typographyBuilder(
         fontFamily = fontFamilyMapper(fontFamily),
