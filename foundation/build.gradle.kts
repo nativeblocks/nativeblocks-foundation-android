@@ -9,7 +9,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("com.vanniktech.maven.publish")
-    id("io.nativeblocks.nativeblocks-gradle-plugin").version("1.0.4")
+    id("io.nativeblocks.nativeblocks-gradle-plugin").version("1.1.0")
 }
 
 val nativeblocksProps = Properties().apply {
@@ -112,8 +112,8 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.6.0")
     //==========================nativeblocks=======================
     implementation("io.nativeblocks:nativeblocks-android:1.2.1")
-    ksp("io.nativeblocks:nativeblocks-compiler-android:1.0.4")
-    implementation("io.nativeblocks:nativeblocks-compiler-android:1.0.4")
+    ksp("io.nativeblocks:nativeblocks-compiler-android:1.1.0")
+    implementation("io.nativeblocks:nativeblocks-compiler-android:1.1.0")
 }
 
 object ModuleInfo {
