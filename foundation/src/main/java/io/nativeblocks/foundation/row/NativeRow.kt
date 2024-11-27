@@ -1,6 +1,7 @@
 package io.nativeblocks.foundation.row
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -43,11 +44,11 @@ fun NativeRow(
             NativeBlockValuePickerOption("wrap", "Wrap content")
         ]
     ) height: String = "wrap",
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) paddingStart: Double = 8.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) paddingTop: Double = 8.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) paddingEnd: Double = 8.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) paddingBottom: Double = 8.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.COLOR_PICKER) background: String = "#ffffffff",
+    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) paddingStart: Double = 0.0,
+    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) paddingTop: Double = 0.0,
+    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) paddingEnd: Double = 0.0,
+    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) paddingBottom: Double = 0.0,
+    @NativeBlockProp(valuePicker = NativeBlockValuePicker.COLOR_PICKER) background: String = "#00000000",
     @NativeBlockProp(
         valuePicker = NativeBlockValuePicker.DROPDOWN,
         valuePickerOptions = [
@@ -94,7 +95,10 @@ fun NativeRow(
     }
     CompositionLocalProvider(blockDirection) {
         Row(
-            modifier = modifier,
+            modifier = modifier
+                .clickable(enabled = onClick != null, onClick = {
+                    onClick?.invoke()
+                }),
             verticalAlignment = findAlignmentVertical(verticalAlignment),
             horizontalArrangement = findArrangementHorizontal(horizontalArrangement)
         ) {

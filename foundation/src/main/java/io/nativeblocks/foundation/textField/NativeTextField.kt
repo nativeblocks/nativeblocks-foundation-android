@@ -258,12 +258,12 @@ fun NativeTextField(
             ),
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 textColor = Color(contentColor.toColorInt()),
-                disabledTextColor = Color(disableBackgroundColor.toColorInt()),
+                disabledTextColor = Color(disabledContentColor.toColorInt()),
                 backgroundColor = Color(backgroundColor.toColorInt()),
                 unfocusedBorderColor = Color(borderColor.toColorInt()),
                 focusedBorderColor = Color(borderFocusColor.toColorInt()),
                 disabledBorderColor = Color(disableBorderColor.toColorInt()),
-                cursorColor = Color(contentColor.toColorInt()),
+                cursorColor = Color(contentColor.toColorInt())
             ),
             readOnly = readOnly,
             enabled = enable,
