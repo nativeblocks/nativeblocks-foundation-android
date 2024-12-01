@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
@@ -29,7 +31,7 @@ import io.nativeblocks.core.util.widthAndHeight
     keyType = "NATIVE_COLUMN",
     name = "Native Column",
     description = "Nativeblocks column block",
-    version = 2
+    version = 7
 )
 @Composable
 fun NativeColumn(
@@ -41,6 +43,13 @@ fun NativeColumn(
             NativeBlockValuePickerOption("wrap", "Wrap content")
         ]
     ) width: String = "wrap",
+    @NativeBlockProp(
+        valuePicker = NativeBlockValuePicker.DROPDOWN,
+        valuePickerOptions = [
+            NativeBlockValuePickerOption("false", "false"),
+            NativeBlockValuePickerOption("true", "true")
+        ]
+    ) scrollable: Boolean = false,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
@@ -119,7 +128,7 @@ fun NativeColumn(
         radiusBottomEnd.toString(),
     )
 
-    val modifier = Modifier
+    var modifier = Modifier
         .clickable(enabled = onClick != null, onClick = {
             onClick?.invoke()
         })
@@ -131,6 +140,10 @@ fun NativeColumn(
             end = paddingEnd.dp,
             bottom = paddingBottom.dp,
         )
+
+    if (scrollable) {
+        modifier = modifier.verticalScroll(rememberScrollState())
+    }
 
     val blockDirection = if (direction == "RTL") {
         LocalLayoutDirection provides LayoutDirection.Rtl

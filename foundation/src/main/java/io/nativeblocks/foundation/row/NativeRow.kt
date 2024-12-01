@@ -2,8 +2,10 @@ package io.nativeblocks.foundation.row
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
@@ -29,7 +31,7 @@ import io.nativeblocks.core.util.widthAndHeight
     keyType = "NATIVE_ROW",
     name = "Native Row",
     description = "Nativeblocks row block",
-    version = 2
+    version = 7
 )
 @Composable
 fun NativeRow(
@@ -49,6 +51,13 @@ fun NativeRow(
             NativeBlockValuePickerOption("wrap", "Wrap content")
         ]
     ) height: String = "wrap",
+    @NativeBlockProp(
+        valuePicker = NativeBlockValuePicker.DROPDOWN,
+        valuePickerOptions = [
+            NativeBlockValuePickerOption("false", "false"),
+            NativeBlockValuePickerOption("true", "true")
+        ]
+    ) scrollable: Boolean = false,
     @NativeBlockProp(
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
@@ -118,7 +127,7 @@ fun NativeRow(
         radiusBottomStart.toString(),
         radiusBottomEnd.toString(),
     )
-    val modifier = Modifier
+    var modifier = Modifier
         .widthAndHeight(width, height)
         .background(Color(background.toColorInt()), shape)
         .padding(
@@ -127,6 +136,10 @@ fun NativeRow(
             end = paddingEnd.dp,
             bottom = paddingBottom.dp,
         )
+
+    if (scrollable) {
+        modifier = modifier.horizontalScroll(rememberScrollState())
+    }
 
     val blockDirection = if (direction == "RTL") {
         LocalLayoutDirection provides LayoutDirection.Rtl
