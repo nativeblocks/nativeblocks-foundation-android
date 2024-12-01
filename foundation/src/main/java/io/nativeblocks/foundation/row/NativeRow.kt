@@ -3,11 +3,13 @@ package io.nativeblocks.foundation.row
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -148,10 +150,12 @@ fun NativeRow(
     }
     CompositionLocalProvider(blockDirection) {
         Row(
-            modifier = modifier
-                .clickable(enabled = onClick != null, onClick = {
-                    onClick?.invoke()
-                }),
+            modifier = modifier.clickable(
+                enabled = onClick != null,
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }) {
+                onClick?.invoke()
+            },
             verticalAlignment = findAlignmentVertical(verticalAlignment),
             horizontalArrangement = findArrangementHorizontal(horizontalArrangement)
         ) {
