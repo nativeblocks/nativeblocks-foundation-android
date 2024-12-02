@@ -19,7 +19,7 @@ import io.nativeblocks.core.util.widthAndHeight
     keyType = "NATIVE_IMAGE",
     name = "Native Image",
     description = "Nativeblocks image block",
-    version = 2
+    version = 1
 )
 @Composable
 fun NativeImage(

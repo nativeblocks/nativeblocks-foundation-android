@@ -23,7 +23,7 @@ import io.nativeblocks.core.util.widthAndHeight
     keyType = "NATIVE_TEXT",
     name = "Native Text",
     description = "Nativeblocks text block",
-    version = 2
+    version = 1
 )
 @Composable
 fun NativeText(

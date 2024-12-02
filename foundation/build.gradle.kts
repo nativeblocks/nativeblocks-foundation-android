@@ -107,7 +107,6 @@ dependencies {
     implementation("androidx.compose.material:material:1.7.4")
     implementation("androidx.compose.animation:animation:1.7.4")
     implementation("androidx.compose.ui:ui-tooling-preview:1.7.4")
-    implementation("androidx.compose.material3:material3-window-size-class:1.3.0")
     debugImplementation("androidx.compose.ui:ui-tooling:1.7.4")
     implementation("io.coil-kt:coil-compose:2.6.0")
     //==========================nativeblocks=======================

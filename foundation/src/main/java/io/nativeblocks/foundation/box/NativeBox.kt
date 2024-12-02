@@ -30,7 +30,7 @@ import io.nativeblocks.core.util.widthAndHeight
     keyType = "NATIVE_BOX",
     name = "Native Box",
     description = "Nativeblocks box block",
-    version = 2
+    version = 1
 )
 @Composable
 fun NativeBox(

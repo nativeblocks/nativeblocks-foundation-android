@@ -37,7 +37,7 @@ import io.nativeblocks.core.util.widthAndHeight
     keyType = "NATIVE_BUTTON",
     name = "Native Button",
     description = "Nativeblocks button block",
-    version = 2
+    version = 1
 )
 @Composable
 fun NativeButton(

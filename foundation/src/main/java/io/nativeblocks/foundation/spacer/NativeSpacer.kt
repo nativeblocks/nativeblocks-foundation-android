@@ -14,7 +14,7 @@ import io.nativeblocks.core.util.widthAndHeight
     keyType = "NATIVE_SPACER",
     name = "Native Spacer",
     description = "Nativeblocks spacer block",
-    version = 2
+    version = 1
 )
 @Composable
 fun NativeSpacer(
