@@ -1,10 +1,15 @@
 package io.nativeblocks.foundation.column
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -18,6 +23,7 @@ import io.nativeblocks.compiler.type.NativeBlockProp
 import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
+import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.util.findAlignmentHorizontal
 import io.nativeblocks.core.util.findArrangementVertical
 import io.nativeblocks.core.util.shapeMapper
@@ -26,11 +32,13 @@ import io.nativeblocks.core.util.widthAndHeight
 @NativeBlock(
     keyType = "NATIVE_COLUMN",
     name = "Native Column",
-    description = "Nativeblocks column block"
+    description = "Nativeblocks column block",
+    version = 1
 )
 @Composable
 fun NativeColumn(
     @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
@@ -38,17 +46,37 @@ fun NativeColumn(
         ]
     ) width: String = "wrap",
     @NativeBlockProp(
+        valuePicker = NativeBlockValuePicker.DROPDOWN,
+        valuePickerOptions = [
+            NativeBlockValuePickerOption("false", "false"),
+            NativeBlockValuePickerOption("true", "true")
+        ]
+    ) scrollable: Boolean = false,
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
         ]
     ) height: String = "wrap",
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) paddingStart: Double = 8.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) paddingTop: Double = 8.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) paddingEnd: Double = 8.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) paddingBottom: Double = 8.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.COLOR_PICKER) background: String = "#ffffffff",
+    @NativeBlockProp(
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
+    ) paddingStart: Double = 0.0,
+    @NativeBlockProp(
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
+    ) paddingTop: Double = 0.0,
+    @NativeBlockProp(
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
+    ) paddingEnd: Double = 0.0,
+    @NativeBlockProp(
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
+    ) paddingBottom: Double = 0.0,
+    @NativeBlockProp(valuePicker = NativeBlockValuePicker.COLOR_PICKER) background: String = "#00000000",
     @NativeBlockProp(
         valuePicker = NativeBlockValuePicker.DROPDOWN,
         valuePickerOptions = [
@@ -56,10 +84,22 @@ fun NativeColumn(
             NativeBlockValuePickerOption("LTR", "LTR")
         ]
     ) direction: String = "LTR",
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) radiusTopStart: Double = 4.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) radiusTopEnd: Double = 4.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) radiusBottomStart: Double = 4.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) radiusBottomEnd: Double = 4.0,
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+    ) radiusTopStart: Double = 0.0,
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+    ) radiusTopEnd: Double = 0.0,
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+    ) radiusBottomStart: Double = 0.0,
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+    ) radiusBottomEnd: Double = 0.0,
     @NativeBlockProp(
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -82,7 +122,6 @@ fun NativeColumn(
     @NativeBlockEvent onClick: (() -> Unit)? = null,
     @NativeBlockSlot content: @Composable (index: BlockIndex) -> Unit
 ) {
-
     val shape = shapeMapper(
         "rectangle",
         radiusTopStart.toString(),
@@ -91,7 +130,13 @@ fun NativeColumn(
         radiusBottomEnd.toString(),
     )
 
-    val modifier = Modifier
+    var modifier = Modifier
+        .clickable(
+            enabled = onClick != null,
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() }) {
+            onClick?.invoke()
+        }
         .widthAndHeight(width, height)
         .background(Color(background.toColorInt()), shape)
         .padding(
@@ -100,6 +145,10 @@ fun NativeColumn(
             end = paddingEnd.dp,
             bottom = paddingBottom.dp,
         )
+
+    if (scrollable) {
+        modifier = modifier.verticalScroll(rememberScrollState())
+    }
 
     val blockDirection = if (direction == "RTL") {
         LocalLayoutDirection provides LayoutDirection.Rtl

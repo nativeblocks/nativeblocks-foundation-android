@@ -5,7 +5,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
-    id("io.nativeblocks.nativeblocks-gradle-plugin").version("1.0.4")
+    id("io.nativeblocks.nativeblocks-gradle-plugin").version("1.1.0")
 }
 
 val nativeblocksProps = Properties().apply {

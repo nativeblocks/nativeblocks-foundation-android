@@ -7,16 +7,19 @@ import io.nativeblocks.compiler.type.NativeBlock
 import io.nativeblocks.compiler.type.NativeBlockProp
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
+import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.util.widthAndHeight
 
 @NativeBlock(
     keyType = "NATIVE_SPACER",
     name = "Native Spacer",
-    description = "Nativeblocks spacer block"
+    description = "Nativeblocks spacer block",
+    version = 1
 )
 @Composable
 fun NativeSpacer(
     @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
@@ -24,6 +27,7 @@ fun NativeSpacer(
         ]
     ) width: String = "wrap",
     @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),

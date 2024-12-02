@@ -9,6 +9,7 @@ import io.nativeblocks.compiler.type.NativeBlockData
 import io.nativeblocks.compiler.type.NativeBlockProp
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
+import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.util.isHttpUrl
 import io.nativeblocks.core.util.scaleTypeMapper
 import io.nativeblocks.core.util.shapeMapper
@@ -17,12 +18,14 @@ import io.nativeblocks.core.util.widthAndHeight
 @NativeBlock(
     keyType = "NATIVE_IMAGE",
     name = "Native Image",
-    description = "Nativeblocks image block"
+    description = "Nativeblocks image block",
+    version = 1
 )
 @Composable
 fun NativeImage(
     @NativeBlockData imageUrl: String,
     @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
@@ -30,16 +33,29 @@ fun NativeImage(
         ]
     ) width: String = "wrap",
     @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
         ]
     ) height: String = "wrap",
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) radiusTopStart: Double = 4.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) radiusTopEnd: Double = 4.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) radiusBottomStart: Double = 4.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.NUMBER_INPUT) radiusBottomEnd: Double = 4.0,
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+    ) radiusTopStart: Double = 0.0,
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+    ) radiusTopEnd: Double = 0.0,
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+    ) radiusBottomStart: Double = 0.0,
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+    ) radiusBottomEnd: Double = 0.0,
     @NativeBlockProp(
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
