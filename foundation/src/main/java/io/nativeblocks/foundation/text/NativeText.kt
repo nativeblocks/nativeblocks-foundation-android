@@ -19,6 +19,25 @@ import io.nativeblocks.core.util.textOverflowMapper
 import io.nativeblocks.core.util.typographyBuilder
 import io.nativeblocks.core.util.widthAndHeight
 
+/**
+ * A composable block for displaying customizable text with support for font styling, alignment, color,
+ * and text overflow properties.
+ *
+ * This block integrates seamlessly into the Nativeblocks ecosystem, offering dynamic configuration of
+ * text properties for server-driven UI.
+ *
+ * @param text The text content to display.
+ * @param width The width of the text block (e.g., "match" or "wrap"). Default is "wrap".
+ * @param height The height of the text block (e.g., "match" or "wrap"). Default is "wrap".
+ * @param fontFamily The font family for the text. Default is "default".
+ * @param fontSize The font size for the text in SP. Default is 14.0.
+ * @param textColor The color of the text in hexadecimal format. Default is "#ffffffff".
+ * @param textAlign The alignment of the text (e.g., "start", "center"). Default is "start".
+ * @param fontWeight The weight of the font for the text (e.g., "normal", "bold"). Default is "normal".
+ * @param overflow The overflow behavior of the text (e.g., "clip", "ellipsis"). Default is "clip".
+ * @param minLines The minimum number of lines to display. Default is 1.
+ * @param maxLines The maximum number of lines to display. Default is 9999.
+ */
 @NativeBlock(
     keyType = "NATIVE_TEXT",
     name = "Native Text",
@@ -27,45 +46,62 @@ import io.nativeblocks.core.util.widthAndHeight
 )
 @Composable
 fun NativeText(
-    @NativeBlockData text: String,
+    @NativeBlockData
+    text: String,
+
     @NativeBlockProp(
+        description = "The width of the text block (e.g., 'match' or 'wrap').",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
         ]
-    ) width: String = "wrap",
+    )
+    width: String = "wrap",
     @NativeBlockProp(
+        description = "The height of the text block (e.g., 'match' or 'wrap').",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
         ]
-    ) height: String = "wrap",
+    )
+    height: String = "wrap",
     @NativeBlockProp(
+        description = "The font family for the text.",
         valuePickerGroup = NativeBlockValuePickerPosition("Font")
-    ) fontFamily: String = "default",
+    )
+    fontFamily: String = "default",
     @NativeBlockProp(
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Font")
-    ) fontSize: Double = 14.0,
+        description = "The font size for the text in SP.",
+        valuePickerGroup = NativeBlockValuePickerPosition("Font"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+    )
+    fontSize: Double = 14.0,
     @NativeBlockProp(
-        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
-        valuePickerGroup = NativeBlockValuePickerPosition("Font")
-    ) textColor: String = "#ffffffff",
+        description = "The color of the text in hexadecimal format.",
+        valuePickerGroup = NativeBlockValuePickerPosition("Font"),
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER
+    )
+    textColor: String = "#ffffffff",
     @NativeBlockProp(
+        description = "The alignment of the text (e.g., 'start', 'center').",
+        valuePickerGroup = NativeBlockValuePickerPosition("Font"),
         valuePicker = NativeBlockValuePicker.DROPDOWN,
         valuePickerOptions = [
             NativeBlockValuePickerOption("start", "start"),
             NativeBlockValuePickerOption("center", "center"),
             NativeBlockValuePickerOption("end", "end"),
             NativeBlockValuePickerOption("justify", "justify")
-        ],
-        valuePickerGroup = NativeBlockValuePickerPosition("Font")
-    ) textAlign: String = "start",
+        ]
+    )
+    textAlign: String = "start",
+
     @NativeBlockProp(
+        description = "The weight of the font for the text (e.g., 'normal', 'bold').",
+        valuePickerGroup = NativeBlockValuePickerPosition("Font"),
         valuePicker = NativeBlockValuePicker.DROPDOWN,
         valuePickerOptions = [
             NativeBlockValuePickerOption("thin", "thin"),
@@ -77,26 +113,32 @@ fun NativeText(
             NativeBlockValuePickerOption("bold", "bold"),
             NativeBlockValuePickerOption("extraBold", "extraBold"),
             NativeBlockValuePickerOption("black", "black")
-        ],
-        valuePickerGroup = NativeBlockValuePickerPosition("Font")
-    ) fontWeight: String = "normal",
+        ]
+    )
+    fontWeight: String = "normal",
     @NativeBlockProp(
+        description = "The overflow behavior of the text (e.g., 'clip', 'ellipsis').",
+        valuePickerGroup = NativeBlockValuePickerPosition("Font"),
         valuePicker = NativeBlockValuePicker.DROPDOWN,
         valuePickerOptions = [
             NativeBlockValuePickerOption("clip", "clip"),
             NativeBlockValuePickerOption("ellipsis", "ellipsis"),
             NativeBlockValuePickerOption("visible", "visible")
-        ],
-        valuePickerGroup = NativeBlockValuePickerPosition("Font")
-    ) overflow: String = "clip",
+        ]
+    )
+    overflow: String = "clip",
     @NativeBlockProp(
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Font")
-    ) minLines: Int = 1,
+        description = "The minimum number of lines to display.",
+        valuePickerGroup = NativeBlockValuePickerPosition("Font"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+    )
+    minLines: Int = 1,
     @NativeBlockProp(
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Font")
-    ) maxLines: Int = 9999,
+        description = "The maximum number of lines to display.",
+        valuePickerGroup = NativeBlockValuePickerPosition("Font"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+    )
+    maxLines: Int = 9999,
 ) {
     val textStyle = typographyBuilder(
         fontFamily = fontFamilyMapper(fontFamily),

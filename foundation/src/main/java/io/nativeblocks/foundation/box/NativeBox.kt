@@ -26,6 +26,28 @@ import io.nativeblocks.core.util.findAlignment
 import io.nativeblocks.core.util.shapeMapper
 import io.nativeblocks.core.util.widthAndHeight
 
+/**
+ * A composable block for creating a customizable container with properties such as padding,
+ * background color, corner radii, directionality, and alignment.
+ *
+ * This block is designed for server-driven UI, supporting dynamic properties, events, and slots.
+ *
+ * @param width Specifies the width of the box (e.g., "match" or "wrap"). Default is "wrap".
+ * @param height Specifies the height of the box (e.g., "match" or "wrap"). Default is "wrap".
+ * @param paddingStart Padding on the start side in DP. Default is 0.0.
+ * @param paddingTop Padding on the top side in DP. Default is 0.0.
+ * @param paddingEnd Padding on the end side in DP. Default is 0.0.
+ * @param paddingBottom Padding on the bottom side in DP. Default is 0.0.
+ * @param background Background color of the box in hexadecimal format. Default is "#00000000".
+ * @param radiusTopStart Top-start corner radius in DP. Default is 0.0.
+ * @param radiusTopEnd Top-end corner radius in DP. Default is 0.0.
+ * @param radiusBottomStart Bottom-start corner radius in DP. Default is 0.0.
+ * @param radiusBottomEnd Bottom-end corner radius in DP. Default is 0.0.
+ * @param direction Specifies the layout direction (e.g., "LTR" or "RTL"). Default is "LTR".
+ * @param verticalAlignment Specifies the alignment of content inside the box. Default is "center".
+ * @param onClick Callback triggered when the box is clicked. Default is null (disabled).
+ * @param content Slot for composing child content within the box.
+ */
 @NativeBlock(
     keyType = "NATIVE_BOX",
     name = "Native Box",
@@ -35,6 +57,7 @@ import io.nativeblocks.core.util.widthAndHeight
 @Composable
 fun NativeBox(
     @NativeBlockProp(
+        description = "Specifies the width of the box (e.g., 'match' or 'wrap').",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -43,6 +66,7 @@ fun NativeBox(
         ]
     ) width: String = "wrap",
     @NativeBlockProp(
+        description = "Specifies the height of the box (e.g., 'match' or 'wrap').",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -51,40 +75,51 @@ fun NativeBox(
         ]
     ) height: String = "wrap",
     @NativeBlockProp(
+        description = "Padding on the start side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
     ) paddingStart: Double = 0.0,
     @NativeBlockProp(
+        description = "Padding on the top side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
     ) paddingTop: Double = 0.0,
     @NativeBlockProp(
+        description = "Padding on the end side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
     ) paddingEnd: Double = 0.0,
     @NativeBlockProp(
+        description = "Padding on the bottom side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
     ) paddingBottom: Double = 0.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.COLOR_PICKER)
-    background: String = "#00000000",
     @NativeBlockProp(
+        description = "Background color of the box in hexadecimal format (e.g., '#FFFFFF').",
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER
+    ) background: String = "#00000000",
+    @NativeBlockProp(
+        description = "Top-start corner radius of the box in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Radius")
     ) radiusTopStart: Double = 0.0,
     @NativeBlockProp(
+        description = "Top-end corner radius of the box in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Radius")
     ) radiusTopEnd: Double = 0.0,
     @NativeBlockProp(
+        description = "Bottom-start corner radius of the box in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Radius")
     ) radiusBottomStart: Double = 0.0,
     @NativeBlockProp(
+        description = "Bottom-end corner radius of the box in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Radius")
     ) radiusBottomEnd: Double = 0.0,
     @NativeBlockProp(
+        description = "Specifies the layout direction of the box (LTR or RTL).",
         valuePicker = NativeBlockValuePicker.DROPDOWN,
         valuePickerOptions = [
             NativeBlockValuePickerOption("RTL", "RTL"),
@@ -92,6 +127,7 @@ fun NativeBox(
         ]
     ) direction: String = "LTR",
     @NativeBlockProp(
+        description = "Specifies the vertical alignment of content inside the box.",
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
             NativeBlockValuePickerOption("center", "center"),
@@ -105,8 +141,12 @@ fun NativeBox(
             NativeBlockValuePickerOption("topCenter", "topCenter")
         ]
     ) verticalAlignment: String = "center",
-    @NativeBlockEvent onClick: (() -> Unit)? = null,
-    @NativeBlockSlot content: @Composable (index: BlockIndex) -> Unit
+    @NativeBlockEvent(
+        description = "Triggered when the box is clicked."
+    ) onClick: (() -> Unit)? = null,
+    @NativeBlockSlot(
+        description = "Slot for placing dynamic child content inside the box."
+    ) content: @Composable (index: BlockIndex) -> Unit
 ) {
     val shape = shapeMapper(
         "rectangle",

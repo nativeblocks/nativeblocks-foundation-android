@@ -29,6 +29,29 @@ import io.nativeblocks.core.util.findArrangementVertical
 import io.nativeblocks.core.util.shapeMapper
 import io.nativeblocks.core.util.widthAndHeight
 
+/**
+ * A composable block for creating a customizable vertical column layout with properties like padding, background, corner radii, scrolling behavior, and alignment.
+ *
+ * This block supports dynamic properties, events, and slots, making it ideal for server-driven UI.
+ *
+ * @param width The width of the column (e.g., "match" or "wrap"). Default is "wrap".
+ * @param scrollable Determines if the column should be scrollable. Default is false.
+ * @param height The height of the column (e.g., "match" or "wrap"). Default is "wrap".
+ * @param paddingStart Padding on the start (left) side in DP. Default is 0.0.
+ * @param paddingTop Padding on the top side in DP. Default is 0.0.
+ * @param paddingEnd Padding on the end (right) side in DP. Default is 0.0.
+ * @param paddingBottom Padding on the bottom side in DP. Default is 0.0.
+ * @param background Background color of the column in hexadecimal format. Default is "#00000000".
+ * @param direction The layout direction of the column (e.g., "LTR" or "RTL"). Default is "LTR".
+ * @param radiusTopStart Top-start corner radius in DP. Default is 0.0.
+ * @param radiusTopEnd Top-end corner radius in DP. Default is 0.0.
+ * @param radiusBottomStart Bottom-start corner radius in DP. Default is 0.0.
+ * @param radiusBottomEnd Bottom-end corner radius in DP. Default is 0.0.
+ * @param verticalArrangement Vertical arrangement of child components inside the column. Default is "top".
+ * @param horizontalAlignment Horizontal alignment of child components inside the column. Default is "start".
+ * @param onClick Callback triggered when the column is clicked. Default is null (disabled).
+ * @param content Slot for composing child content within the column.
+ */
 @NativeBlock(
     keyType = "NATIVE_COLUMN",
     name = "Native Column",
@@ -38,6 +61,7 @@ import io.nativeblocks.core.util.widthAndHeight
 @Composable
 fun NativeColumn(
     @NativeBlockProp(
+        description = "The width of the column (e.g., 'match' or 'wrap').",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -46,6 +70,7 @@ fun NativeColumn(
         ]
     ) width: String = "wrap",
     @NativeBlockProp(
+        description = "Determines if the column should be scrollable.",
         valuePicker = NativeBlockValuePicker.DROPDOWN,
         valuePickerOptions = [
             NativeBlockValuePickerOption("false", "false"),
@@ -53,6 +78,7 @@ fun NativeColumn(
         ]
     ) scrollable: Boolean = false,
     @NativeBlockProp(
+        description = "The height of the column (e.g., 'match' or 'wrap').",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -61,23 +87,31 @@ fun NativeColumn(
         ]
     ) height: String = "wrap",
     @NativeBlockProp(
+        description = "Padding on the start (left) side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
     ) paddingStart: Double = 0.0,
     @NativeBlockProp(
+        description = "Padding on the top side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
     ) paddingTop: Double = 0.0,
     @NativeBlockProp(
+        description = "Padding on the end (right) side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
     ) paddingEnd: Double = 0.0,
     @NativeBlockProp(
+        description = "Padding on the bottom side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
     ) paddingBottom: Double = 0.0,
-    @NativeBlockProp(valuePicker = NativeBlockValuePicker.COLOR_PICKER) background: String = "#00000000",
     @NativeBlockProp(
+        description = "Background color of the column in hexadecimal format.",
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER
+    ) background: String = "#00000000",
+    @NativeBlockProp(
+        description = "The layout direction of the column (e.g., 'LTR' or 'RTL').",
         valuePicker = NativeBlockValuePicker.DROPDOWN,
         valuePickerOptions = [
             NativeBlockValuePickerOption("RTL", "RTL"),
@@ -85,22 +119,27 @@ fun NativeColumn(
         ]
     ) direction: String = "LTR",
     @NativeBlockProp(
+        description = "Top-start corner radius in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT
     ) radiusTopStart: Double = 0.0,
     @NativeBlockProp(
+        description = "Top-end corner radius in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT
     ) radiusTopEnd: Double = 0.0,
     @NativeBlockProp(
+        description = "Bottom-start corner radius in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT
     ) radiusBottomStart: Double = 0.0,
     @NativeBlockProp(
+        description = "Bottom-end corner radius in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT
     ) radiusBottomEnd: Double = 0.0,
     @NativeBlockProp(
+        description = "Vertical arrangement of child components inside the column.",
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
             NativeBlockValuePickerOption("top", "top"),
@@ -112,6 +151,7 @@ fun NativeColumn(
         ]
     ) verticalArrangement: String = "top",
     @NativeBlockProp(
+        description = "Horizontal alignment of child components inside the column.",
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
             NativeBlockValuePickerOption("start", "start"),
@@ -119,8 +159,12 @@ fun NativeColumn(
             NativeBlockValuePickerOption("centerHorizontally", "centerHorizontally"),
         ]
     ) horizontalAlignment: String = "top",
-    @NativeBlockEvent onClick: (() -> Unit)? = null,
-    @NativeBlockSlot content: @Composable (index: BlockIndex) -> Unit
+    @NativeBlockEvent(
+        description = "Callback triggered when the column is clicked."
+    ) onClick: (() -> Unit)? = null,
+    @NativeBlockSlot(
+        description = "Slot for composing child content within the column."
+    ) content: @Composable (index: BlockIndex) -> Unit
 ) {
     val shape = shapeMapper(
         "rectangle",
