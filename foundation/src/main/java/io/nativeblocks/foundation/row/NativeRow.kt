@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import io.nativeblocks.compiler.type.BlockIndex
 import io.nativeblocks.compiler.type.NativeBlock
+import io.nativeblocks.compiler.type.NativeBlockData
 import io.nativeblocks.compiler.type.NativeBlockEvent
 import io.nativeblocks.compiler.type.NativeBlockProp
 import io.nativeblocks.compiler.type.NativeBlockSlot
@@ -26,6 +27,7 @@ import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.util.findAlignmentVertical
 import io.nativeblocks.core.util.findArrangementHorizontal
+import io.nativeblocks.core.util.json.NativeJsonPath
 import io.nativeblocks.core.util.shapeMapper
 import io.nativeblocks.core.util.widthAndHeight
 
@@ -35,6 +37,8 @@ import io.nativeblocks.core.util.widthAndHeight
  *
  * This block supports dynamic properties, events, and slots, making it ideal for server-driven UI.
  *
+ * @param list A JSON array (e.g., "[{},{},...]") used to render child content dynamically. The size of the list determines
+ * the number of repetitions of the content.
  * @param width The width of the row (e.g., "match" or "wrap"). Default is "wrap".
  * @param height The height of the row (e.g., "match" or "wrap"). Default is "wrap".
  * @param scrollable Determines if the row should be scrollable horizontally. Default is false.
@@ -57,10 +61,14 @@ import io.nativeblocks.core.util.widthAndHeight
     keyType = "NATIVE_ROW",
     name = "Native Row",
     description = "Nativeblocks row block",
-    version = 1
+    version = 2
 )
 @Composable
 fun NativeRow(
+    @NativeBlockData(
+        "A JSON array (e.g., '[{},{},...]') used for repeating the content based on its size. If the list value is invalid, the default content slot is invoked."
+    )
+    list: String = "",
     @NativeBlockProp(
         description = "The width of the row (e.g., 'match' or 'wrap').",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
@@ -167,6 +175,12 @@ fun NativeRow(
         description = "Slot for composing child content within the row."
     ) content: @Composable (index: BlockIndex) -> Unit
 ) {
+    val listItems: List<*>? = try {
+        NativeJsonPath().query(list, "$") as List<*>
+    } catch (e: Exception) {
+        null
+    }
+
     val shape = shapeMapper(
         "rectangle",
         radiusTopStart.toString(),
@@ -204,7 +218,13 @@ fun NativeRow(
             verticalAlignment = findAlignmentVertical(verticalAlignment),
             horizontalArrangement = findArrangementHorizontal(horizontalArrangement)
         ) {
-            content(-1)
+            if(listItems !=null) {
+                listItems.forEachIndexed { index, _->
+                    content.invoke(index)
+                }
+            }else{
+                content(-1)
+            }
         }
     }
 }
