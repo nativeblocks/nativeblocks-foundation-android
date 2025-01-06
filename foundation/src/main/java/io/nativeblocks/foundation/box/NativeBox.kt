@@ -156,13 +156,7 @@ fun NativeBox(
         radiusBottomEnd.toString(),
     )
 
-    val modifier = Modifier
-        .clickable(
-            enabled = onClick != null,
-            indication = null,
-            interactionSource = remember { MutableInteractionSource() }) {
-            onClick?.invoke()
-        }
+    var modifier = Modifier
         .widthAndHeight(width, height)
         .background(Color(background.toColorInt()), shape)
         .padding(
@@ -171,6 +165,15 @@ fun NativeBox(
             end = paddingEnd.dp,
             bottom = paddingBottom.dp,
         )
+
+    if (onClick != null) {
+        modifier = Modifier.clickable(
+            enabled = true,
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() }) {
+            onClick.invoke()
+        }
+    }
 
     val blockDirection = if (direction == "RTL") {
         LocalLayoutDirection provides LayoutDirection.Rtl
