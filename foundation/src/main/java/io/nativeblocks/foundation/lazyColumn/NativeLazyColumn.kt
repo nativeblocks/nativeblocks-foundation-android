@@ -1,12 +1,11 @@
-package io.nativeblocks.foundation.row
+package io.nativeblocks.foundation.lazyColumn
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
@@ -25,52 +24,51 @@ import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
-import io.nativeblocks.core.util.findAlignmentVertical
-import io.nativeblocks.core.util.findArrangementHorizontal
+import io.nativeblocks.core.util.findAlignmentHorizontal
+import io.nativeblocks.core.util.findArrangementVertical
 import io.nativeblocks.core.util.json.NativeJsonPath
 import io.nativeblocks.core.util.shapeMapper
 import io.nativeblocks.core.util.widthAndHeight
 
 /**
- * A composable block for creating a customizable horizontal row layout with properties like padding,
- * background color, corner radii, scrolling behavior, and alignment.
+ * A composable block for creating a customizable vertical lazy column list layout with properties like padding, background, corner radii, scrolling behavior, and alignment.
  *
  * This block supports dynamic properties, events, and slots, making it ideal for server-driven UI.
  *
  * @param list A JSON array (e.g., "[{},{},...]") used to render child content dynamically. The size of the list determines
  * the number of repetitions of the content.
- * @param width The width of the row (e.g., "match" or "wrap"). Default is "wrap".
- * @param height The height of the row (e.g., "match" or "wrap"). Default is "wrap".
- * @param scrollable Determines if the row should be scrollable horizontally. Default is false.
+ * @param width The width of the column (e.g., "match" or "wrap"). Default is "wrap".
+ * @param scrollable Determines if the column should be scrollable. Default is false.
+ * @param height The height of the column (e.g., "match" or "wrap"). Default is "wrap".
  * @param paddingStart Padding on the start (left) side in DP. Default is 0.0.
  * @param paddingTop Padding on the top side in DP. Default is 0.0.
  * @param paddingEnd Padding on the end (right) side in DP. Default is 0.0.
  * @param paddingBottom Padding on the bottom side in DP. Default is 0.0.
- * @param background Background color of the row in hexadecimal format. Default is "#00000000".
+ * @param background Background color of the column in hexadecimal format. Default is "#00000000".
+ * @param direction The layout direction of the column (e.g., "LTR" or "RTL"). Default is "LTR".
  * @param radiusTopStart Top-start corner radius in DP. Default is 0.0.
  * @param radiusTopEnd Top-end corner radius in DP. Default is 0.0.
  * @param radiusBottomStart Bottom-start corner radius in DP. Default is 0.0.
  * @param radiusBottomEnd Bottom-end corner radius in DP. Default is 0.0.
- * @param direction The layout direction of the row (e.g., "LTR" or "RTL"). Default is "LTR".
- * @param horizontalArrangement Horizontal arrangement of child components inside the row. Default is "start".
- * @param verticalAlignment Vertical alignment of child components inside the row. Default is "top".
- * @param onClick Callback triggered when the row is clicked. Default is null (disabled).
- * @param content Slot for composing child content within the row.
+ * @param verticalArrangement Vertical arrangement of child components inside the column. Default is "top".
+ * @param horizontalAlignment Horizontal alignment of child components inside the column. Default is "start".
+ * @param onClick Callback triggered when the column is clicked. Default is null (disabled).
+ * @param content Slot for composing child content within the column.
  */
 @NativeBlock(
-    keyType = "NATIVE_ROW",
-    name = "Native Row",
-    description = "Nativeblocks row block",
-    version = 2
+    keyType = "NATIVE_LAZY_COLUMN",
+    name = "Native Lazy Column",
+    description = "Nativeblocks lazy column block",
+    version = 1
 )
 @Composable
-fun NativeRow(
+fun NativeLazyColumn(
     @NativeBlockData(
-        "A JSON array (e.g., '[{},{},...]') used for repeating the content based on its size. If the list value is invalid, the default content slot is invoked."
+        "A JSON array (e.g., '[{},{},...]') used for repeating the content based on its size."
     )
     list: String = "",
     @NativeBlockProp(
-        description = "The width of the row (e.g., 'match' or 'wrap').",
+        description = "The width of the column (e.g., 'match' or 'wrap').",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -79,7 +77,15 @@ fun NativeRow(
         ]
     ) width: String = "wrap",
     @NativeBlockProp(
-        description = "The height of the row (e.g., 'match' or 'wrap').",
+        description = "Determines if the column should be scrollable.",
+        valuePicker = NativeBlockValuePicker.DROPDOWN,
+        valuePickerOptions = [
+            NativeBlockValuePickerOption("false", "false"),
+            NativeBlockValuePickerOption("true", "true")
+        ]
+    ) scrollable: Boolean = true,
+    @NativeBlockProp(
+        description = "The height of the column (e.g., 'match' or 'wrap').",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -87,14 +93,6 @@ fun NativeRow(
             NativeBlockValuePickerOption("wrap", "Wrap content")
         ]
     ) height: String = "wrap",
-    @NativeBlockProp(
-        description = "Determines if the row should be scrollable horizontally.",
-        valuePicker = NativeBlockValuePicker.DROPDOWN,
-        valuePickerOptions = [
-            NativeBlockValuePickerOption("false", "false"),
-            NativeBlockValuePickerOption("true", "true")
-        ]
-    ) scrollable: Boolean = false,
     @NativeBlockProp(
         description = "Padding on the start (left) side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
@@ -116,9 +114,17 @@ fun NativeRow(
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
     ) paddingBottom: Double = 0.0,
     @NativeBlockProp(
-        description = "Background color of the row in hexadecimal format.",
+        description = "Background color of the column in hexadecimal format.",
         valuePicker = NativeBlockValuePicker.COLOR_PICKER
     ) background: String = "#00000000",
+    @NativeBlockProp(
+        description = "The layout direction of the column (e.g., 'LTR' or 'RTL').",
+        valuePicker = NativeBlockValuePicker.DROPDOWN,
+        valuePickerOptions = [
+            NativeBlockValuePickerOption("RTL", "RTL"),
+            NativeBlockValuePickerOption("LTR", "LTR")
+        ]
+    ) direction: String = "LTR",
     @NativeBlockProp(
         description = "Top-start corner radius in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
@@ -140,45 +146,37 @@ fun NativeRow(
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT
     ) radiusBottomEnd: Double = 0.0,
     @NativeBlockProp(
-        description = "The layout direction of the row (e.g., 'LTR' or 'RTL').",
-        valuePicker = NativeBlockValuePicker.DROPDOWN,
-        valuePickerOptions = [
-            NativeBlockValuePickerOption("RTL", "RTL"),
-            NativeBlockValuePickerOption("LTR", "LTR")
-        ]
-    ) direction: String = "LTR",
-    @NativeBlockProp(
-        description = "Horizontal arrangement of child components inside the row.",
+        description = "Vertical arrangement of child components inside the column.",
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
-            NativeBlockValuePickerOption("start", "start"),
-            NativeBlockValuePickerOption("end", "end"),
+            NativeBlockValuePickerOption("top", "top"),
+            NativeBlockValuePickerOption("bottom", "bottom"),
             NativeBlockValuePickerOption("center", "center"),
             NativeBlockValuePickerOption("spaceBetween", "spaceBetween"),
             NativeBlockValuePickerOption("spaceAround", "spaceAround"),
             NativeBlockValuePickerOption("spaceEvenly", "spaceEvenly"),
         ]
-    ) horizontalArrangement: String = "start",
+    ) verticalArrangement: String = "top",
     @NativeBlockProp(
-        description = "Vertical alignment of child components inside the row.",
+        description = "Horizontal alignment of child components inside the column.",
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
-            NativeBlockValuePickerOption("top", "top"),
-            NativeBlockValuePickerOption("bottom", "bottom"),
-            NativeBlockValuePickerOption("centerVertically", "centerVertically"),
+            NativeBlockValuePickerOption("start", "start"),
+            NativeBlockValuePickerOption("end", "end"),
+            NativeBlockValuePickerOption("centerHorizontally", "centerHorizontally"),
         ]
-    ) verticalAlignment: String = "top",
+    ) horizontalAlignment: String = "top",
     @NativeBlockEvent(
-        description = "Callback triggered when the row is clicked."
+        description = "Callback triggered when the column is clicked."
     ) onClick: (() -> Unit)? = null,
     @NativeBlockSlot(
-        description = "Slot for composing child content within the row."
+        description = "Slot for composing child content within the column."
     ) content: @Composable (index: BlockIndex) -> Unit
 ) {
-    val listItems: List<*>? = try {
+    val listItems: List<*> = try {
         NativeJsonPath().query(list, "$") as List<*>
     } catch (e: Exception) {
-        null
+        listOf<Any>()
     }
 
     val shape = shapeMapper(
@@ -188,7 +186,14 @@ fun NativeRow(
         radiusBottomStart.toString(),
         radiusBottomEnd.toString(),
     )
-    var modifier = Modifier
+
+    val modifier = Modifier
+        .clickable(
+            enabled = onClick != null,
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() }) {
+            onClick?.invoke()
+        }
         .widthAndHeight(width, height)
         .background(Color(background.toColorInt()), shape)
         .padding(
@@ -198,32 +203,21 @@ fun NativeRow(
             bottom = paddingBottom.dp,
         )
 
-    if (scrollable) {
-        modifier = modifier.horizontalScroll(rememberScrollState())
-    }
-
     val blockDirection = if (direction == "RTL") {
         LocalLayoutDirection provides LayoutDirection.Rtl
     } else {
         LocalLayoutDirection provides LayoutDirection.Ltr
     }
+
     CompositionLocalProvider(blockDirection) {
-        Row(
-            modifier = modifier.clickable(
-                enabled = onClick != null,
-                indication = null,
-                interactionSource = remember { MutableInteractionSource() }) {
-                onClick?.invoke()
-            },
-            verticalAlignment = findAlignmentVertical(verticalAlignment),
-            horizontalArrangement = findArrangementHorizontal(horizontalArrangement)
+        LazyColumn(
+            modifier = modifier,
+            userScrollEnabled = scrollable,
+            verticalArrangement = findArrangementVertical(verticalArrangement),
+            horizontalAlignment = findAlignmentHorizontal(horizontalAlignment)
         ) {
-            if (listItems != null) {
-                listItems.forEachIndexed { index, _ ->
-                    content.invoke(index)
-                }
-            } else {
-                content(-1)
+            itemsIndexed(listItems) { index, _ ->
+                content.invoke(index)
             }
         }
     }
