@@ -221,11 +221,11 @@ fun NativeColumn(
             verticalArrangement = findArrangementVertical(verticalArrangement),
             horizontalAlignment = findAlignmentHorizontal(horizontalAlignment)
         ) {
-            if(listItems !=null) {
-                listItems.forEachIndexed { index, _->
+            if (listItems != null) {
+                listItems.forEachIndexed { index, _ ->
                     content.invoke(index)
                 }
-            }else{
+            } else {
                 content(-1)
             }
         }

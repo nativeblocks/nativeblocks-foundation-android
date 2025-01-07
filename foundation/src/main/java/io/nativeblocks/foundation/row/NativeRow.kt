@@ -218,11 +218,11 @@ fun NativeRow(
             verticalAlignment = findAlignmentVertical(verticalAlignment),
             horizontalArrangement = findArrangementHorizontal(horizontalArrangement)
         ) {
-            if(listItems !=null) {
-                listItems.forEachIndexed { index, _->
+            if (listItems != null) {
+                listItems.forEachIndexed { index, _ ->
                     content.invoke(index)
                 }
-            }else{
+            } else {
                 content(-1)
             }
         }
