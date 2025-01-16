@@ -184,10 +184,10 @@ fun NativeLazyRow(
 
     val shape = shapeMapper(
         "rectangle",
-        radiusTopStart.toString(),
-        radiusTopEnd.toString(),
-        radiusBottomStart.toString(),
-        radiusBottomEnd.toString(),
+        radiusTopStart.dp,
+        radiusTopEnd.dp,
+        radiusBottomStart.dp,
+        radiusBottomEnd.dp,
     )
     var modifier = Modifier
         .clickable(

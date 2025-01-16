@@ -6,7 +6,7 @@ import io.nativeblocks.core.api.provider.type.INativeType
 
 class DpNativeType : INativeType<Dp> {
     override fun toString(input: Dp?): String {
-        return input?.value?.toDouble()?.toString() ?: ""
+        return input?.value?.toDouble()?.toString() ?: "0"
     }
 
     override fun fromString(input: String?): Dp {

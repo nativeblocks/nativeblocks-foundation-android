@@ -181,10 +181,10 @@ fun NativeLazyColumn(
 
     val shape = shapeMapper(
         "rectangle",
-        radiusTopStart.toString(),
-        radiusTopEnd.toString(),
-        radiusBottomStart.toString(),
-        radiusBottomEnd.toString(),
+        radiusTopStart.dp,
+        radiusTopEnd.dp,
+        radiusBottomStart.dp,
+        radiusBottomEnd.dp,
     )
 
     val modifier = Modifier

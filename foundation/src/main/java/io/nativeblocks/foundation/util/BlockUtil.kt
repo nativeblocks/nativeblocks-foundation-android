@@ -25,6 +25,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import io.nativeblocks.core.api.NativeblocksResourceManager
@@ -236,18 +237,18 @@ fun textDecorationMapper(textDecoration: String?): TextDecoration {
  */
 fun shapeMapper(
     shapeName: String?,
-    shapeRadiusTopStart: String?,
-    shapeRadiusTopEnd: String?,
-    shapeRadiusBottomStart: String?,
-    shapeRadiusBottomEnd: String?
+    shapeRadiusTopStart: Dp,
+    shapeRadiusTopEnd: Dp,
+    shapeRadiusBottomStart: Dp,
+    shapeRadiusBottomEnd: Dp
 ): Shape {
     return when (shapeName) {
         "circle" -> CircleShape
         "rectangle" -> RoundedCornerShape(
-            topStart = shapeRadiusTopStart?.toFloatOrNull()?.dp ?: 0.dp,
-            topEnd = shapeRadiusTopEnd?.toFloatOrNull()?.dp ?: 0.dp,
-            bottomStart = shapeRadiusBottomStart?.toFloatOrNull()?.dp ?: 0.dp,
-            bottomEnd = shapeRadiusBottomEnd?.toFloatOrNull()?.dp ?: 0.dp,
+            topStart = shapeRadiusTopStart,
+            topEnd = shapeRadiusTopEnd,
+            bottomStart = shapeRadiusBottomStart,
+            bottomEnd = shapeRadiusBottomEnd
         )
 
         else -> RectangleShape

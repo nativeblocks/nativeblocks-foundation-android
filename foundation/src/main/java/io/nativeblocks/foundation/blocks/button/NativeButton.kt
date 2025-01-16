@@ -14,10 +14,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.toColorInt
 import io.nativeblocks.compiler.type.BlockIndex
 import io.nativeblocks.compiler.type.NativeBlock
 import io.nativeblocks.compiler.type.NativeBlockData
@@ -81,7 +84,8 @@ fun NativeButton(
         description = "The text displayed on the button."
     ) text: String,
     @NativeBlockData(
-        description = "Whether the button is enabled or not."
+        description = "Whether the button is enabled or not.",
+        defaultValue = "true"
     ) enable: Boolean = true,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
@@ -90,7 +94,8 @@ fun NativeButton(
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
         ],
-        description = "The width of the button (e.g., 'match' or 'wrap')."
+        description = "The width of the button (e.g., 'match' or 'wrap').",
+        defaultValue = "wrap"
     ) width: String = "wrap",
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
@@ -99,107 +104,128 @@ fun NativeButton(
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
         ],
-        description = "The height of the button (e.g., 'match' or 'wrap')."
+        description = "The height of the button (e.g., 'match' or 'wrap').",
+        defaultValue = "wrap"
     ) height: String = "wrap",
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Content color"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
-        description = "The color of the button's text or content."
-    ) contentColor: String = "#FFFFFFFF",
+        description = "The color of the button's text or content.",
+        defaultValue = "#FFFFFFFF"
+    ) contentColor: Color = Color.White,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Content color"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
-        description = "The color of the button's content when it is disabled."
-    ) disabledContentColor: String = "#FFFFFFB2",
+        description = "The color of the button's content when it is disabled.",
+        defaultValue = "#FFFFFFB2"
+    ) disabledContentColor: Color = Color.Blue,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Background color"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
-        description = "The background color of the button."
-    ) backgroundColor: String = "#FF212121",
+        description = "The background color of the button.",
+        defaultValue = "#FF212121"
+    ) backgroundColor: Color = Color.Gray,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Background color"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
-        description = "The background color when the button is disabled."
-    ) disableBackgroundColor: String = "#212121B2",
+        description = "The background color when the button is disabled.",
+        defaultValue = "#212121B2"
+    ) disableBackgroundColor: Color = Color.Blue,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Border color"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
-        description = "The border color of the button."
-    ) borderColor: String = "#FF212121",
+        description = "The border color of the button.",
+        defaultValue = "#FF212121"
+    ) borderColor: Color = Color.Gray,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Border color"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
-        description = "The border color when the button is disabled."
-    ) disableBorderColor: String = "#212121B2",
+        description = "The border color when the button is disabled.",
+        defaultValue = "#212121B2"
+    ) disableBorderColor: Color = Color.Blue,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        description = "Padding on the start (left) side in DP."
-    ) paddingStart: Double = 4.0,
+        description = "Padding on the start (left) side in DP.",
+        defaultValue = "4.0"
+    ) paddingStart:  Double = 4.0,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        description = "Padding on the top side in DP."
+        description = "Padding on the top side in DP.",
+        defaultValue = "4.0"
     ) paddingTop: Double = 4.0,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        description = "Padding on the end (right) side in DP."
+        description = "Padding on the end (right) side in DP.",
+        defaultValue = "4.0"
     ) paddingEnd: Double = 4.0,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        description = "Padding on the bottom side in DP."
+        description = "Padding on the bottom side in DP.",
+        defaultValue = "4.0"
     ) paddingBottom: Double = 4.0,
 
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Content spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        description = "Content padding on the start (left) side in DP."
+        description = "Content padding on the start (left) side in DP.",
+        defaultValue = "4.0"
     ) contentPaddingStart: Double = 4.0,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Content spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        description = "Content padding on the top side in DP."
+        description = "Content padding on the top side in DP.",
+        defaultValue = "4.0"
     ) contentPaddingTop: Double = 4.0,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Content spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        description = "Content padding on the end (right) side in DP."
+        description = "Content padding on the end (right) side in DP.",
+        defaultValue = "4.0"
     ) contentPaddingEnd: Double = 4.0,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Content spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        description = "Content padding on the bottom side in DP."
+        description = "Content padding on the bottom side in DP.",
+        defaultValue = "4.0"
     ) contentPaddingBottom: Double = 4.0,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        description = "The radius for the top-start corner in DP."
+        description = "The radius for the top-start corner in DP.",
+        defaultValue = "4.0"
     ) radiusTopStart: Double = 4.0,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        description = "The radius for the top-end corner in DP."
+        description = "The radius for the top-end corner in DP.",
+        defaultValue = "4.0"
     ) radiusTopEnd: Double = 4.0,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        description = "The radius for the bottom-start corner in DP."
+        description = "The radius for the bottom-start corner in DP.",
+        defaultValue = "4.0"
     ) radiusBottomStart: Double = 4.0,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        description = "The radius for the bottom-end corner in DP."
-    ) radiusBottomEnd: Double = 4.0,
+        description = "The radius for the bottom-end corner in DP.",
+        defaultValue = "4.0"
+    ) radiusBottomEnd:Double = 4.0,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Font"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        description = "The font size of the button text in SP."
-    ) fontSize: Double = 14.0,
+        description = "The font size of the button text in SP.",
+        defaultValue = "14.sp"
+    ) fontSize: TextUnit = 14.sp,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Font"),
-        description = "The font family used for the button text."
+        description = "The font family used for the button text.",
+        defaultValue = "default"
     ) fontFamily: String = "default",
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Font"),
@@ -210,8 +236,9 @@ fun NativeButton(
             NativeBlockValuePickerOption("end", "end"),
             NativeBlockValuePickerOption("justify", "justify")
         ],
-        description = "The alignment of the button text (e.g., 'start', 'center')."
-    ) textAlign: String = "start",
+        description = "The alignment of the button text (e.g., 'start', 'center').",
+        defaultValue = "start"
+    ) textAlign: TextAlign = TextAlign.Start,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Font"),
         valuePicker = NativeBlockValuePicker.DROPDOWN,
@@ -226,8 +253,9 @@ fun NativeButton(
             NativeBlockValuePickerOption("extraBold", "extraBold"),
             NativeBlockValuePickerOption("black", "black")
         ],
-        description = "The font weight for the button text (e.g., 'normal', 'bold')."
-    ) fontWeight: String = "normal",
+        description = "The font weight for the button text (e.g., 'normal', 'bold').",
+        defaultValue = "normal"
+    ) fontWeight: FontWeight = FontWeight.Normal,
     @NativeBlockSlot(
         description = "Slot for adding a leading icon to the button."
     ) onLeadingIcon: (@Composable (index: BlockIndex) -> Unit)? = null,
@@ -240,8 +268,8 @@ fun NativeButton(
 ) {
     val textStyle = typographyBuilder(
         fontFamily = fontFamilyMapper(fontFamily),
-        fontWeight = fontWeightMapper(fontWeight),
-        fontSize = fontSize.sp
+        fontWeight = fontWeight,
+        fontSize = fontSize
     )
 
     val modifier = Modifier
@@ -258,10 +286,10 @@ fun NativeButton(
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = Color(backgroundColor.toColorInt()),
-            contentColor = Color(contentColor.toColorInt()),
-            disabledBackgroundColor = Color(disableBackgroundColor.toColorInt()),
-            disabledContentColor = Color(disabledContentColor.toColorInt()),
+            backgroundColor = backgroundColor,
+            contentColor = contentColor,
+            disabledBackgroundColor = disableBackgroundColor,
+            disabledContentColor = disabledContentColor,
         ),
         modifier = modifier,
         shape = RoundedCornerShape(
@@ -272,7 +300,7 @@ fun NativeButton(
         ),
         border = BorderStroke(
             1.dp,
-            Color(if (enable) borderColor.toColorInt() else disableBorderColor.toColorInt())
+            if (enable) borderColor else disableBorderColor
         ),
         enabled = enable
     ) {
@@ -292,9 +320,9 @@ fun NativeButton(
             Text(
                 modifier = Modifier,
                 text = text,
-                color = Color(contentColor.toColorInt()),
+                color = contentColor,
                 style = textStyle,
-                textAlign = textAlignmentMapper(textAlign),
+                textAlign = textAlign,
                 overflow = TextOverflow.Clip,
                 minLines = 1,
                 maxLines = 9999,

@@ -3,6 +3,7 @@ package io.nativeblocks.foundation.blocks.column
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -10,12 +11,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.toColorInt
 import io.nativeblocks.compiler.type.BlockIndex
 import io.nativeblocks.compiler.type.NativeBlock
 import io.nativeblocks.compiler.type.NativeBlockData
@@ -25,9 +26,9 @@ import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
+import io.nativeblocks.core.util.json.NativeJsonPath
 import io.nativeblocks.foundation.util.findAlignmentHorizontal
 import io.nativeblocks.foundation.util.findArrangementVertical
-import io.nativeblocks.core.util.json.NativeJsonPath
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 
@@ -75,7 +76,8 @@ fun NativeColumn(
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
-        ]
+        ],
+        defaultValue = "wrap"
     ) width: String = "wrap",
     @NativeBlockProp(
         description = "Determines if the column should be scrollable.",
@@ -83,7 +85,8 @@ fun NativeColumn(
         valuePickerOptions = [
             NativeBlockValuePickerOption("false", "false"),
             NativeBlockValuePickerOption("true", "true")
-        ]
+        ],
+        defaultValue = "false"
     ) scrollable: Boolean = false,
     @NativeBlockProp(
         description = "The height of the column (e.g., 'match' or 'wrap').",
@@ -92,59 +95,70 @@ fun NativeColumn(
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
-        ]
+        ],
+        defaultValue = "wrap"
     ) height: String = "wrap",
     @NativeBlockProp(
         description = "Padding on the start (left) side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        defaultValue = "0.0"
     ) paddingStart: Double = 0.0,
     @NativeBlockProp(
         description = "Padding on the top side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        defaultValue = "0.0"
     ) paddingTop: Double = 0.0,
     @NativeBlockProp(
         description = "Padding on the end (right) side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        defaultValue = "0.0"
     ) paddingEnd: Double = 0.0,
     @NativeBlockProp(
         description = "Padding on the bottom side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        defaultValue = "0.0"
     ) paddingBottom: Double = 0.0,
     @NativeBlockProp(
         description = "Background color of the column in hexadecimal format.",
-        valuePicker = NativeBlockValuePicker.COLOR_PICKER
-    ) background: String = "#00000000",
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
+        defaultValue = "#00000000"
+    ) background: Color = Color.Transparent,
     @NativeBlockProp(
         description = "The layout direction of the column (e.g., 'LTR' or 'RTL').",
         valuePicker = NativeBlockValuePicker.DROPDOWN,
         valuePickerOptions = [
             NativeBlockValuePickerOption("RTL", "RTL"),
             NativeBlockValuePickerOption("LTR", "LTR")
-        ]
-    ) direction: String = "LTR",
+        ],
+        defaultValue = "LTR"
+    ) direction: LayoutDirection = LayoutDirection.Ltr,
     @NativeBlockProp(
         description = "Top-start corner radius in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0.0"
     ) radiusTopStart: Double = 0.0,
     @NativeBlockProp(
         description = "Top-end corner radius in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0.0"
     ) radiusTopEnd: Double = 0.0,
     @NativeBlockProp(
         description = "Bottom-start corner radius in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0.0"
     ) radiusBottomStart: Double = 0.0,
     @NativeBlockProp(
         description = "Bottom-end corner radius in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0.0"
     ) radiusBottomEnd: Double = 0.0,
     @NativeBlockProp(
         description = "Vertical arrangement of child components inside the column.",
@@ -156,8 +170,9 @@ fun NativeColumn(
             NativeBlockValuePickerOption("spaceBetween", "spaceBetween"),
             NativeBlockValuePickerOption("spaceAround", "spaceAround"),
             NativeBlockValuePickerOption("spaceEvenly", "spaceEvenly"),
-        ]
-    ) verticalArrangement: String = "top",
+        ],
+        defaultValue = "top"
+    ) verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     @NativeBlockProp(
         description = "Horizontal alignment of child components inside the column.",
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
@@ -165,8 +180,9 @@ fun NativeColumn(
             NativeBlockValuePickerOption("start", "start"),
             NativeBlockValuePickerOption("end", "end"),
             NativeBlockValuePickerOption("centerHorizontally", "centerHorizontally"),
-        ]
-    ) horizontalAlignment: String = "top",
+        ],
+        defaultValue = "start"
+    ) horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     @NativeBlockEvent(
         description = "Callback triggered when the column is clicked."
     ) onClick: (() -> Unit)? = null,
@@ -184,10 +200,10 @@ fun NativeColumn(
 
     val shape = shapeMapper(
         "rectangle",
-        radiusTopStart.toString(),
-        radiusTopEnd.toString(),
-        radiusBottomStart.toString(),
-        radiusBottomEnd.toString(),
+        radiusTopStart.dp,
+        radiusTopEnd.dp,
+        radiusBottomStart.dp,
+        radiusBottomEnd.dp,
     )
 
     var modifier = Modifier
@@ -198,7 +214,7 @@ fun NativeColumn(
             onClick?.invoke()
         }
         .widthAndHeight(width, height)
-        .background(Color(background.toColorInt()), shape)
+        .background(background, shape)
         .padding(
             start = paddingStart.dp,
             top = paddingTop.dp,
@@ -209,17 +225,11 @@ fun NativeColumn(
     if (scrollable) {
         modifier = modifier.verticalScroll(rememberScrollState())
     }
-
-    val blockDirection = if (direction == "RTL") {
-        LocalLayoutDirection provides LayoutDirection.Rtl
-    } else {
-        LocalLayoutDirection provides LayoutDirection.Ltr
-    }
-    CompositionLocalProvider(blockDirection) {
+    CompositionLocalProvider(LocalLayoutDirection provides direction) {
         Column(
             modifier = modifier,
-            verticalArrangement = findArrangementVertical(verticalArrangement),
-            horizontalAlignment = findAlignmentHorizontal(horizontalAlignment)
+            verticalArrangement = verticalArrangement,
+            horizontalAlignment = horizontalAlignment
         ) {
             if (listItems != null) {
                 listItems.forEachIndexed { index, _ ->

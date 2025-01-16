@@ -3,6 +3,8 @@ package io.nativeblocks.foundation.blocks.image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import io.nativeblocks.compiler.type.NativeBlock
 import io.nativeblocks.compiler.type.NativeBlockData
@@ -11,7 +13,6 @@ import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.foundation.util.isHttpUrl
-import io.nativeblocks.foundation.util.scaleTypeMapper
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 
@@ -48,7 +49,8 @@ fun NativeImage(
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
-        ]
+        ],
+        defaultValue = "wrap"
     ) width: String = "wrap",
     @NativeBlockProp(
         description = "The height of the image (e.g., 'match' or 'wrap').",
@@ -57,27 +59,32 @@ fun NativeImage(
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
-        ]
+        ],
+        defaultValue = "wrap"
     ) height: String = "wrap",
     @NativeBlockProp(
         description = "The radius for the top-start corner in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0.0"
     ) radiusTopStart: Double = 0.0,
     @NativeBlockProp(
         description = "The radius for the top-end corner in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0.0"
     ) radiusTopEnd: Double = 0.0,
     @NativeBlockProp(
         description = "The radius for the bottom-start corner in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0.0"
     ) radiusBottomStart: Double = 0.0,
     @NativeBlockProp(
         description = "The radius for the bottom-end corner in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0.0"
     ) radiusBottomEnd: Double = 0.0,
     @NativeBlockProp(
         description = "The scaling strategy for the image (e.g., 'fit', 'crop').",
@@ -90,25 +97,26 @@ fun NativeImage(
             NativeBlockValuePickerOption("fillBounds", "fillBounds"),
             NativeBlockValuePickerOption("fillWidth", "fillWidth"),
             NativeBlockValuePickerOption("fillHeight", "fillHeight")
-        ]
-    ) scaleType: String = "none",
+        ],
+        defaultValue = "none"
+    ) scaleType: ContentScale = ContentScale.None,
     @NativeBlockData(
         description = "A description of the image content for accessibility purposes."
     ) contentDescription: String = "",
 ) {
     val shape = shapeMapper(
         "rectangle",
-        radiusTopStart.toString(),
-        radiusTopEnd.toString(),
-        radiusBottomStart.toString(),
-        radiusBottomEnd.toString(),
+        radiusTopStart.dp,
+        radiusTopEnd.dp,
+        radiusBottomStart.dp,
+        radiusBottomEnd.dp,
     )
 
     if (imageUrl.isHttpUrl()) {
         AsyncImage(
             model = imageUrl.trim(),
             contentDescription = contentDescription,
-            contentScale = scaleTypeMapper(scaleType),
+            contentScale = scaleType,
             modifier = Modifier
                 .widthAndHeight(width, height)
                 .clip(shape)
