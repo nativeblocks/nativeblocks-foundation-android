@@ -1,4 +1,4 @@
-package io.nativeblocks.foundation.lazyColumn
+package io.nativeblocks.foundation.blocks.lazyColumn
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,11 +24,11 @@ import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
-import io.nativeblocks.core.util.findAlignmentHorizontal
-import io.nativeblocks.core.util.findArrangementVertical
+import io.nativeblocks.foundation.util.findAlignmentHorizontal
+import io.nativeblocks.foundation.util.findArrangementVertical
 import io.nativeblocks.core.util.json.NativeJsonPath
-import io.nativeblocks.core.util.shapeMapper
-import io.nativeblocks.core.util.widthAndHeight
+import io.nativeblocks.foundation.util.shapeMapper
+import io.nativeblocks.foundation.util.widthAndHeight
 
 /**
  * A composable block for creating a customizable vertical lazy column list layout with properties like padding, background, corner radii, scrolling behavior, and alignment.

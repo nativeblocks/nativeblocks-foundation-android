@@ -1,4 +1,4 @@
-package io.nativeblocks.foundation.image
+package io.nativeblocks.foundation.blocks.image
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -10,10 +10,10 @@ import io.nativeblocks.compiler.type.NativeBlockProp
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
-import io.nativeblocks.core.util.isHttpUrl
-import io.nativeblocks.core.util.scaleTypeMapper
-import io.nativeblocks.core.util.shapeMapper
-import io.nativeblocks.core.util.widthAndHeight
+import io.nativeblocks.foundation.util.isHttpUrl
+import io.nativeblocks.foundation.util.scaleTypeMapper
+import io.nativeblocks.foundation.util.shapeMapper
+import io.nativeblocks.foundation.util.widthAndHeight
 
 /**
  * A composable block for displaying images with customizable properties such as size, corner radii, and scaling.

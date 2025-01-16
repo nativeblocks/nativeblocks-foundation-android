@@ -1,4 +1,4 @@
-package io.nativeblocks.foundation.box
+package io.nativeblocks.foundation.blocks.box
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,9 +22,9 @@ import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
-import io.nativeblocks.core.util.findAlignment
-import io.nativeblocks.core.util.shapeMapper
-import io.nativeblocks.core.util.widthAndHeight
+import io.nativeblocks.foundation.util.findAlignment
+import io.nativeblocks.foundation.util.shapeMapper
+import io.nativeblocks.foundation.util.widthAndHeight
 
 /**
  * A composable block for creating a customizable container with properties such as padding,

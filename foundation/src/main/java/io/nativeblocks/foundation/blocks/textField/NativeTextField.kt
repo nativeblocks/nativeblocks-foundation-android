@@ -1,4 +1,4 @@
-package io.nativeblocks.foundation.textField
+package io.nativeblocks.foundation.blocks.textField
 
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.PaddingValues
@@ -32,11 +32,11 @@ import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.util.fontFamilyMapper
-import io.nativeblocks.core.util.fontWeightMapper
-import io.nativeblocks.core.util.keyboardTypeMapper
-import io.nativeblocks.core.util.textAlignmentMapper
-import io.nativeblocks.core.util.typographyBuilder
-import io.nativeblocks.core.util.widthAndHeight
+import io.nativeblocks.foundation.util.fontWeightMapper
+import io.nativeblocks.foundation.util.keyboardTypeMapper
+import io.nativeblocks.foundation.util.textAlignmentMapper
+import io.nativeblocks.foundation.util.typographyBuilder
+import io.nativeblocks.foundation.util.widthAndHeight
 import kotlin.math.roundToInt
 
 /**

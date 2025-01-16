@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import io.nativeblocks.core.api.NativeblocksEdition
 import io.nativeblocks.core.api.NativeblocksManager
+import io.nativeblocks.foundation.FoundationTypeProvider
 import io.nativeblocks.foundation.integration.consumer.block.FoundationBlockProvider
 import io.nativeblocks.wandkit.liveKit
 import kotlinx.coroutines.runBlocking
@@ -38,6 +39,7 @@ class App : Application() {
         NativeblocksManager.getInstance().liveKit()
 
         FoundationBlockProvider.provideBlocks()
+        FoundationTypeProvider.provideTypes()
         NativeblocksManager.getInstance().provideEventLogger("LOGGER", AppLogger())
     }
 }

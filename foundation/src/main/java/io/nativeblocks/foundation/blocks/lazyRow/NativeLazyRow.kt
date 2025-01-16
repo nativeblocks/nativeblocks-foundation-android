@@ -1,11 +1,12 @@
-package io.nativeblocks.foundation.row
+package io.nativeblocks.foundation.blocks.lazyRow
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -25,14 +26,14 @@ import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
-import io.nativeblocks.core.util.findAlignmentVertical
-import io.nativeblocks.core.util.findArrangementHorizontal
+import io.nativeblocks.foundation.util.findAlignmentVertical
+import io.nativeblocks.foundation.util.findArrangementHorizontal
 import io.nativeblocks.core.util.json.NativeJsonPath
-import io.nativeblocks.core.util.shapeMapper
-import io.nativeblocks.core.util.widthAndHeight
+import io.nativeblocks.foundation.util.shapeMapper
+import io.nativeblocks.foundation.util.widthAndHeight
 
 /**
- * A composable block for creating a customizable horizontal row layout with properties like padding,
+ * A composable block for creating a customizable horizontal lazy row list layout with properties like padding,
  * background color, corner radii, scrolling behavior, and alignment.
  *
  * This block supports dynamic properties, events, and slots, making it ideal for server-driven UI.
@@ -58,15 +59,15 @@ import io.nativeblocks.core.util.widthAndHeight
  * @param content Slot for composing child content within the row.
  */
 @NativeBlock(
-    keyType = "NATIVE_ROW",
-    name = "Native Row",
-    description = "Nativeblocks row block",
-    version = 2
+    keyType = "NATIVE_LAZY_ROW",
+    name = "Native Lazy Row",
+    description = "Nativeblocks lazy row block",
+    version = 1
 )
 @Composable
-fun NativeRow(
+fun NativeLazyRow(
     @NativeBlockData(
-        "A JSON array (e.g., '[{},{},...]') used for repeating the content based on its size. If the list value is invalid, the default content slot is invoked."
+        "A JSON array (e.g., '[{},{},...]') used for repeating the content based on its size."
     )
     list: String = "",
     @NativeBlockProp(
@@ -94,7 +95,7 @@ fun NativeRow(
             NativeBlockValuePickerOption("false", "false"),
             NativeBlockValuePickerOption("true", "true")
         ]
-    ) scrollable: Boolean = false,
+    ) scrollable: Boolean = true,
     @NativeBlockProp(
         description = "Padding on the start (left) side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
@@ -175,10 +176,10 @@ fun NativeRow(
         description = "Slot for composing child content within the row."
     ) content: @Composable (index: BlockIndex) -> Unit
 ) {
-    val listItems: List<*>? = try {
+    val listItems: List<*> = try {
         NativeJsonPath().query(list, "$") as List<*>
     } catch (e: Exception) {
-        null
+        listOf<Any>()
     }
 
     val shape = shapeMapper(
@@ -189,6 +190,12 @@ fun NativeRow(
         radiusBottomEnd.toString(),
     )
     var modifier = Modifier
+        .clickable(
+            enabled = onClick != null,
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() }) {
+            onClick?.invoke()
+        }
         .widthAndHeight(width, height)
         .background(Color(background.toColorInt()), shape)
         .padding(
@@ -208,22 +215,14 @@ fun NativeRow(
         LocalLayoutDirection provides LayoutDirection.Ltr
     }
     CompositionLocalProvider(blockDirection) {
-        Row(
-            modifier = modifier.clickable(
-                enabled = onClick != null,
-                indication = null,
-                interactionSource = remember { MutableInteractionSource() }) {
-                onClick?.invoke()
-            },
+        LazyRow(
+            modifier = modifier,
+            userScrollEnabled = scrollable,
             verticalAlignment = findAlignmentVertical(verticalAlignment),
             horizontalArrangement = findArrangementHorizontal(horizontalArrangement)
         ) {
-            if (listItems != null) {
-                listItems.forEachIndexed { index, _ ->
-                    content.invoke(index)
-                }
-            } else {
-                content(-1)
+            itemsIndexed(listItems) { index, _ ->
+                content.invoke(index)
             }
         }
     }

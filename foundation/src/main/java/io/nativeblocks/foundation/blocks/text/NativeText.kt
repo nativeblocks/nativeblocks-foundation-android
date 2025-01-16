@@ -1,4 +1,4 @@
-package io.nativeblocks.foundation.text
+package io.nativeblocks.foundation.blocks.text
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -13,11 +13,11 @@ import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.util.fontFamilyMapper
-import io.nativeblocks.core.util.fontWeightMapper
-import io.nativeblocks.core.util.textAlignmentMapper
-import io.nativeblocks.core.util.textOverflowMapper
-import io.nativeblocks.core.util.typographyBuilder
-import io.nativeblocks.core.util.widthAndHeight
+import io.nativeblocks.foundation.util.fontWeightMapper
+import io.nativeblocks.foundation.util.textAlignmentMapper
+import io.nativeblocks.foundation.util.textOverflowMapper
+import io.nativeblocks.foundation.util.typographyBuilder
+import io.nativeblocks.foundation.util.widthAndHeight
 
 /**
  * A composable block for displaying customizable text with support for font styling, alignment, color,
