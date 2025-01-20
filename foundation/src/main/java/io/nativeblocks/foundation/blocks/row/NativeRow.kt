@@ -4,18 +4,19 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.toColorInt
 import io.nativeblocks.compiler.type.BlockIndex
 import io.nativeblocks.compiler.type.NativeBlock
 import io.nativeblocks.compiler.type.NativeBlockData
@@ -25,8 +26,6 @@ import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
-import io.nativeblocks.foundation.util.findAlignmentVertical
-import io.nativeblocks.foundation.util.findArrangementHorizontal
 import io.nativeblocks.core.util.json.NativeJsonPath
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
@@ -76,7 +75,8 @@ fun NativeRow(
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
-        ]
+        ],
+        defaultValue = "wrap"
     ) width: String = "wrap",
     @NativeBlockProp(
         description = "The height of the row (e.g., 'match' or 'wrap').",
@@ -85,7 +85,8 @@ fun NativeRow(
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
-        ]
+        ],
+        defaultValue = "wrap"
     ) height: String = "wrap",
     @NativeBlockProp(
         description = "Determines if the row should be scrollable horizontally.",
@@ -93,51 +94,61 @@ fun NativeRow(
         valuePickerOptions = [
             NativeBlockValuePickerOption("false", "false"),
             NativeBlockValuePickerOption("true", "true")
-        ]
+        ],
+        defaultValue = "false"
     ) scrollable: Boolean = false,
     @NativeBlockProp(
         description = "Padding on the start (left) side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        defaultValue = "0.0"
     ) paddingStart: Double = 0.0,
     @NativeBlockProp(
         description = "Padding on the top side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        defaultValue = "0.0"
     ) paddingTop: Double = 0.0,
     @NativeBlockProp(
         description = "Padding on the end (right) side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        defaultValue = "0.0"
     ) paddingEnd: Double = 0.0,
     @NativeBlockProp(
         description = "Padding on the bottom side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        defaultValue = "0.0"
     ) paddingBottom: Double = 0.0,
     @NativeBlockProp(
         description = "Background color of the row in hexadecimal format.",
-        valuePicker = NativeBlockValuePicker.COLOR_PICKER
-    ) background: String = "#00000000",
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
+        defaultValue = "#00000000"
+    ) background: Color = Color.Transparent,
     @NativeBlockProp(
         description = "Top-start corner radius in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0.0"
     ) radiusTopStart: Double = 0.0,
     @NativeBlockProp(
         description = "Top-end corner radius in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0.0"
     ) radiusTopEnd: Double = 0.0,
     @NativeBlockProp(
         description = "Bottom-start corner radius in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0.0"
     ) radiusBottomStart: Double = 0.0,
     @NativeBlockProp(
         description = "Bottom-end corner radius in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0.0"
     ) radiusBottomEnd: Double = 0.0,
     @NativeBlockProp(
         description = "The layout direction of the row (e.g., 'LTR' or 'RTL').",
@@ -145,8 +156,9 @@ fun NativeRow(
         valuePickerOptions = [
             NativeBlockValuePickerOption("RTL", "RTL"),
             NativeBlockValuePickerOption("LTR", "LTR")
-        ]
-    ) direction: String = "LTR",
+        ],
+        defaultValue = "LTR"
+    ) direction: LayoutDirection = LayoutDirection.Ltr,
     @NativeBlockProp(
         description = "Horizontal arrangement of child components inside the row.",
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
@@ -157,8 +169,9 @@ fun NativeRow(
             NativeBlockValuePickerOption("spaceBetween", "spaceBetween"),
             NativeBlockValuePickerOption("spaceAround", "spaceAround"),
             NativeBlockValuePickerOption("spaceEvenly", "spaceEvenly"),
-        ]
-    ) horizontalArrangement: String = "start",
+        ],
+        defaultValue = "start"
+    ) horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     @NativeBlockProp(
         description = "Vertical alignment of child components inside the row.",
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
@@ -166,8 +179,9 @@ fun NativeRow(
             NativeBlockValuePickerOption("top", "top"),
             NativeBlockValuePickerOption("bottom", "bottom"),
             NativeBlockValuePickerOption("centerVertically", "centerVertically"),
-        ]
-    ) verticalAlignment: String = "top",
+        ],
+        defaultValue = "top"
+    ) verticalAlignment: Alignment.Vertical = Alignment.Top,
     @NativeBlockEvent(
         description = "Callback triggered when the row is clicked."
     ) onClick: (() -> Unit)? = null,
@@ -190,7 +204,7 @@ fun NativeRow(
     )
     var modifier = Modifier
         .widthAndHeight(width, height)
-        .background(Color(background.toColorInt()), shape)
+        .background(background, shape)
         .padding(
             start = paddingStart.dp,
             top = paddingTop.dp,
@@ -202,12 +216,7 @@ fun NativeRow(
         modifier = modifier.horizontalScroll(rememberScrollState())
     }
 
-    val blockDirection = if (direction == "RTL") {
-        LocalLayoutDirection provides LayoutDirection.Rtl
-    } else {
-        LocalLayoutDirection provides LayoutDirection.Ltr
-    }
-    CompositionLocalProvider(blockDirection) {
+    CompositionLocalProvider(LocalLayoutDirection provides direction) {
         Row(
             modifier = modifier.clickable(
                 enabled = onClick != null,
@@ -215,8 +224,8 @@ fun NativeRow(
                 interactionSource = remember { MutableInteractionSource() }) {
                 onClick?.invoke()
             },
-            verticalAlignment = findAlignmentVertical(verticalAlignment),
-            horizontalArrangement = findArrangementHorizontal(horizontalArrangement)
+            verticalAlignment = verticalAlignment,
+            horizontalArrangement = horizontalArrangement
         ) {
             if (listItems != null) {
                 listItems.forEachIndexed { index, _ ->

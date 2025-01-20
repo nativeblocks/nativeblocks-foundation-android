@@ -38,7 +38,8 @@ fun NativeSpacer(
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
-        ]
+        ],
+        defaultValue = "wrap"
     ) width: String = "wrap",
     @NativeBlockProp(
         description = "The height of the spacer (e.g., 'match' or 'wrap').",
@@ -47,7 +48,8 @@ fun NativeSpacer(
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
-        ]
+        ],
+        defaultValue = "wrap"
     ) height: String = "wrap",
 ) {
     Spacer(

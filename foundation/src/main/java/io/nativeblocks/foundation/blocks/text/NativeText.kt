@@ -4,8 +4,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.toColorInt
 import io.nativeblocks.compiler.type.NativeBlock
 import io.nativeblocks.compiler.type.NativeBlockData
 import io.nativeblocks.compiler.type.NativeBlockProp
@@ -13,9 +16,6 @@ import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.util.fontFamilyMapper
-import io.nativeblocks.foundation.util.fontWeightMapper
-import io.nativeblocks.foundation.util.textAlignmentMapper
-import io.nativeblocks.foundation.util.textOverflowMapper
 import io.nativeblocks.foundation.util.typographyBuilder
 import io.nativeblocks.foundation.util.widthAndHeight
 
@@ -56,7 +56,8 @@ fun NativeText(
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
-        ]
+        ],
+        defaultValue = "wrap"
     )
     width: String = "wrap",
     @NativeBlockProp(
@@ -66,7 +67,8 @@ fun NativeText(
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
-        ]
+        ],
+        defaultValue = "wrap"
     )
     height: String = "wrap",
     @NativeBlockProp(
@@ -77,15 +79,16 @@ fun NativeText(
     @NativeBlockProp(
         description = "The font size for the text in SP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Font"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
-    )
-    fontSize: Double = 14.0,
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "14"
+    ) fontSize: TextUnit = 14.sp,
     @NativeBlockProp(
         description = "The color of the text in hexadecimal format.",
         valuePickerGroup = NativeBlockValuePickerPosition("Font"),
-        valuePicker = NativeBlockValuePicker.COLOR_PICKER
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
+        defaultValue = "#ffffffff"
     )
-    textColor: String = "#ffffffff",
+    textColor: Color = Color.White,
     @NativeBlockProp(
         description = "The alignment of the text (e.g., 'start', 'center').",
         valuePickerGroup = NativeBlockValuePickerPosition("Font"),
@@ -95,9 +98,9 @@ fun NativeText(
             NativeBlockValuePickerOption("center", "center"),
             NativeBlockValuePickerOption("end", "end"),
             NativeBlockValuePickerOption("justify", "justify")
-        ]
-    )
-    textAlign: String = "start",
+        ],
+        defaultValue = "start"
+    ) textAlign: TextAlign = TextAlign.Start,
 
     @NativeBlockProp(
         description = "The weight of the font for the text (e.g., 'normal', 'bold').",
@@ -113,9 +116,9 @@ fun NativeText(
             NativeBlockValuePickerOption("bold", "bold"),
             NativeBlockValuePickerOption("extraBold", "extraBold"),
             NativeBlockValuePickerOption("black", "black")
-        ]
-    )
-    fontWeight: String = "normal",
+        ],
+        defaultValue = "normal"
+    ) fontWeight: FontWeight = FontWeight.Normal,
     @NativeBlockProp(
         description = "The overflow behavior of the text (e.g., 'clip', 'ellipsis').",
         valuePickerGroup = NativeBlockValuePickerPosition("Font"),
@@ -124,36 +127,39 @@ fun NativeText(
             NativeBlockValuePickerOption("clip", "clip"),
             NativeBlockValuePickerOption("ellipsis", "ellipsis"),
             NativeBlockValuePickerOption("visible", "visible")
-        ]
+        ],
+        defaultValue = "clip"
     )
-    overflow: String = "clip",
+    overflow: TextOverflow = TextOverflow.Clip,
     @NativeBlockProp(
         description = "The minimum number of lines to display.",
         valuePickerGroup = NativeBlockValuePickerPosition("Font"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "1"
     )
     minLines: Int = 1,
     @NativeBlockProp(
         description = "The maximum number of lines to display.",
         valuePickerGroup = NativeBlockValuePickerPosition("Font"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "9999"
     )
     maxLines: Int = 9999,
 ) {
     val textStyle = typographyBuilder(
         fontFamily = fontFamilyMapper(fontFamily),
-        fontWeight = fontWeightMapper(fontWeight),
-        fontSize = fontSize.sp
+        fontWeight = fontWeight,
+        fontSize = fontSize
     )
     val modifier = Modifier
         .widthAndHeight(width, height)
     Text(
         modifier = modifier,
         text = text,
-        color = Color(textColor.toColorInt()),
+        color = textColor,
         style = textStyle,
-        textAlign = textAlignmentMapper(textAlign),
-        overflow = textOverflowMapper(overflow),
+        textAlign = textAlign,
+        overflow = overflow,
         minLines = minLines,
         maxLines = maxLines,
     )
