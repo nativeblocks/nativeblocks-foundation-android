@@ -3,7 +3,24 @@ package io.nativeblocks.foundation.types
 import androidx.compose.ui.text.input.KeyboardType
 import io.nativeblocks.core.api.provider.type.INativeType
 
+/**
+ * A class that provides serialization and deserialization methods for [KeyboardType] objects.
+ * It implements the [INativeType] interface for [KeyboardType].
+ *
+ * Example usage:
+ * ```kotlin
+ * NativeblocksManager.getInstance()
+ *     .provideTypeConverter(KeyboardType::class, KeyboardTypeNativeType())
+ * ```
+ */
 class KeyboardTypeNativeType : INativeType<KeyboardType> {
+
+    /**
+     * Converts a [KeyboardType] object to its string representation.
+     *
+     * @param input The [KeyboardType] object to be converted to a string.
+     * @return A string representation of the [KeyboardType], or an empty string if the input is null or not recognized.
+     */
     override fun toString(input: KeyboardType?): String {
         return when (input) {
             KeyboardType.Text -> "text"
@@ -19,6 +36,12 @@ class KeyboardTypeNativeType : INativeType<KeyboardType> {
         }
     }
 
+    /**
+     * Converts a string to a [KeyboardType] object.
+     *
+     * @param input The string representation of a [KeyboardType].
+     * @return The corresponding [KeyboardType] object, or [KeyboardType.Text] if the input is null or not recognized.
+     */
     override fun fromString(input: String?): KeyboardType {
         return when (input?.lowercase()) {
             "text" -> KeyboardType.Text
