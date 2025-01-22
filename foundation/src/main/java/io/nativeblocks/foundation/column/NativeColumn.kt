@@ -191,12 +191,6 @@ fun NativeColumn(
     )
 
     var modifier = Modifier
-        .clickable(
-            enabled = onClick != null,
-            indication = null,
-            interactionSource = remember { MutableInteractionSource() }) {
-            onClick?.invoke()
-        }
         .widthAndHeight(width, height)
         .background(Color(background.toColorInt()), shape)
         .padding(
@@ -205,6 +199,15 @@ fun NativeColumn(
             end = paddingEnd.dp,
             bottom = paddingBottom.dp,
         )
+
+    if (onClick != null) {
+        modifier = Modifier.clickable(
+            enabled = true,
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() }) {
+            onClick.invoke()
+        }
+    }
 
     if (scrollable) {
         modifier = modifier.verticalScroll(rememberScrollState())

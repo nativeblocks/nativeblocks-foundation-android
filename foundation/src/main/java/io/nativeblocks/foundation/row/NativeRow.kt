@@ -198,6 +198,15 @@ fun NativeRow(
             bottom = paddingBottom.dp,
         )
 
+    if (onClick != null) {
+        modifier = Modifier.clickable(
+            enabled = true,
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() }) {
+            onClick.invoke()
+        }
+    }
+
     if (scrollable) {
         modifier = modifier.horizontalScroll(rememberScrollState())
     }
@@ -209,12 +218,7 @@ fun NativeRow(
     }
     CompositionLocalProvider(blockDirection) {
         Row(
-            modifier = modifier.clickable(
-                enabled = onClick != null,
-                indication = null,
-                interactionSource = remember { MutableInteractionSource() }) {
-                onClick?.invoke()
-            },
+            modifier = modifier,
             verticalAlignment = findAlignmentVertical(verticalAlignment),
             horizontalArrangement = findArrangementHorizontal(horizontalArrangement)
         ) {
