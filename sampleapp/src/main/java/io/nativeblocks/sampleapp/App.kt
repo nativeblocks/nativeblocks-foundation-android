@@ -6,11 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import io.nativeblocks.core.api.NativeblocksEdition
 import io.nativeblocks.core.api.NativeblocksManager
-import io.nativeblocks.foundation.FoundationTypeProvider
-import io.nativeblocks.foundation.actions.NativeChangeBlockProperty
-import io.nativeblocks.foundation.actions.NativeChangeVariable
-import io.nativeblocks.foundation.integration.consumer.action.FoundationActionProvider
-import io.nativeblocks.foundation.integration.consumer.block.FoundationBlockProvider
+import io.nativeblocks.foundation.FoundationProvider
 import io.nativeblocks.wandkit.liveKit
 import kotlinx.coroutines.runBlocking
 import kotlin.system.exitProcess
@@ -40,13 +36,7 @@ class App : Application() {
             */
         )
         NativeblocksManager.getInstance().liveKit()
-
-        FoundationActionProvider.provideActions(
-            nativeChangeVariable = NativeChangeVariable(),
-            nativeChangeBlockProperty = NativeChangeBlockProperty()
-        )
-        FoundationBlockProvider.provideBlocks()
-        FoundationTypeProvider.provideTypes()
+        FoundationProvider.provide()
         NativeblocksManager.getInstance().provideEventLogger("LOGGER", AppLogger())
     }
 }
