@@ -13,7 +13,7 @@ class LayoutDirectionNativeType : INativeType<LayoutDirection> {
     }
 
     override fun fromString(input: String?): LayoutDirection {
-        return if (input == "RTL") {
+        return if (input?.uppercase() == "RTL") {
             LayoutDirection.Rtl
         } else {
             LayoutDirection.Ltr

@@ -12,7 +12,7 @@ class VerticalArrangementNativeType : INativeType<Arrangement.Vertical> {
             Arrangement.SpaceBetween -> "spaceBetween"
             Arrangement.SpaceAround -> "spaceAround"
             Arrangement.SpaceEvenly -> "spaceEvenly"
-            else -> "top"
+            else -> ""
         }
     }
 

@@ -20,15 +20,15 @@ class FontWeightNativeType : INativeType<FontWeight> {
     }
 
     override fun fromString(input: String?): FontWeight {
-        return when (input) {
+        return when (input?.lowercase()) {
             "thin" -> FontWeight.Thin
-            "extraLight" -> FontWeight.ExtraLight
+            "extralight" -> FontWeight.ExtraLight
             "light" -> FontWeight.Light
             "normal" -> FontWeight.Normal
             "medium" -> FontWeight.Medium
-            "semiBold" -> FontWeight.SemiBold
+            "semibold" -> FontWeight.SemiBold
             "bold" -> FontWeight.Bold
-            "extraBold" -> FontWeight.ExtraBold
+            "extrabold" -> FontWeight.ExtraBold
             "black" -> FontWeight.Black
             else -> FontWeight.Normal
         }

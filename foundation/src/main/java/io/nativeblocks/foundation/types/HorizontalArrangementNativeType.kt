@@ -12,18 +12,18 @@ class HorizontalArrangementNativeType : INativeType<Arrangement.Horizontal> {
             Arrangement.SpaceBetween -> "spaceBetween"
             Arrangement.SpaceAround -> "spaceAround"
             Arrangement.SpaceEvenly -> "spaceEvenly"
-            else -> "start"
+            else -> ""
         }
     }
 
     override fun fromString(input: String?): Arrangement.Horizontal {
-        return when (input) {
+        return when (input?.lowercase()) {
             "start" -> Arrangement.Start
             "end" -> Arrangement.End
             "center" -> Arrangement.Center
-            "spaceBetween" -> Arrangement.SpaceBetween
-            "spaceAround" -> Arrangement.SpaceAround
-            "spaceEvenly" -> Arrangement.SpaceEvenly
+            "spacebetween" -> Arrangement.SpaceBetween
+            "spacearound" -> Arrangement.SpaceAround
+            "spaceevenly" -> Arrangement.SpaceEvenly
             else -> Arrangement.Start
         }
     }

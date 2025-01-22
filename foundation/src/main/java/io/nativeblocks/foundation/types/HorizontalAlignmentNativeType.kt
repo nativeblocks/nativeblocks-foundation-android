@@ -9,12 +9,12 @@ class HorizontalAlignmentNativeType : INativeType<Alignment.Horizontal> {
             Alignment.Start -> "start"
             Alignment.End -> "end"
             Alignment.CenterHorizontally -> "centerHorizontally"
-            else -> "start"
+            else -> ""
         }
     }
 
     override fun fromString(input: String?): Alignment.Horizontal {
-        return  when (input?.lowercase()) {
+        return when (input?.lowercase()) {
             "start" -> Alignment.Start
             "end" -> Alignment.End
             "centerhorizontally" -> Alignment.CenterHorizontally

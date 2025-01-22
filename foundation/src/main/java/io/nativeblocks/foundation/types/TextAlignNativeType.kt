@@ -15,7 +15,7 @@ class TextAlignNativeType : INativeType<TextAlign> {
     }
 
     override fun fromString(input: String?): TextAlign {
-        return when (input) {
+        return when (input?.lowercase()) {
             "start" -> TextAlign.Start
             "center" -> TextAlign.Center
             "end" -> TextAlign.End

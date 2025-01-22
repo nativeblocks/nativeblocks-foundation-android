@@ -12,15 +12,17 @@ class TextUnitNativeType : INativeType<TextUnit> {
             TextUnitType.Em -> {
                 "${input.value.toDouble()}.em"
             }
+
             TextUnitType.Sp -> {
                 "${input.value.toDouble()}.sp"
             }
+
             else -> input?.value?.toDouble()?.toString() ?: "0"
         }
     }
 
     override fun fromString(input: String?): TextUnit {
-        return if (input?.endsWith(".em", ignoreCase = true) == true) {
+        return if (input?.trim()?.endsWith(".em", ignoreCase = true) == true) {
             input.replace(".em", "", ignoreCase = true).toDoubleOrNull()?.em ?: 0.em
         } else {
             input?.replace(".sp", "", ignoreCase = true)?.toDoubleOrNull()?.sp ?: 0.sp

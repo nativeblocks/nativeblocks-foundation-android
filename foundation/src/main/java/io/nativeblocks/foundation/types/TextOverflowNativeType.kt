@@ -9,12 +9,12 @@ class TextOverflowNativeType : INativeType<TextOverflow> {
             TextOverflow.Clip -> "clip"
             TextOverflow.Ellipsis -> "ellipsis"
             TextOverflow.Visible -> "visible"
-            else ->  ""
+            else -> ""
         }
     }
 
     override fun fromString(input: String?): TextOverflow {
-        return when (input) {
+        return when (input?.lowercase()) {
             "clip" -> TextOverflow.Clip
             "ellipsis" -> TextOverflow.Ellipsis
             "visible" -> TextOverflow.Visible

@@ -9,7 +9,7 @@ class VerticalAlignmentNativeType : INativeType<Alignment.Vertical> {
             Alignment.Top -> "top"
             Alignment.Bottom -> "bottom"
             Alignment.CenterVertically -> "centerVertically"
-            else -> "top"
+            else -> ""
         }
     }
 
@@ -17,7 +17,7 @@ class VerticalAlignmentNativeType : INativeType<Alignment.Vertical> {
         return when (input?.lowercase()) {
             "top" -> Alignment.Top
             "bottom" -> Alignment.Bottom
-            "centerVertically" -> Alignment.CenterVertically
+            "centervertically" -> Alignment.CenterVertically
             else -> Alignment.Top
         }
     }

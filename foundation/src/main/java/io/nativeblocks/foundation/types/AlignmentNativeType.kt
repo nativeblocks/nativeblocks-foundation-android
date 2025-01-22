@@ -15,21 +15,21 @@ class AlignmentNativeType : INativeType<Alignment> {
             Alignment.TopStart -> "topStart"
             Alignment.TopEnd -> "topEnd"
             Alignment.TopCenter -> "topCenter"
-            else -> "center"
+            else -> ""
         }
     }
 
     override fun fromString(input: String?): Alignment {
-        return when (input) {
+        return when (input?.lowercase()) {
             "center" -> Alignment.Center
-            "centerStart" -> Alignment.CenterStart
-            "centerEnd" -> Alignment.CenterEnd
-            "bottomCenter" -> Alignment.BottomCenter
-            "bottomStart" -> Alignment.BottomStart
-            "bottomEnd" -> Alignment.BottomEnd
-            "topStart" -> Alignment.TopStart
-            "topEnd" -> Alignment.TopEnd
-            "topCenter" -> Alignment.TopCenter
+            "centerstart" -> Alignment.CenterStart
+            "centerend" -> Alignment.CenterEnd
+            "bottomcenter" -> Alignment.BottomCenter
+            "bottomstart" -> Alignment.BottomStart
+            "bottomend" -> Alignment.BottomEnd
+            "topstart" -> Alignment.TopStart
+            "topend" -> Alignment.TopEnd
+            "topcenter" -> Alignment.TopCenter
             else -> Alignment.Center
         }
     }
