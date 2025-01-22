@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,8 +31,6 @@ import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.util.fontFamilyMapper
-import io.nativeblocks.foundation.util.fontWeightMapper
-import io.nativeblocks.foundation.util.textAlignmentMapper
 import io.nativeblocks.foundation.util.typographyBuilder
 import io.nativeblocks.foundation.util.widthAndHeight
 
@@ -147,74 +146,74 @@ fun NativeButton(
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "Padding on the start (left) side in DP.",
         defaultValue = "4.0"
-    ) paddingStart:  Double = 4.0,
+    ) paddingStart: Dp = 4.dp,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "Padding on the top side in DP.",
         defaultValue = "4.0"
-    ) paddingTop: Double = 4.0,
+    ) paddingTop: Dp = 4.dp,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "Padding on the end (right) side in DP.",
         defaultValue = "4.0"
-    ) paddingEnd: Double = 4.0,
+    ) paddingEnd: Dp = 4.dp,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "Padding on the bottom side in DP.",
         defaultValue = "4.0"
-    ) paddingBottom: Double = 4.0,
+    ) paddingBottom: Dp = 4.dp,
 
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Content spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "Content padding on the start (left) side in DP.",
         defaultValue = "4.0"
-    ) contentPaddingStart: Double = 4.0,
+    ) contentPaddingStart: Dp = 4.dp,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Content spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "Content padding on the top side in DP.",
         defaultValue = "4.0"
-    ) contentPaddingTop: Double = 4.0,
+    ) contentPaddingTop: Dp = 4.dp,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Content spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "Content padding on the end (right) side in DP.",
         defaultValue = "4.0"
-    ) contentPaddingEnd: Double = 4.0,
+    ) contentPaddingEnd: Dp = 4.dp,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Content spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "Content padding on the bottom side in DP.",
         defaultValue = "4.0"
-    ) contentPaddingBottom: Double = 4.0,
+    ) contentPaddingBottom: Dp = 4.dp,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "The radius for the top-start corner in DP.",
         defaultValue = "4.0"
-    ) radiusTopStart: Double = 4.0,
+    ) radiusTopStart: Dp = 4.dp,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "The radius for the top-end corner in DP.",
         defaultValue = "4.0"
-    ) radiusTopEnd: Double = 4.0,
+    ) radiusTopEnd: Dp = 4.dp,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "The radius for the bottom-start corner in DP.",
         defaultValue = "4.0"
-    ) radiusBottomStart: Double = 4.0,
+    ) radiusBottomStart: Dp = 4.dp,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "The radius for the bottom-end corner in DP.",
         defaultValue = "4.0"
-    ) radiusBottomEnd:Double = 4.0,
+    ) radiusBottomEnd: Dp = 4.dp,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Font"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
@@ -275,10 +274,10 @@ fun NativeButton(
         .widthAndHeight(width, height)
         .padding(
             PaddingValues(
-                start = paddingStart.dp,
-                top = paddingTop.dp,
-                end = paddingEnd.dp,
-                bottom = paddingBottom.dp
+                start = paddingStart,
+                top = paddingTop,
+                end = paddingEnd,
+                bottom = paddingBottom
             )
         )
 
@@ -292,10 +291,10 @@ fun NativeButton(
         ),
         modifier = modifier,
         shape = RoundedCornerShape(
-            topStart = radiusTopStart.dp,
-            topEnd = radiusTopEnd.dp,
-            bottomStart = radiusBottomStart.dp,
-            bottomEnd = radiusBottomEnd.dp
+            topStart = radiusTopStart,
+            topEnd = radiusTopEnd,
+            bottomStart = radiusBottomStart,
+            bottomEnd = radiusBottomEnd
         ),
         border = BorderStroke(
             1.dp,
@@ -306,10 +305,10 @@ fun NativeButton(
         Row(
             modifier = Modifier.padding(
                 PaddingValues(
-                    start = contentPaddingStart.dp,
-                    top = contentPaddingTop.dp,
-                    end = contentPaddingEnd.dp,
-                    bottom = contentPaddingBottom.dp
+                    start = contentPaddingStart,
+                    top = contentPaddingTop,
+                    end = contentPaddingEnd,
+                    bottom = contentPaddingBottom
                 )
             ),
             verticalAlignment = Alignment.CenterVertically,

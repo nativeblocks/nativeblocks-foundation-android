@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import io.nativeblocks.compiler.type.BlockIndex
@@ -100,25 +101,25 @@ fun NativeLazyColumn(
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         defaultValue = "0.0"
-    ) paddingStart: Double = 0.0,
+    ) paddingStart: Dp = 0.dp,
     @NativeBlockProp(
         description = "Padding on the top side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         defaultValue = "0.0"
-    ) paddingTop: Double = 0.0,
+    ) paddingTop: Dp = 0.dp,
     @NativeBlockProp(
         description = "Padding on the end (right) side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         defaultValue = "0.0"
-    ) paddingEnd: Double = 0.0,
+    ) paddingEnd: Dp = 0.dp,
     @NativeBlockProp(
         description = "Padding on the bottom side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         defaultValue = "0.0"
-    ) paddingBottom: Double = 0.0,
+    ) paddingBottom: Dp = 0.dp,
     @NativeBlockProp(
         description = "Background color of the column in hexadecimal format.",
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
@@ -138,25 +139,25 @@ fun NativeLazyColumn(
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "0.0"
-    ) radiusTopStart: Double = 0.0,
+    ) radiusTopStart: Dp = 0.dp,
     @NativeBlockProp(
         description = "Top-end corner radius in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "0.0"
-    ) radiusTopEnd: Double = 0.0,
+    ) radiusTopEnd: Dp = 0.dp,
     @NativeBlockProp(
         description = "Bottom-start corner radius in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "0.0"
-    ) radiusBottomStart: Double = 0.0,
+    ) radiusBottomStart: Dp = 0.dp,
     @NativeBlockProp(
         description = "Bottom-end corner radius in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "0.0"
-    ) radiusBottomEnd: Double = 0.0,
+    ) radiusBottomEnd: Dp = 0.dp,
     @NativeBlockProp(
         description = "Vertical arrangement of child components inside the column.",
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
@@ -195,10 +196,10 @@ fun NativeLazyColumn(
 
     val shape = shapeMapper(
         "rectangle",
-        radiusTopStart.dp,
-        radiusTopEnd.dp,
-        radiusBottomStart.dp,
-        radiusBottomEnd.dp,
+        radiusTopStart,
+        radiusTopEnd,
+        radiusBottomStart,
+        radiusBottomEnd,
     )
 
     val modifier = Modifier
@@ -211,10 +212,10 @@ fun NativeLazyColumn(
         .widthAndHeight(width, height)
         .background(background, shape)
         .padding(
-            start = paddingStart.dp,
-            top = paddingTop.dp,
-            end = paddingEnd.dp,
-            bottom = paddingBottom.dp,
+            start = paddingStart,
+            top = paddingTop,
+            end = paddingEnd,
+            bottom = paddingBottom,
         )
 
     CompositionLocalProvider(LocalLayoutDirection provides direction) {

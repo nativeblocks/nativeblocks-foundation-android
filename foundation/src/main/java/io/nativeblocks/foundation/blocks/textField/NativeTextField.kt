@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -165,50 +166,50 @@ fun NativeTextField(
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "4.0"
-    ) radiusTopStart: Double = 4.0,
+    ) radiusTopStart: Dp = 4.dp,
     @NativeBlockProp(
         description = "The radius for the top-end corner of the text field in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "4.0"
-    ) radiusTopEnd: Double = 4.0,
+    ) radiusTopEnd: Dp = 4.dp,
     @NativeBlockProp(
         description = "The radius for the bottom-start corner of the text field in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "4.0"
-    ) radiusBottomStart: Double = 4.0,
+    ) radiusBottomStart: Dp = 4.dp,
     @NativeBlockProp(
         description = "The radius for the bottom-end corner of the text field in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "4.0"
-    ) radiusBottomEnd: Double = 4.0,
+    ) radiusBottomEnd: Dp = 4.dp,
 
     @NativeBlockProp(
         description = "The padding on the start (left) side of the text field in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "4.0"
-    ) paddingStart: Double = 4.0,
+    ) paddingStart: Dp = 4.dp,
     @NativeBlockProp(
         description = "The padding on the top side of the text field in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "4.0"
-    ) paddingTop: Double = 4.0,
+    ) paddingTop: Dp = 4.dp,
     @NativeBlockProp(
         description = "The padding on the end (right) side of the text field in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "4.0"
-    ) paddingEnd: Double = 4.0,
+    ) paddingEnd: Dp = 4.dp,
     @NativeBlockProp(
         description = "The padding on the bottom side of the text field in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "4.0"
-    ) paddingBottom: Double = 4.0,
+    ) paddingBottom: Dp = 4.dp,
 
     @NativeBlockProp(
         description = "The font size of the text in SP.",
@@ -314,10 +315,10 @@ fun NativeTextField(
         .widthAndHeight(width, height)
         .padding(
             PaddingValues(
-                start = paddingStart.dp,
-                top = paddingTop.dp,
-                end = paddingEnd.dp,
-                bottom = paddingBottom.dp
+                start = paddingStart,
+                top = paddingTop,
+                end = paddingEnd,
+                bottom = paddingBottom
             )
         )
         .focusable()
@@ -341,10 +342,10 @@ fun NativeTextField(
                 textAlign = textAlign
             ),
             shape = RoundedCornerShape(
-                topStart = radiusTopStart.dp,
-                topEnd = radiusTopEnd.dp,
-                bottomStart = radiusBottomStart.dp,
-                bottomEnd = radiusBottomEnd.dp
+                topStart = radiusTopStart,
+                topEnd = radiusTopEnd,
+                bottomStart = radiusBottomStart,
+                bottomEnd = radiusBottomEnd
             ),
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 textColor = contentColor,

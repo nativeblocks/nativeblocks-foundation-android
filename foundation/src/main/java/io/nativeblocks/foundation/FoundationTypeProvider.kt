@@ -8,12 +8,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.TextUnit
 import io.nativeblocks.core.api.NativeblocksManager
 import io.nativeblocks.foundation.types.AlignmentNativeType
 import io.nativeblocks.foundation.types.ColorNativeType
 import io.nativeblocks.foundation.types.ContentScaleNativeType
+import io.nativeblocks.foundation.types.DpNativeType
 import io.nativeblocks.foundation.types.FontWeightNativeType
 import io.nativeblocks.foundation.types.HorizontalAlignmentNativeType
 import io.nativeblocks.foundation.types.HorizontalArrangementNativeType
@@ -27,6 +29,7 @@ import io.nativeblocks.foundation.types.VerticalArrangementNativeType
 
 object FoundationTypeProvider {
     fun provideTypes() {
+        NativeblocksManager.getInstance().provideTypeConverter(Dp::class, DpNativeType())
         NativeblocksManager.getInstance().provideTypeConverter(Color::class, ColorNativeType())
         NativeblocksManager.getInstance()
             .provideTypeConverter(LayoutDirection::class, LayoutDirectionNativeType())

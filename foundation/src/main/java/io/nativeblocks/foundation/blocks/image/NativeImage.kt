@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import io.nativeblocks.compiler.type.NativeBlock
@@ -67,25 +68,25 @@ fun NativeImage(
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "0.0"
-    ) radiusTopStart: Double = 0.0,
+    ) radiusTopStart: Dp = 0.dp,
     @NativeBlockProp(
         description = "The radius for the top-end corner in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "0.0"
-    ) radiusTopEnd: Double = 0.0,
+    ) radiusTopEnd: Dp = 0.dp,
     @NativeBlockProp(
         description = "The radius for the bottom-start corner in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "0.0"
-    ) radiusBottomStart: Double = 0.0,
+    ) radiusBottomStart: Dp = 0.dp,
     @NativeBlockProp(
         description = "The radius for the bottom-end corner in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "0.0"
-    ) radiusBottomEnd: Double = 0.0,
+    ) radiusBottomEnd: Dp = 0.dp,
     @NativeBlockProp(
         description = "The scaling strategy for the image (e.g., 'fit', 'crop').",
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
@@ -106,10 +107,10 @@ fun NativeImage(
 ) {
     val shape = shapeMapper(
         "rectangle",
-        radiusTopStart.dp,
-        radiusTopEnd.dp,
-        radiusBottomStart.dp,
-        radiusBottomEnd.dp,
+        radiusTopStart,
+        radiusTopEnd,
+        radiusBottomStart,
+        radiusBottomEnd,
     )
 
     if (imageUrl.isHttpUrl()) {
