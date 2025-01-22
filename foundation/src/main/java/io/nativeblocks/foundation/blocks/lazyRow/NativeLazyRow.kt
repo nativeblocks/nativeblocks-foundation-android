@@ -205,12 +205,6 @@ fun NativeLazyRow(
         radiusBottomEnd,
     )
     var modifier = Modifier
-        .clickable(
-            enabled = onClick != null,
-            indication = null,
-            interactionSource = remember { MutableInteractionSource() }) {
-            onClick?.invoke()
-        }
         .widthAndHeight(width, height)
         .background(background, shape)
         .padding(
@@ -219,6 +213,15 @@ fun NativeLazyRow(
             end = paddingEnd,
             bottom = paddingBottom,
         )
+
+    if (onClick != null) {
+        modifier = Modifier.clickable(
+            enabled = true,
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() }) {
+            onClick.invoke()
+        }
+    }
 
     if (scrollable) {
         modifier = modifier.horizontalScroll(rememberScrollState())

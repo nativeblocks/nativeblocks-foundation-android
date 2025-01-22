@@ -202,13 +202,7 @@ fun NativeLazyColumn(
         radiusBottomEnd,
     )
 
-    val modifier = Modifier
-        .clickable(
-            enabled = onClick != null,
-            indication = null,
-            interactionSource = remember { MutableInteractionSource() }) {
-            onClick?.invoke()
-        }
+    var modifier = Modifier
         .widthAndHeight(width, height)
         .background(background, shape)
         .padding(
@@ -217,6 +211,15 @@ fun NativeLazyColumn(
             end = paddingEnd,
             bottom = paddingBottom,
         )
+
+    if (onClick != null) {
+        modifier = Modifier.clickable(
+            enabled = true,
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() }) {
+            onClick.invoke()
+        }
+    }
 
     CompositionLocalProvider(LocalLayoutDirection provides direction) {
         LazyColumn(
