@@ -4,6 +4,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -16,7 +17,6 @@ import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.util.fontFamilyMapper
-import io.nativeblocks.foundation.util.typographyBuilder
 import io.nativeblocks.foundation.util.widthAndHeight
 
 /**
@@ -146,7 +146,7 @@ fun NativeText(
     )
     maxLines: Int = 9999,
 ) {
-    val textStyle = typographyBuilder(
+    val textStyle = TextStyle(
         fontFamily = fontFamilyMapper(fontFamily),
         fontWeight = fontWeight,
         fontSize = fontSize

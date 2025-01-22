@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -36,7 +37,6 @@ import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.util.fontFamilyMapper
-import io.nativeblocks.foundation.util.typographyBuilder
 import io.nativeblocks.foundation.util.widthAndHeight
 
 /**
@@ -305,7 +305,7 @@ fun NativeTextField(
     val valueState = remember("") { mutableStateOf(TextFieldValue(text = text)) }
     val focusManager = LocalFocusManager.current
 
-    val textStyle = typographyBuilder(
+    val textStyle = TextStyle(
         fontFamily = fontFamilyMapper(fontFamily),
         fontWeight = fontWeight,
         fontSize = fontSize,
