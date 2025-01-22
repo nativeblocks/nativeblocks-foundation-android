@@ -27,8 +27,6 @@ import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.util.json.NativeJsonPath
-import io.nativeblocks.foundation.util.findAlignmentHorizontal
-import io.nativeblocks.foundation.util.findArrangementVertical
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 
@@ -207,12 +205,6 @@ fun NativeColumn(
     )
 
     var modifier = Modifier
-        .clickable(
-            enabled = onClick != null,
-            indication = null,
-            interactionSource = remember { MutableInteractionSource() }) {
-            onClick?.invoke()
-        }
         .widthAndHeight(width, height)
         .background(background, shape)
         .padding(
@@ -221,6 +213,15 @@ fun NativeColumn(
             end = paddingEnd.dp,
             bottom = paddingBottom.dp,
         )
+
+    if (onClick != null) {
+        modifier = Modifier.clickable(
+            enabled = true,
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() }) {
+            onClick.invoke()
+        }
+    }
 
     if (scrollable) {
         modifier = modifier.verticalScroll(rememberScrollState())

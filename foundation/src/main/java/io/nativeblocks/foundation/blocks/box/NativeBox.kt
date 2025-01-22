@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import io.nativeblocks.compiler.type.BlockIndex
@@ -87,19 +86,19 @@ fun NativeBox(
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         defaultValue = "0.0"
-    ) paddingTop:  Double = 0.0,
+    ) paddingTop: Double = 0.0,
     @NativeBlockProp(
         description = "Padding on the end side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         defaultValue = "0.0"
-    ) paddingEnd:  Double = 0.0,
+    ) paddingEnd: Double = 0.0,
     @NativeBlockProp(
         description = "Padding on the bottom side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         defaultValue = "0.0"
-    ) paddingBottom:  Double = 0.0,
+    ) paddingBottom: Double = 0.0,
     @NativeBlockProp(
         description = "Background color of the box in hexadecimal format (e.g., '#FFFFFF').",
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
@@ -110,25 +109,25 @@ fun NativeBox(
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         defaultValue = "0.0"
-    ) radiusTopStart:  Double = 0.0,
+    ) radiusTopStart: Double = 0.0,
     @NativeBlockProp(
         description = "Top-end corner radius of the box in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         defaultValue = "0.0"
-    ) radiusTopEnd:  Double = 0.0,
+    ) radiusTopEnd: Double = 0.0,
     @NativeBlockProp(
         description = "Bottom-start corner radius of the box in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         defaultValue = "0.0"
-    ) radiusBottomStart:  Double = 0.0,
+    ) radiusBottomStart: Double = 0.0,
     @NativeBlockProp(
         description = "Bottom-end corner radius of the box in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
         defaultValue = "0.0"
-    ) radiusBottomEnd:  Double = 0.0,
+    ) radiusBottomEnd: Double = 0.0,
     @NativeBlockProp(
         description = "Specifies the layout direction of the box (LTR or RTL).",
         valuePicker = NativeBlockValuePicker.DROPDOWN,
@@ -169,13 +168,7 @@ fun NativeBox(
         radiusBottomEnd.dp,
     )
 
-    val modifier = Modifier
-        .clickable(
-            enabled = onClick != null,
-            indication = null,
-            interactionSource = remember { MutableInteractionSource() }) {
-            onClick?.invoke()
-        }
+    var modifier = Modifier
         .widthAndHeight(width, height)
         .background(background, shape)
         .padding(
@@ -184,6 +177,15 @@ fun NativeBox(
             end = paddingEnd.dp,
             bottom = paddingBottom.dp,
         )
+
+    if (onClick != null) {
+        modifier = Modifier.clickable(
+            enabled = true,
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() }) {
+            onClick.invoke()
+        }
+    }
 
     CompositionLocalProvider(LocalLayoutDirection provides direction) {
         Box(
