@@ -116,31 +116,31 @@ fun NativeButton(
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         description = "The color of the button's content when it is disabled.",
         defaultValue = "#FFFFFFB2"
-    ) disabledContentColor: Color = Color.Blue,
+    ) disabledContentColor: Color = Color(0xFFFFFFB2),
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Background color"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         description = "The background color of the button.",
         defaultValue = "#FF212121"
-    ) backgroundColor: Color = Color.Gray,
+    ) backgroundColor: Color = Color(0xFF212121),
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Background color"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         description = "The background color when the button is disabled.",
         defaultValue = "#212121B2"
-    ) disableBackgroundColor: Color = Color.Blue,
+    ) disableBackgroundColor: Color = Color(0x212121B2),
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Border color"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         description = "The border color of the button.",
         defaultValue = "#FF212121"
-    ) borderColor: Color = Color.Gray,
+    ) borderColor: Color = Color(0xFF212121),
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Border color"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         description = "The border color when the button is disabled.",
         defaultValue = "#212121B2"
-    ) disableBorderColor: Color = Color.Blue,
+    ) disableBorderColor: Color = Color(0x212121B2),
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
