@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import io.nativeblocks.core.api.NativeblocksEdition
 import io.nativeblocks.core.api.NativeblocksManager
+import io.nativeblocks.core.api.provider.logger.INativeLogger
 import io.nativeblocks.foundation.FoundationProvider
 import io.nativeblocks.wandkit.liveKit
 import kotlinx.coroutines.runBlocking
@@ -39,6 +40,11 @@ class App : Application() {
         FoundationProvider.provide()
         NativeblocksManager.getInstance().provideEventLogger("LOGGER", AppLogger())
     }
+
+    override fun onTerminate() {
+        super.onTerminate()
+        NativeblocksManager.getInstance().destroy()
+    }
 }
 
 class ExceptionHandler(private val context: Context) : Thread.UncaughtExceptionHandler {
@@ -49,5 +55,11 @@ class ExceptionHandler(private val context: Context) : Thread.UncaughtExceptionH
             Toast.makeText(context, e.message.orEmpty(), Toast.LENGTH_LONG).show()
             exitProcess(1)
         }
+    }
+}
+
+class AppLogger : INativeLogger {
+    override fun log(eventName: String, parameters: Map<String, String>) {
+        Log.d(eventName, "log: $parameters")
     }
 }
