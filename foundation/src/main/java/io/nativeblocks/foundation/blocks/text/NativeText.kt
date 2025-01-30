@@ -42,11 +42,11 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "NATIVE_TEXT",
     name = "Native Text",
     description = "Nativeblocks text block",
-    version = 1
+    version = 2
 )
 @Composable
 fun NativeText(
-    @NativeBlockData
+    @NativeBlockData(description = "The text content to be displayed.")
     text: String,
 
     @NativeBlockProp(
@@ -73,7 +73,8 @@ fun NativeText(
     height: String = "wrap",
     @NativeBlockProp(
         description = "The font family for the text.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Font")
+        valuePickerGroup = NativeBlockValuePickerPosition("Font"),
+        defaultValue = "default"
     )
     fontFamily: String = "default",
     @NativeBlockProp(

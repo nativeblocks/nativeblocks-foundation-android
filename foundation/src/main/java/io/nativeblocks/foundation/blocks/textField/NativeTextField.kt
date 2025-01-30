@@ -83,7 +83,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "NATIVE_TEXT_FIELD",
     name = "Native TextField",
     description = "Nativeblocks textField block",
-    version = 1
+    version = 2
 )
 @Composable
 fun NativeTextField(
@@ -219,7 +219,8 @@ fun NativeTextField(
     ) fontSize: TextUnit = 14.sp,
     @NativeBlockProp(
         description = "The font family for the text.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Font")
+        valuePickerGroup = NativeBlockValuePickerPosition("Font"),
+        defaultValue = "default"
     ) fontFamily: String = "default",
     @NativeBlockProp(
         description = "The alignment of the text (e.g., 'start', 'center', 'end', 'justify').",
