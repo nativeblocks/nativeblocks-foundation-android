@@ -9,7 +9,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("com.vanniktech.maven.publish")
-    id("io.nativeblocks.nativeblocks-gradle-plugin").version("1.1.0")
+    id("io.nativeblocks.nativeblocks-gradle-plugin").version("1.1.1")
 }
 
 val nativeblocksProps = Properties().apply {

@@ -1,4 +1,4 @@
-package io.nativeblocks.foundation.box
+package io.nativeblocks.foundation.blocks.box
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -8,12 +8,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.toColorInt
 import io.nativeblocks.compiler.type.BlockIndex
 import io.nativeblocks.compiler.type.NativeBlock
 import io.nativeblocks.compiler.type.NativeBlockEvent
@@ -22,9 +23,8 @@ import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
-import io.nativeblocks.core.util.findAlignment
-import io.nativeblocks.core.util.shapeMapper
-import io.nativeblocks.core.util.widthAndHeight
+import io.nativeblocks.foundation.util.shapeMapper
+import io.nativeblocks.foundation.util.widthAndHeight
 
 /**
  * A composable block for creating a customizable container with properties such as padding,
@@ -63,7 +63,8 @@ fun NativeBox(
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
-        ]
+        ],
+        defaultValue = "wrap"
     ) width: String = "wrap",
     @NativeBlockProp(
         description = "Specifies the height of the box (e.g., 'match' or 'wrap').",
@@ -72,60 +73,71 @@ fun NativeBox(
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
-        ]
+        ],
+        defaultValue = "wrap"
     ) height: String = "wrap",
     @NativeBlockProp(
         description = "Padding on the start side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
-    ) paddingStart: Double = 0.0,
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        defaultValue = "0.0"
+    ) paddingStart: Dp = 0.dp,
     @NativeBlockProp(
         description = "Padding on the top side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
-    ) paddingTop: Double = 0.0,
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        defaultValue = "0.0"
+    ) paddingTop: Dp = 0.dp,
     @NativeBlockProp(
         description = "Padding on the end side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
-    ) paddingEnd: Double = 0.0,
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        defaultValue = "0.0"
+    ) paddingEnd: Dp = 0.dp,
     @NativeBlockProp(
         description = "Padding on the bottom side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing")
-    ) paddingBottom: Double = 0.0,
+        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        defaultValue = "0.0"
+    ) paddingBottom: Dp = 0.dp,
     @NativeBlockProp(
         description = "Background color of the box in hexadecimal format (e.g., '#FFFFFF').",
-        valuePicker = NativeBlockValuePicker.COLOR_PICKER
-    ) background: String = "#00000000",
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
+        defaultValue = "#00000000"
+    ) background: Color = Color.Transparent,
     @NativeBlockProp(
         description = "Top-start corner radius of the box in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius")
-    ) radiusTopStart: Double = 0.0,
+        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        defaultValue = "0.0"
+    ) radiusTopStart: Dp = 0.dp,
     @NativeBlockProp(
         description = "Top-end corner radius of the box in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius")
-    ) radiusTopEnd: Double = 0.0,
+        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        defaultValue = "0.0"
+    ) radiusTopEnd: Dp = 0.dp,
     @NativeBlockProp(
         description = "Bottom-start corner radius of the box in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius")
-    ) radiusBottomStart: Double = 0.0,
+        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        defaultValue = "0.0"
+    ) radiusBottomStart: Dp = 0.dp,
     @NativeBlockProp(
         description = "Bottom-end corner radius of the box in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius")
-    ) radiusBottomEnd: Double = 0.0,
+        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        defaultValue = "0.0"
+    ) radiusBottomEnd: Dp = 0.dp,
     @NativeBlockProp(
         description = "Specifies the layout direction of the box (LTR or RTL).",
         valuePicker = NativeBlockValuePicker.DROPDOWN,
         valuePickerOptions = [
             NativeBlockValuePickerOption("RTL", "RTL"),
             NativeBlockValuePickerOption("LTR", "LTR")
-        ]
-    ) direction: String = "LTR",
+        ],
+        defaultValue = "LTR"
+    ) direction: LayoutDirection = LayoutDirection.Ltr,
     @NativeBlockProp(
         description = "Specifies the vertical alignment of content inside the box.",
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
@@ -139,8 +151,9 @@ fun NativeBox(
             NativeBlockValuePickerOption("topStart", "topStart"),
             NativeBlockValuePickerOption("topEnd", "topEnd"),
             NativeBlockValuePickerOption("topCenter", "topCenter")
-        ]
-    ) verticalAlignment: String = "center",
+        ],
+        defaultValue = "center"
+    ) verticalAlignment: Alignment = Alignment.Center,
     @NativeBlockEvent(
         description = "Triggered when the box is clicked."
     ) onClick: (() -> Unit)? = null,
@@ -150,20 +163,20 @@ fun NativeBox(
 ) {
     val shape = shapeMapper(
         "rectangle",
-        radiusTopStart.toString(),
-        radiusTopEnd.toString(),
-        radiusBottomStart.toString(),
-        radiusBottomEnd.toString(),
+        radiusTopStart,
+        radiusTopEnd,
+        radiusBottomStart,
+        radiusBottomEnd,
     )
 
     var modifier = Modifier
         .widthAndHeight(width, height)
-        .background(Color(background.toColorInt()), shape)
+        .background(background, shape)
         .padding(
-            start = paddingStart.dp,
-            top = paddingTop.dp,
-            end = paddingEnd.dp,
-            bottom = paddingBottom.dp,
+            start = paddingStart,
+            top = paddingTop,
+            end = paddingEnd,
+            bottom = paddingBottom,
         )
 
     if (onClick != null) {
@@ -175,15 +188,10 @@ fun NativeBox(
         }
     }
 
-    val blockDirection = if (direction == "RTL") {
-        LocalLayoutDirection provides LayoutDirection.Rtl
-    } else {
-        LocalLayoutDirection provides LayoutDirection.Ltr
-    }
-    CompositionLocalProvider(blockDirection) {
+    CompositionLocalProvider(LocalLayoutDirection provides direction) {
         Box(
             modifier = modifier,
-            contentAlignment = findAlignment(verticalAlignment),
+            contentAlignment = verticalAlignment,
         ) {
             content(-1)
         }

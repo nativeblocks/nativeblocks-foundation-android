@@ -1,8 +1,11 @@
-package io.nativeblocks.foundation.image
+package io.nativeblocks.foundation.blocks.image
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import io.nativeblocks.compiler.type.NativeBlock
 import io.nativeblocks.compiler.type.NativeBlockData
@@ -10,10 +13,9 @@ import io.nativeblocks.compiler.type.NativeBlockProp
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
-import io.nativeblocks.core.util.isHttpUrl
-import io.nativeblocks.core.util.scaleTypeMapper
-import io.nativeblocks.core.util.shapeMapper
-import io.nativeblocks.core.util.widthAndHeight
+import io.nativeblocks.foundation.util.isHttpUrl
+import io.nativeblocks.foundation.util.shapeMapper
+import io.nativeblocks.foundation.util.widthAndHeight
 
 /**
  * A composable block for displaying images with customizable properties such as size, corner radii, and scaling.
@@ -48,7 +50,8 @@ fun NativeImage(
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
-        ]
+        ],
+        defaultValue = "wrap"
     ) width: String = "wrap",
     @NativeBlockProp(
         description = "The height of the image (e.g., 'match' or 'wrap').",
@@ -57,28 +60,33 @@ fun NativeImage(
         valuePickerOptions = [
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
-        ]
+        ],
+        defaultValue = "wrap"
     ) height: String = "wrap",
     @NativeBlockProp(
         description = "The radius for the top-start corner in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
-    ) radiusTopStart: Double = 0.0,
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0.0"
+    ) radiusTopStart: Dp = 0.dp,
     @NativeBlockProp(
         description = "The radius for the top-end corner in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
-    ) radiusTopEnd: Double = 0.0,
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0.0"
+    ) radiusTopEnd: Dp = 0.dp,
     @NativeBlockProp(
         description = "The radius for the bottom-start corner in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
-    ) radiusBottomStart: Double = 0.0,
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0.0"
+    ) radiusBottomStart: Dp = 0.dp,
     @NativeBlockProp(
         description = "The radius for the bottom-end corner in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT
-    ) radiusBottomEnd: Double = 0.0,
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0.0"
+    ) radiusBottomEnd: Dp = 0.dp,
     @NativeBlockProp(
         description = "The scaling strategy for the image (e.g., 'fit', 'crop').",
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
@@ -90,25 +98,26 @@ fun NativeImage(
             NativeBlockValuePickerOption("fillBounds", "fillBounds"),
             NativeBlockValuePickerOption("fillWidth", "fillWidth"),
             NativeBlockValuePickerOption("fillHeight", "fillHeight")
-        ]
-    ) scaleType: String = "none",
+        ],
+        defaultValue = "none"
+    ) scaleType: ContentScale = ContentScale.None,
     @NativeBlockData(
         description = "A description of the image content for accessibility purposes."
     ) contentDescription: String = "",
 ) {
     val shape = shapeMapper(
         "rectangle",
-        radiusTopStart.toString(),
-        radiusTopEnd.toString(),
-        radiusBottomStart.toString(),
-        radiusBottomEnd.toString(),
+        radiusTopStart,
+        radiusTopEnd,
+        radiusBottomStart,
+        radiusBottomEnd,
     )
 
     if (imageUrl.isHttpUrl()) {
         AsyncImage(
             model = imageUrl.trim(),
             contentDescription = contentDescription,
-            contentScale = scaleTypeMapper(scaleType),
+            contentScale = scaleType,
             modifier = Modifier
                 .widthAndHeight(width, height)
                 .clip(shape)
