@@ -13,7 +13,7 @@ import kotlinx.coroutines.runBlocking
 import kotlin.system.exitProcess
 
 private const val NATIVEBLOCKS_API_KEY = ""
-private const val NATIVEBLOCKS_API_URL = "https://edge.api.nativeblocks.io/gateway"
+private const val NATIVEBLOCKS_API_URL = "https://api.nativeblocks.io/gateway/init"
 
 class App : Application() {
     override fun onCreate() {
@@ -36,6 +36,7 @@ class App : Application() {
             )
             */
         )
+        NativeblocksManager.getInstance().setLocalization("FA")
         NativeblocksManager.getInstance().liveKit()
         FoundationProvider.provide()
         NativeblocksManager.getInstance().provideEventLogger("LOGGER", AppLogger())
