@@ -40,10 +40,10 @@ class VerticalAlignmentNativeType : INativeType<Alignment.Vertical> {
      *         Defaults to [Alignment.Top] if the string is invalid.
      */
     override fun fromString(input: String?): Alignment.Vertical {
-        return when (input?.lowercase()) {
+        return when (input) {
             "top" -> Alignment.Top
             "bottom" -> Alignment.Bottom
-            "centervertically" -> Alignment.CenterVertically
+            "centerVertically" -> Alignment.CenterVertically
             else -> Alignment.Top
         }
     }

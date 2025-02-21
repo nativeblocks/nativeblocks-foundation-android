@@ -29,12 +29,12 @@ class TextUnitNativeType : INativeType<TextUnit> {
      */
     override fun toString(input: TextUnit?): String {
         return when (input?.type) {
-            TextUnitType.Em -> {
-                "${input.value.toDouble()}.em"
-            }
-
             TextUnitType.Sp -> {
                 "${input.value.toDouble()}.sp"
+            }
+
+            TextUnitType.Em -> {
+                "${input.value.toDouble()}.em"
             }
 
             else -> input?.value?.toDouble()?.toString() ?: "0"
@@ -50,10 +50,10 @@ class TextUnitNativeType : INativeType<TextUnit> {
      *         Defaults to `0.sp` if the string is invalid.
      */
     override fun fromString(input: String?): TextUnit {
-        return if (input?.trim()?.endsWith(".em", ignoreCase = true) == true) {
-            input.replace(".em", "", ignoreCase = true).toDoubleOrNull()?.em ?: 0.em
+        return if (input?.trim()?.endsWith(".sp", ignoreCase = true) == true) {
+            input.replace(".em", "", ignoreCase = true).toDoubleOrNull()?.sp ?: 0.sp
         } else {
-            input?.replace(".sp", "", ignoreCase = true)?.toDoubleOrNull()?.sp ?: 0.sp
+            input?.replace(".em", "", ignoreCase = true)?.toDoubleOrNull()?.em ?: 0.em
         }
     }
 }

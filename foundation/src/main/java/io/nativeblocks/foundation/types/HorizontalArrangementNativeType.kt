@@ -1,6 +1,7 @@
 package io.nativeblocks.foundation.types
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.ui.unit.dp
 import io.nativeblocks.core.api.provider.type.INativeType
 
 /**
@@ -40,14 +41,14 @@ class HorizontalArrangementNativeType : INativeType<Arrangement.Horizontal> {
      * @return The corresponding [Arrangement.Horizontal] object, or [Arrangement.Start] if the input is null or not recognized.
      */
     override fun fromString(input: String?): Arrangement.Horizontal {
-        return when (input?.lowercase()) {
+        return when (input) {
             "start" -> Arrangement.Start
             "end" -> Arrangement.End
             "center" -> Arrangement.Center
-            "spacebetween" -> Arrangement.SpaceBetween
-            "spacearound" -> Arrangement.SpaceAround
-            "spaceevenly" -> Arrangement.SpaceEvenly
-            else -> Arrangement.Start
+            "spaceBetween" -> Arrangement.SpaceBetween
+            "spaceAround" -> Arrangement.SpaceAround
+            "spaceEvenly" -> Arrangement.SpaceEvenly
+            else -> Arrangement.spacedBy(input?.toIntOrNull()?.dp ?: 0.dp)
         }
     }
 }

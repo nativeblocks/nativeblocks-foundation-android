@@ -29,7 +29,7 @@ class TextAlignNativeType : INativeType<TextAlign> {
             TextAlign.Center -> "center"
             TextAlign.End -> "end"
             TextAlign.Justify -> "justify"
-            else -> ""
+            else -> "unspecified"
         }
     }
 
@@ -40,12 +40,12 @@ class TextAlignNativeType : INativeType<TextAlign> {
      * @return The corresponding [TextAlign] value, such as [TextAlign.Start], [TextAlign.Center], [TextAlign.End], or [TextAlign.Justify].
      */
     override fun fromString(input: String?): TextAlign {
-        return when (input?.lowercase()) {
+        return when (input) {
             "start" -> TextAlign.Start
             "center" -> TextAlign.Center
             "end" -> TextAlign.End
             "justify" -> TextAlign.Justify
-            else -> TextAlign.Start
+            else -> TextAlign.Unspecified
         }
     }
 }

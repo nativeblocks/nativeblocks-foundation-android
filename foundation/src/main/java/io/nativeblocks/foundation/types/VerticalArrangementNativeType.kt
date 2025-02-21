@@ -1,6 +1,7 @@
 package io.nativeblocks.foundation.types
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.ui.unit.dp
 import io.nativeblocks.core.api.provider.type.INativeType
 
 /**
@@ -47,14 +48,14 @@ class VerticalArrangementNativeType : INativeType<Arrangement.Vertical> {
      *         Defaults to [Arrangement.Top] if the string is invalid.
      */
     override fun fromString(input: String?): Arrangement.Vertical {
-        return when (input?.lowercase()) {
+        return when (input) {
             "top" -> Arrangement.Top
             "bottom" -> Arrangement.Bottom
             "center" -> Arrangement.Center
-            "spacebetween" -> Arrangement.SpaceBetween
-            "spacearound" -> Arrangement.SpaceAround
-            "spaceevenly" -> Arrangement.SpaceEvenly
-            else -> Arrangement.Top
+            "spaceBetween" -> Arrangement.SpaceBetween
+            "spaceAround" -> Arrangement.SpaceAround
+            "spaceEvenly" -> Arrangement.SpaceEvenly
+            else -> Arrangement.spacedBy(input?.toIntOrNull()?.dp ?: 0.dp)
         }
     }
 }

@@ -39,7 +39,7 @@ class TextOverflowNativeType : INativeType<TextOverflow> {
      * @return The corresponding [TextOverflow] value, such as [TextOverflow.Clip], [TextOverflow.Ellipsis], or [TextOverflow.Visible].
      */
     override fun fromString(input: String?): TextOverflow {
-        return when (input?.lowercase()) {
+        return when (input) {
             "clip" -> TextOverflow.Clip
             "ellipsis" -> TextOverflow.Ellipsis
             "visible" -> TextOverflow.Visible
