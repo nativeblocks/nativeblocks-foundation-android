@@ -51,7 +51,7 @@ class TextUnitNativeType : INativeType<TextUnit> {
      */
     override fun fromString(input: String?): TextUnit {
         return if (input?.trim()?.endsWith(".sp", ignoreCase = true) == true) {
-            input.replace(".em", "", ignoreCase = true).toDoubleOrNull()?.sp ?: 0.sp
+            input.replace(".sp", "", ignoreCase = true).toDoubleOrNull()?.sp ?: 0.sp
         } else {
             input?.replace(".em", "", ignoreCase = true)?.toDoubleOrNull()?.em ?: 0.em
         }
