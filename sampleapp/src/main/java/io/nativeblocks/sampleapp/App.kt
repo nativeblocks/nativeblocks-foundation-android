@@ -36,7 +36,7 @@ class App : Application() {
             )
             */
         )
-        NativeblocksManager.getInstance().setLocalization("FA")
+        NativeblocksManager.getInstance().setLocalization("EN")
         NativeblocksManager.getInstance().liveKit()
         FoundationProvider.provide()
         NativeblocksManager.getInstance().provideEventLogger("LOGGER", AppLogger())

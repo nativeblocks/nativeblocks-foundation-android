@@ -9,14 +9,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import io.nativeblocks.compiler.type.BlockIndex
 import io.nativeblocks.compiler.type.NativeBlock
@@ -46,7 +43,6 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param paddingEnd Padding on the end (right) side in DP. Default is 0.0.
  * @param paddingBottom Padding on the bottom side in DP. Default is 0.0.
  * @param background Background color of the column in hexadecimal format. Default is "#00000000".
- * @param direction The layout direction of the column (e.g., "LTR" or "RTL"). Default is "LTR".
  * @param radiusTopStart Top-start corner radius in DP. Default is 0.0.
  * @param radiusTopEnd Top-end corner radius in DP. Default is 0.0.
  * @param radiusBottomStart Bottom-start corner radius in DP. Default is 0.0.
@@ -126,15 +122,6 @@ fun NativeColumn(
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         defaultValue = "#00000000"
     ) background: Color = Color.Transparent,
-    @NativeBlockProp(
-        description = "The layout direction of the column (e.g., 'LTR' or 'RTL').",
-        valuePicker = NativeBlockValuePicker.DROPDOWN,
-        valuePickerOptions = [
-            NativeBlockValuePickerOption("RTL", "RTL"),
-            NativeBlockValuePickerOption("LTR", "LTR")
-        ],
-        defaultValue = "LTR"
-    ) direction: LayoutDirection = LayoutDirection.Ltr,
     @NativeBlockProp(
         description = "Top-start corner radius in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
@@ -227,19 +214,17 @@ fun NativeColumn(
     if (scrollable) {
         modifier = modifier.verticalScroll(rememberScrollState())
     }
-    CompositionLocalProvider(LocalLayoutDirection provides direction) {
-        Column(
-            modifier = modifier,
-            verticalArrangement = verticalArrangement,
-            horizontalAlignment = horizontalAlignment
-        ) {
-            if (listItems != null) {
-                listItems.forEachIndexed { index, _ ->
-                    content.invoke(index)
-                }
-            } else {
-                content(-1)
+    Column(
+        modifier = modifier,
+        verticalArrangement = verticalArrangement,
+        horizontalAlignment = horizontalAlignment
+    ) {
+        if (listItems != null) {
+            listItems.forEachIndexed { index, _ ->
+                content.invoke(index)
             }
+        } else {
+            content(-1)
         }
     }
 }

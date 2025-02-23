@@ -6,14 +6,11 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import io.nativeblocks.compiler.type.BlockIndex
 import io.nativeblocks.compiler.type.NativeBlock
@@ -28,7 +25,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
 
 /**
  * A composable block for creating a customizable container with properties such as padding,
- * background color, corner radii, directionality, and alignment.
+ * background color, corner radii, and alignment.
  *
  * This block is designed for server-driven UI, supporting dynamic properties, events, and slots.
  *
@@ -43,7 +40,6 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param radiusTopEnd Top-end corner radius in DP. Default is 0.0.
  * @param radiusBottomStart Bottom-start corner radius in DP. Default is 0.0.
  * @param radiusBottomEnd Bottom-end corner radius in DP. Default is 0.0.
- * @param direction Specifies the layout direction (e.g., "LTR" or "RTL"). Default is "LTR".
  * @param verticalAlignment Specifies the alignment of content inside the box. Default is "center".
  * @param onClick Callback triggered when the box is clicked. Default is null (disabled).
  * @param content Slot for composing child content within the box.
@@ -130,15 +126,6 @@ fun NativeBox(
         defaultValue = "0.0"
     ) radiusBottomEnd: Dp = 0.dp,
     @NativeBlockProp(
-        description = "Specifies the layout direction of the box (LTR or RTL).",
-        valuePicker = NativeBlockValuePicker.DROPDOWN,
-        valuePickerOptions = [
-            NativeBlockValuePickerOption("RTL", "RTL"),
-            NativeBlockValuePickerOption("LTR", "LTR")
-        ],
-        defaultValue = "LTR"
-    ) direction: LayoutDirection = LayoutDirection.Ltr,
-    @NativeBlockProp(
         description = "Specifies the vertical alignment of content inside the box.",
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -188,12 +175,10 @@ fun NativeBox(
         }
     }
 
-    CompositionLocalProvider(LocalLayoutDirection provides direction) {
-        Box(
-            modifier = modifier,
-            contentAlignment = verticalAlignment,
-        ) {
-            content(-1)
-        }
+    Box(
+        modifier = modifier,
+        contentAlignment = verticalAlignment,
+    ) {
+        content(-1)
     }
 }
