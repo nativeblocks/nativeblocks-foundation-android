@@ -9,6 +9,7 @@ import io.nativeblocks.compiler.type.Then
 import io.nativeblocks.core.api.provider.action.ActionProps
 import io.nativeblocks.core.util.evaluateMixConditionOperator
 import io.nativeblocks.core.util.getVariableValue
+import io.nativeblocks.core.util.replaceNativeVariable
 
 /**
  * Evaluates a propertyValue that may contain mixed conditions and operators based on a property type
@@ -83,26 +84,17 @@ class NativeChangeBlockProperty {
         var currentProperty = blockProperties[param.propertyKey]
         if (currentProperty != null) {
             if (param.propertyValueMobile.isNotEmpty()) {
-                param.actionProps.variables?.forEach { variableItem ->
-                    valueMobile =
-                        valueMobile.getVariableValue(variableItem.key, variableItem.value.value)
-                }
+                valueMobile = valueMobile.replaceNativeVariable(param.actionProps.variables)
                 valueMobile = valueMobile.evaluateMixConditionOperator(type = currentProperty.type)
                 currentProperty = currentProperty.copy(valueMobile = valueMobile)
             }
             if (param.propertyValueTablet.isNotEmpty()) {
-                param.actionProps.variables?.forEach { variableItem ->
-                    valueTablet =
-                        valueTablet.getVariableValue(variableItem.key, variableItem.value.value)
-                }
+                valueTablet = valueTablet.replaceNativeVariable(param.actionProps.variables)
                 valueTablet = valueTablet.evaluateMixConditionOperator(type = currentProperty.type)
                 currentProperty = currentProperty.copy(valueTablet = valueTablet)
             }
             if (param.propertyValueDesktop.isNotEmpty()) {
-                param.actionProps.variables?.forEach { variableItem ->
-                    valueDesktop =
-                        valueDesktop.getVariableValue(variableItem.key, variableItem.value.value)
-                }
+                valueDesktop = valueDesktop.replaceNativeVariable(param.actionProps.variables)
                 valueDesktop =
                     valueDesktop.evaluateMixConditionOperator(type = currentProperty.type)
                 currentProperty = currentProperty.copy(valueDesktop = valueDesktop)
