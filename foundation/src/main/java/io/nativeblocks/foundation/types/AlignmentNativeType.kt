@@ -43,16 +43,16 @@ class AlignmentNativeType : INativeType<Alignment> {
      * @return The corresponding [Alignment] object, or [Alignment.Center] if the input is null or not recognized.
      */
     override fun fromString(input: String?): Alignment {
-        return when (input?.lowercase()) {
+        return when (input) {
             "center" -> Alignment.Center
-            "centerstart" -> Alignment.CenterStart
-            "centerend" -> Alignment.CenterEnd
-            "bottomcenter" -> Alignment.BottomCenter
-            "bottomstart" -> Alignment.BottomStart
-            "bottomend" -> Alignment.BottomEnd
-            "topstart" -> Alignment.TopStart
-            "topend" -> Alignment.TopEnd
-            "topcenter" -> Alignment.TopCenter
+            "centerStart" -> Alignment.CenterStart
+            "centerEnd" -> Alignment.CenterEnd
+            "bottomCenter" -> Alignment.BottomCenter
+            "bottomStart" -> Alignment.BottomStart
+            "bottomEnd" -> Alignment.BottomEnd
+            "topStart" -> Alignment.TopStart
+            "topEnd" -> Alignment.TopEnd
+            "topCenter" -> Alignment.TopCenter
             else -> Alignment.Center
         }
     }

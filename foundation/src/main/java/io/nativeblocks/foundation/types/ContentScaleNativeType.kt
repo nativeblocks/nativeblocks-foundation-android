@@ -41,14 +41,14 @@ class ContentScaleNativeType : INativeType<ContentScale> {
      * @return The corresponding [ContentScale] object, or [ContentScale.None] if the input is null or not recognized.
      */
     override fun fromString(input: String?): ContentScale {
-        return when (input?.lowercase()) {
+        return when (input) {
             "none" -> ContentScale.None
             "crop" -> ContentScale.Crop
             "inside" -> ContentScale.Inside
             "fit" -> ContentScale.Fit
-            "fillbounds" -> ContentScale.FillBounds
-            "fillwidth" -> ContentScale.FillWidth
-            "fillheight" -> ContentScale.FillHeight
+            "fillBounds" -> ContentScale.FillBounds
+            "fillWidth" -> ContentScale.FillWidth
+            "fillHeight" -> ContentScale.FillHeight
             else -> ContentScale.None
         }
     }

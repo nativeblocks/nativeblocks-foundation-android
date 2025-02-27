@@ -37,10 +37,10 @@ class HorizontalAlignmentNativeType : INativeType<Alignment.Horizontal> {
      * @return The corresponding [Alignment.Horizontal] object, or [Alignment.Start] if the input is null or not recognized.
      */
     override fun fromString(input: String?): Alignment.Horizontal {
-        return when (input?.lowercase()) {
+        return when (input) {
             "start" -> Alignment.Start
             "end" -> Alignment.End
-            "centerhorizontally" -> Alignment.CenterHorizontally
+            "centerHorizontally" -> Alignment.CenterHorizontally
             else -> Alignment.Start
         }
     }

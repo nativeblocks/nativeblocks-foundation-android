@@ -335,7 +335,7 @@ fun NativeTextField(
         colors = TextFieldDefaults.outlinedTextFieldColors(
             textColor = contentColor,
             disabledTextColor = disabledContentColor,
-            backgroundColor = backgroundColor,
+            backgroundColor = if (enable) backgroundColor else disableBackgroundColor,
             unfocusedBorderColor = borderColor,
             focusedBorderColor = borderFocusColor,
             disabledBorderColor = disableBorderColor,

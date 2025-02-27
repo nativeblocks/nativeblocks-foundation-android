@@ -43,7 +43,7 @@ class KeyboardTypeNativeType : INativeType<KeyboardType> {
      * @return The corresponding [KeyboardType] object, or [KeyboardType.Text] if the input is null or not recognized.
      */
     override fun fromString(input: String?): KeyboardType {
-        return when (input?.lowercase()) {
+        return when (input) {
             "text" -> KeyboardType.Text
             "ascii" -> KeyboardType.Ascii
             "number" -> KeyboardType.Number
@@ -51,9 +51,9 @@ class KeyboardTypeNativeType : INativeType<KeyboardType> {
             "uri" -> KeyboardType.Uri
             "email" -> KeyboardType.Email
             "password" -> KeyboardType.Password
-            "numberpassword" -> KeyboardType.NumberPassword
+            "numberPassword" -> KeyboardType.NumberPassword
             "decimal" -> KeyboardType.Decimal
-            else -> KeyboardType.Text
+            else -> KeyboardType.Unspecified
         }
     }
 }
