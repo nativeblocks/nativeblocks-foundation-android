@@ -9,14 +9,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import io.nativeblocks.compiler.type.BlockIndex
 import io.nativeblocks.compiler.type.NativeBlock
@@ -51,7 +48,6 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param radiusTopEnd Top-end corner radius in DP. Default is 0.0.
  * @param radiusBottomStart Bottom-start corner radius in DP. Default is 0.0.
  * @param radiusBottomEnd Bottom-end corner radius in DP. Default is 0.0.
- * @param direction The layout direction of the row (e.g., "LTR" or "RTL"). Default is "LTR".
  * @param horizontalArrangement Horizontal arrangement of child components inside the row. Default is "start".
  * @param verticalAlignment Vertical alignment of child components inside the row. Default is "top".
  * @param onClick Callback triggered when the row is clicked. Default is null (disabled).
@@ -152,15 +148,6 @@ fun NativeRow(
         defaultValue = "0.0"
     ) radiusBottomEnd: Dp = 0.dp,
     @NativeBlockProp(
-        description = "The layout direction of the row (e.g., 'LTR' or 'RTL').",
-        valuePicker = NativeBlockValuePicker.DROPDOWN,
-        valuePickerOptions = [
-            NativeBlockValuePickerOption("RTL", "RTL"),
-            NativeBlockValuePickerOption("LTR", "LTR")
-        ],
-        defaultValue = "LTR"
-    ) direction: LayoutDirection = LayoutDirection.Ltr,
-    @NativeBlockProp(
         description = "Horizontal arrangement of child components inside the row.",
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -226,19 +213,17 @@ fun NativeRow(
         modifier = modifier.horizontalScroll(rememberScrollState())
     }
 
-    CompositionLocalProvider(LocalLayoutDirection provides direction) {
-        Row(
-            modifier = modifier,
-            verticalAlignment = verticalAlignment,
-            horizontalArrangement = horizontalArrangement
-        ) {
-            if (listItems != null) {
-                listItems.forEachIndexed { index, _ ->
-                    content.invoke(index)
-                }
-            } else {
-                content(-1)
+    Row(
+        modifier = modifier,
+        verticalAlignment = verticalAlignment,
+        horizontalArrangement = horizontalArrangement
+    ) {
+        if (listItems != null) {
+            listItems.forEachIndexed { index, _ ->
+                content.invoke(index)
             }
+        } else {
+            content(-1)
         }
     }
 }

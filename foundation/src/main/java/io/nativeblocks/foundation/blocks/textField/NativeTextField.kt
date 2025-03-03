@@ -10,20 +10,17 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -73,7 +70,6 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param fontWeight Specifies the font weight of the text (e.g., "normal", "bold"). Default is "normal".
  * @param maxLines The maximum number of lines allowed for the text. Default is 100.
  * @param letterSpacing The letter spacing for the text in SP. Default is 1.25.
- * @param direction The layout direction of the text field (e.g., "LTR" or "RTL"). Default is "LTR".
  * @param keyboardType The type of keyboard to display (e.g., "text", "number"). Default is "normal".
  * @param onLeadingIcon The leading icon slot, if any.
  * @param onTrailingIcon The trailing icon slot, if any.
@@ -264,17 +260,6 @@ fun NativeTextField(
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "1.25"
     ) letterSpacing: TextUnit = 1.25.sp,
-
-    @NativeBlockProp(
-        description = "The layout direction of the text field (e.g., 'LTR', 'RTL').",
-        valuePickerGroup = NativeBlockValuePickerPosition("Direction"),
-        valuePicker = NativeBlockValuePicker.DROPDOWN,
-        valuePickerOptions = [
-            NativeBlockValuePickerOption("RTL", "RTL"),
-            NativeBlockValuePickerOption("LTR", "LTR")
-        ],
-        defaultValue = "LTR"
-    ) direction: LayoutDirection = LayoutDirection.Ltr,
     @NativeBlockProp(
         description = "The type of keyboard to display for the text field (e.g., 'text', 'number', 'email').",
         valuePickerGroup = NativeBlockValuePickerPosition("Keyboard"),
@@ -324,76 +309,74 @@ fun NativeTextField(
         )
         .focusable()
 
-    CompositionLocalProvider(LocalLayoutDirection provides direction) {
-        OutlinedTextField(
-            modifier = modifier,
-            value = valueState.value,
-            onValueChange = {
-                valueState.value = it
-                onTextChange.invoke(it.text)
-            },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = keyboardType
-            ),
-            keyboardActions = KeyboardActions(onAny = {
-                focusManager.clearFocus()
-            }),
-            textStyle = textStyle.copy(
-                letterSpacing = letterSpacing,
-                textAlign = textAlign
-            ),
-            shape = RoundedCornerShape(
-                topStart = radiusTopStart,
-                topEnd = radiusTopEnd,
-                bottomStart = radiusBottomStart,
-                bottomEnd = radiusBottomEnd
-            ),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                textColor = contentColor,
-                disabledTextColor = disabledContentColor,
-                backgroundColor = if (enable) backgroundColor else disableBackgroundColor,
-                unfocusedBorderColor = borderColor,
-                focusedBorderColor = borderFocusColor,
-                disabledBorderColor = disableBorderColor,
-                cursorColor = contentColor
-            ),
-            readOnly = readOnly,
-            enabled = enable,
-            leadingIcon = if (onLeadingIcon != null) {
-                { onLeadingIcon.invoke(-1) }
-            } else {
-                null
-            },
-            trailingIcon = if (onTrailingIcon != null) {
-                { onTrailingIcon.invoke(-1) }
-            } else {
-                null
-            },
-            singleLine = maxLines == 1,
-            maxLines = maxLines,
-            placeholder = {
-                Text(
-                    text = placeholder,
-                    modifier = Modifier,
-                    color = contentColor.copy(alpha = 0.7f),
-                    fontSize = textStyle.fontSize,
-                    fontStyle = textStyle.fontStyle,
-                    fontWeight = textStyle.fontWeight,
-                    fontFamily = textStyle.fontFamily,
-                    textAlign = textAlign,
-                    letterSpacing = letterSpacing
-                )
-            },
-            label = {
-                Text(
-                    text = label,
-                    modifier = Modifier,
-                    color = contentColor,
-                    fontSize = fontSize,
-                    fontFamily = textStyle.fontFamily,
-                    textAlign = textAlign,
-                )
-            },
-        )
-    }
+    OutlinedTextField(
+        modifier = modifier,
+        value = valueState.value,
+        onValueChange = {
+            valueState.value = it
+            onTextChange.invoke(it.text)
+        },
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType
+        ),
+        keyboardActions = KeyboardActions(onAny = {
+            focusManager.clearFocus()
+        }),
+        textStyle = textStyle.copy(
+            letterSpacing = letterSpacing,
+            textAlign = textAlign
+        ),
+        shape = RoundedCornerShape(
+            topStart = radiusTopStart,
+            topEnd = radiusTopEnd,
+            bottomStart = radiusBottomStart,
+            bottomEnd = radiusBottomEnd
+        ),
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            textColor = contentColor,
+            disabledTextColor = disabledContentColor,
+            backgroundColor = if (enable) backgroundColor else disableBackgroundColor,
+            unfocusedBorderColor = borderColor,
+            focusedBorderColor = borderFocusColor,
+            disabledBorderColor = disableBorderColor,
+            cursorColor = contentColor
+        ),
+        readOnly = readOnly,
+        enabled = enable,
+        leadingIcon = if (onLeadingIcon != null) {
+            { onLeadingIcon.invoke(-1) }
+        } else {
+            null
+        },
+        trailingIcon = if (onTrailingIcon != null) {
+            { onTrailingIcon.invoke(-1) }
+        } else {
+            null
+        },
+        singleLine = maxLines == 1,
+        maxLines = maxLines,
+        placeholder = {
+            Text(
+                text = placeholder,
+                modifier = Modifier,
+                color = contentColor.copy(alpha = 0.7f),
+                fontSize = textStyle.fontSize,
+                fontStyle = textStyle.fontStyle,
+                fontWeight = textStyle.fontWeight,
+                fontFamily = textStyle.fontFamily,
+                textAlign = textAlign,
+                letterSpacing = letterSpacing
+            )
+        },
+        label = {
+            Text(
+                text = label,
+                modifier = Modifier,
+                color = contentColor,
+                fontSize = fontSize,
+                fontFamily = textStyle.fontFamily,
+                textAlign = textAlign,
+            )
+        },
+    )
 }
