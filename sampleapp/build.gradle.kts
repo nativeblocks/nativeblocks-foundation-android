@@ -74,10 +74,9 @@ dependencies {
     implementation("androidx.compose.animation:animation:1.7.4")
     implementation("androidx.compose.ui:ui-tooling:1.7.4")
 
-    implementation("io.nativeblocks:nativeblocks-android:1.2.1")
-    ksp("io.nativeblocks:nativeblocks-compiler-android:1.0.4")
-    implementation("io.nativeblocks:nativeblocks-compiler-android:1.0.4")
-    implementation("io.nativeblocks:nativeblocks-compiler-android:1.0.4")
+    implementation("io.nativeblocks:nativeblocks-android:1.3.0")
+    ksp("io.nativeblocks:nativeblocks-compiler-android:1.2.0")
+    implementation("io.nativeblocks:nativeblocks-compiler-android:1.2.0")
     implementation("io.nativeblocks:nativeblocks-wandkit-android:1.0.1")
 
     implementation(project(":foundation"))
