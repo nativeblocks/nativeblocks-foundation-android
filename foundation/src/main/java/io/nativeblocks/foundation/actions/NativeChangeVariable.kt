@@ -10,40 +10,18 @@ import io.nativeblocks.compiler.type.NativeActionValuePicker
 import io.nativeblocks.compiler.type.Then
 import io.nativeblocks.core.api.provider.action.ActionProps
 import io.nativeblocks.core.util.actionHandleVariableValue
-import io.nativeblocks.core.util.evaluateMixConditionOperator
+import io.nativeblocks.core.util.replacingTypeValue
 
 /**
- * A native action that changes a variable's value based on the provided parameters.
- * This class handles the process of evaluating and updating a variable's value,
- * ensuring that the variable is updated based on the current context and conditions.
+ * An native action responsible for changing the variable within the Nativeblocks system.
  *
- * Evaluates a variableValue that may contain mixed conditions and operators based on a variable type
- * specified by variableKey. If the string contains conditions, it evaluates them and converts the result
- * to a boolean string if the variable type is "BOOLEAN". If the string contains operators, it evaluates
- * the expression and converts the result to the specified numeric type.
+ * The `NativeChangeVariable` class enables the modification of a value dynamically.
+ * It supports variable substitution, conditional evaluation, and arithmetic operations for property values.
  *
- * Supported types: "BOOLEAN", "INT", "DOUBLE", "LONG", "FLOAT".
- *
- * The evaluated variableValue is returned as a string, or the original value if no conditions or operators are found.
- *
- * A class responsible for changing the variables of a block within the Nativeblocks system.
- * This action allows modification of a variable.
- *
- * Example 1 (for BOOLEAN type):
- * - variableValue: "(4 / 2 != 0) && (true == true)"
- * - Evaluated value: "true" (evaluates the condition and returns boolean as string)
- *
- * Example 2 (for INT type):
- * - variableValue: "(3+1)/2"
- * - Evaluated value: "2" (evaluates the arithmetic expression and returns the result as an integer)
- *
- * Example 3 (for STRING type):
- * - variableValue: "\"test\" == \"test\""
- * - Evaluated value: "true" (evaluates string equality and returns the result as string)
- *
- * Example 4 (for FLOAT type):
- * - variableValue: "2 * 2.5"
- * - Evaluated value: "5.0" (evaluates multiplication and returns the result as float)
+ * Variable Value Supported Formats:
+ *   - `{var:variable-key}`: Replaces with the value of the variable.
+ *   - `{index}`: Replaces with the list item index.
+ *   - `#SCRIPT 2 + 2 #ENDSCRIPT`: The string with evaluated JavaScript code replacing the script tags.
  */
 @NativeAction(
     keyType = "NATIVE_CHANGE_VARIABLE",
@@ -81,7 +59,7 @@ class NativeChangeVariable {
         if (variable == null) return
 
         var value = actionHandleVariableValue(param.actionProps, param.variableValue) ?: ""
-        value = value.evaluateMixConditionOperator(type = variable.type)
+        value = value.replacingTypeValue(type = variable.type)
         param.onNext(value)
     }
 }
