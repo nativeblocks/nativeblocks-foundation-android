@@ -5,6 +5,7 @@ import io.nativeblocks.compiler.type.NativeActionEvent
 import io.nativeblocks.compiler.type.NativeActionFunction
 import io.nativeblocks.compiler.type.NativeActionParameter
 import io.nativeblocks.compiler.type.NativeActionProp
+import io.nativeblocks.compiler.type.NativeActionValuePicker
 import io.nativeblocks.compiler.type.Then
 import io.nativeblocks.core.api.provider.action.ActionProps
 import io.nativeblocks.core.util.actionHandleVariableValue
@@ -28,7 +29,7 @@ import io.nativeblocks.core.util.replacingTypeValue
     keyType = "NATIVE_CHANGE_BLOCK_PROPERTY",
     name = "Native Change Block Property",
     description = "Native Change Block Property",
-    version = 1
+    version = 2
 )
 class NativeChangeBlockProperty {
     /**
@@ -47,11 +48,20 @@ class NativeChangeBlockProperty {
         val blockKey: String,
         @NativeActionProp(description = "key of the block's property")
         val propertyKey: String,
-        @NativeActionProp(description = "new value for the block's Mobile property")
+        @NativeActionProp(
+            description = "new value for the block's Mobile property",
+            valuePicker = NativeActionValuePicker.SCRIPT_AREA_INPUT
+        )
         val propertyValueMobile: String,
-        @NativeActionProp(description = "new value for the block's Tablet property")
+        @NativeActionProp(
+            description = "new value for the block's Tablet property",
+            valuePicker = NativeActionValuePicker.SCRIPT_AREA_INPUT
+        )
         val propertyValueTablet: String,
-        @NativeActionProp(description = "new value for the block's Desktop property")
+        @NativeActionProp(
+            description = "new value for the block's Desktop property",
+            valuePicker = NativeActionValuePicker.SCRIPT_AREA_INPUT
+        )
         val propertyValueDesktop: String,
         @NativeActionEvent(then = Then.NEXT)
         val onNext: () -> Unit

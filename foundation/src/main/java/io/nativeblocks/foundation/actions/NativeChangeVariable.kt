@@ -27,7 +27,7 @@ import io.nativeblocks.core.util.replacingTypeValue
     keyType = "NATIVE_CHANGE_VARIABLE",
     name = "Native Change Variable",
     description = "Native Change Variable",
-    version = 1
+    version = 2
 )
 class NativeChangeVariable {
     /**
@@ -45,7 +45,7 @@ class NativeChangeVariable {
         val variableKey: String,
         @NativeActionProp(
             description = "value of the variable",
-            valuePicker = NativeActionValuePicker.TEXT_AREA_INPUT
+            valuePicker = NativeActionValuePicker.SCRIPT_AREA_INPUT
         )
         val variableValue: String,
         @NativeActionEvent(then = Then.NEXT, dataBinding = ["variableKey"])
@@ -55,8 +55,7 @@ class NativeChangeVariable {
     @NativeActionFunction
     fun invoke(param: Parameter) {
         val data = param.actionProps.trigger?.data.orEmpty()
-        val variable = param.actionProps.variables?.get(data["variableKey"]?.value.orEmpty())
-        if (variable == null) return
+        val variable = param.actionProps.variables?.get(data["variableKey"]?.value.orEmpty()) ?: return
 
         var value = actionHandleVariableValue(param.actionProps, param.variableValue) ?: ""
         value = value.replacingTypeValue(type = variable.type)
