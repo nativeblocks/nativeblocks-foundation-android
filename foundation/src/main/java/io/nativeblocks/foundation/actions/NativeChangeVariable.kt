@@ -53,7 +53,7 @@ class NativeChangeVariable {
     )
 
     @NativeActionFunction
-    fun invoke(param: Parameter) {
+    suspend fun invoke(param: Parameter) {
         val data = param.actionProps.trigger?.data.orEmpty()
         val variable = param.actionProps.variables?.get(data["variableKey"]?.value.orEmpty()) ?: return
 

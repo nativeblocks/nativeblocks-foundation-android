@@ -68,7 +68,7 @@ class NativeChangeBlockProperty {
     )
 
     @NativeActionFunction
-    fun invoke(param: Parameter) {
+    suspend fun invoke(param: Parameter) {
         var valueMobile = param.propertyValueMobile
         var valueTablet = param.propertyValueTablet
         var valueDesktop = param.propertyValueDesktop
