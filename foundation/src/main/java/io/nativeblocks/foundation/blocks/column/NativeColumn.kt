@@ -24,7 +24,6 @@ import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
-import io.nativeblocks.core.util.json.NativeJsonPath
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 
@@ -60,7 +59,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
 @Composable
 fun NativeColumn(
     @NativeBlockData(
-        description = "A JSON array (e.g., '[{},{},...]') used for repeating the content based on its size. If the list value is invalid, the default content slot is invoked." ,
+        description = "A JSON array (e.g., '[{},{},...]') used for repeating the content based on its size. If the list value is invalid, the default content slot is invoked.",
         deprecated = true,
         deprecatedReason = "For better performance, use the 'length' instead."
 
@@ -219,7 +218,7 @@ fun NativeColumn(
         horizontalAlignment = horizontalAlignment
     ) {
         if (length >= 0) {
-            for(index in 0 until length){
+            for (index in 0 until length) {
                 content.invoke(index)
             }
         } else {

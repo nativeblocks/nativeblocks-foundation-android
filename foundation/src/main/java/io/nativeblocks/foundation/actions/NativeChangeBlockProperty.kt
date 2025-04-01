@@ -8,8 +8,8 @@ import io.nativeblocks.compiler.type.NativeActionProp
 import io.nativeblocks.compiler.type.NativeActionValuePicker
 import io.nativeblocks.compiler.type.Then
 import io.nativeblocks.core.api.provider.action.ActionProps
-import io.nativeblocks.core.util.actionHandleVariableValue
-import io.nativeblocks.core.util.replacingTypeValue
+import io.nativeblocks.core.api.util.actionHandleVariableValue
+import io.nativeblocks.core.api.util.cast
 
 /**
  * An Action responsible for changing the properties of a block within the Nativeblocks system.
@@ -79,17 +79,17 @@ class NativeChangeBlockProperty {
         if (currentProperty != null) {
             if (param.propertyValueMobile.isNotEmpty()) {
                 valueMobile = actionHandleVariableValue(param.actionProps, valueMobile) ?: ""
-                valueMobile = valueMobile.replacingTypeValue(type = currentProperty.type)
+                valueMobile = cast(valueMobile, currentProperty.type)
                 currentProperty = currentProperty.copy(valueMobile = valueMobile)
             }
             if (param.propertyValueTablet.isNotEmpty()) {
                 valueTablet = actionHandleVariableValue(param.actionProps, valueTablet) ?: ""
-                valueTablet = valueTablet.replacingTypeValue(type = currentProperty.type)
+                valueTablet = cast(valueTablet, currentProperty.type)
                 currentProperty = currentProperty.copy(valueTablet = valueTablet)
             }
             if (param.propertyValueDesktop.isNotEmpty()) {
                 valueDesktop = actionHandleVariableValue(param.actionProps, valueDesktop) ?: ""
-                valueDesktop = valueDesktop.replacingTypeValue(type = currentProperty.type)
+                valueDesktop = cast(valueDesktop, currentProperty.type)
                 currentProperty = currentProperty.copy(valueDesktop = valueDesktop)
             }
             blockProperties[currentProperty.key] = currentProperty

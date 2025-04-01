@@ -7,7 +7,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -25,7 +24,6 @@ import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
-import io.nativeblocks.core.util.json.NativeJsonPath
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 

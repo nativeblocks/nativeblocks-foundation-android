@@ -9,8 +9,8 @@ import io.nativeblocks.compiler.type.NativeActionProp
 import io.nativeblocks.compiler.type.NativeActionValuePicker
 import io.nativeblocks.compiler.type.Then
 import io.nativeblocks.core.api.provider.action.ActionProps
-import io.nativeblocks.core.util.actionHandleVariableValue
-import io.nativeblocks.core.util.replacingTypeValue
+import io.nativeblocks.core.api.util.actionHandleVariableValue
+import io.nativeblocks.core.api.util.cast
 
 /**
  * An native action responsible for changing the variable within the Nativeblocks system.
@@ -58,7 +58,7 @@ class NativeChangeVariable {
         val variable = param.actionProps.variables?.get(data["variableKey"]?.value.orEmpty()) ?: return
 
         var value = actionHandleVariableValue(param.actionProps, param.variableValue) ?: ""
-        value = value.replacingTypeValue(type = variable.type)
+        value = cast(value, variable.type)
         param.onNext(value)
     }
 }

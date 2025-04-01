@@ -24,7 +24,6 @@ import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
-import io.nativeblocks.core.util.json.NativeJsonPath
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 
@@ -219,7 +218,7 @@ fun NativeRow(
         horizontalArrangement = horizontalArrangement
     ) {
         if (length >= 0) {
-            for(index in 0 until length){
+            for (index in 0 until length) {
                 content.invoke(index)
             }
         } else {
