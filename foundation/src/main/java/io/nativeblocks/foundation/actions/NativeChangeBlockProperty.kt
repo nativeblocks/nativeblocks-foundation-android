@@ -79,17 +79,17 @@ class NativeChangeBlockProperty {
         if (currentProperty != null) {
             if (param.propertyValueMobile.isNotEmpty()) {
                 valueMobile = actionHandleVariableValue(param.actionProps, valueMobile) ?: ""
-                valueMobile = cast(valueMobile, currentProperty.type)
+                valueMobile = cast(valueMobile, currentProperty.type) ?: ""
                 currentProperty = currentProperty.copy(valueMobile = valueMobile)
             }
             if (param.propertyValueTablet.isNotEmpty()) {
                 valueTablet = actionHandleVariableValue(param.actionProps, valueTablet) ?: ""
-                valueTablet = cast(valueTablet, currentProperty.type)
+                valueTablet = cast(valueTablet, currentProperty.type) ?: ""
                 currentProperty = currentProperty.copy(valueTablet = valueTablet)
             }
             if (param.propertyValueDesktop.isNotEmpty()) {
                 valueDesktop = actionHandleVariableValue(param.actionProps, valueDesktop) ?: ""
-                valueDesktop = cast(valueDesktop, currentProperty.type)
+                valueDesktop = cast(valueDesktop, currentProperty.type) ?: ""
                 currentProperty = currentProperty.copy(valueDesktop = valueDesktop)
             }
             blockProperties[currentProperty.key] = currentProperty

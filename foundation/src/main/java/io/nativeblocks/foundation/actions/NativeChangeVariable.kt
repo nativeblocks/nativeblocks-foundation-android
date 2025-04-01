@@ -58,7 +58,7 @@ class NativeChangeVariable {
         val variable = param.actionProps.variables?.get(data["variableKey"]?.value.orEmpty()) ?: return
 
         var value = actionHandleVariableValue(param.actionProps, param.variableValue) ?: ""
-        value = cast(value, variable.type)
+        value = cast(value, variable.type) ?: ""
         param.onNext(value)
     }
 }
