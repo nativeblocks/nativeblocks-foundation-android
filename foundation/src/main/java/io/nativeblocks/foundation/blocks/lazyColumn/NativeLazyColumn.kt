@@ -6,7 +6,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -23,7 +22,6 @@ import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
-import io.nativeblocks.core.util.json.NativeJsonPath
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 
@@ -32,8 +30,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  *
  * This block supports dynamic properties, events, and slots, making it ideal for server-driven UI.
  *
- * @param list A JSON array (e.g., "[{},{},...]") used to render child content dynamically. The size of the list determines
- * the number of repetitions of the content.
+ * @param length The Length of list determines the number of repetitions of the content.
  * @param width The width of the column (e.g., "match" or "wrap"). Default is "wrap".
  * @param scrollable Determines if the column should be scrollable. Default is false.
  * @param height The height of the column (e.g., "match" or "wrap"). Default is "wrap".
@@ -55,14 +52,21 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "NATIVE_LAZY_COLUMN",
     name = "Native Lazy Column",
     description = "Nativeblocks lazy column block",
-    version = 1
+    version = 3
 )
 @Composable
 fun NativeLazyColumn(
     @NativeBlockData(
-        "A JSON array (e.g., '[{},{},...]') used for repeating the content based on its size."
+        description = "A JSON array (e.g., '[{},{},...]') used for repeating the content based on its size.",
+        deprecated = true,
+        deprecatedReason = "For better performance, use the 'length' instead."
     )
     list: String = "",
+    @NativeBlockData(
+        description = "The Length of list determines the number of repetitions of the content.",
+        defaultValue = "0"
+    )
+    length: Int = 0,
     @NativeBlockProp(
         description = "The width of the column (e.g., 'match' or 'wrap').",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
@@ -175,12 +179,6 @@ fun NativeLazyColumn(
         description = "Slot for composing child content within the column."
     ) content: @Composable (index: BlockIndex) -> Unit
 ) {
-    val listItems: List<*> = try {
-        NativeJsonPath().query(list, "$") as List<*>
-    } catch (e: Exception) {
-        listOf<Any>()
-    }
-
     val shape = shapeMapper(
         "rectangle",
         radiusTopStart,
@@ -214,7 +212,7 @@ fun NativeLazyColumn(
         verticalArrangement = verticalArrangement,
         horizontalAlignment = horizontalAlignment
     ) {
-        itemsIndexed(listItems) { index, _ ->
+        items(count = length) { index ->
             content.invoke(index)
         }
     }

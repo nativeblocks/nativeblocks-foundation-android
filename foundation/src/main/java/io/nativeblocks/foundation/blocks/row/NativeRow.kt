@@ -24,7 +24,6 @@ import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
-import io.nativeblocks.core.util.json.NativeJsonPath
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 
@@ -34,8 +33,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  *
  * This block supports dynamic properties, events, and slots, making it ideal for server-driven UI.
  *
- * @param list A JSON array (e.g., "[{},{},...]") used to render child content dynamically. The size of the list determines
- * the number of repetitions of the content.
+ * @param length The Length of list determines the number of repetitions of the content. The default value of -1 means no repetition.
  * @param width The width of the row (e.g., "match" or "wrap"). Default is "wrap".
  * @param height The height of the row (e.g., "match" or "wrap"). Default is "wrap".
  * @param scrollable Determines if the row should be scrollable horizontally. Default is false.
@@ -57,14 +55,21 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "NATIVE_ROW",
     name = "Native Row",
     description = "Nativeblocks row block",
-    version = 2
+    version = 3
 )
 @Composable
 fun NativeRow(
     @NativeBlockData(
-        "A JSON array (e.g., '[{},{},...]') used for repeating the content based on its size. If the list value is invalid, the default content slot is invoked."
+        description = "A JSON array (e.g., '[{},{},...]') used for repeating the content based on its size. If the list value is invalid, the default content slot is invoked.",
+        deprecated = true,
+        deprecatedReason = "For better performance, use the 'length' instead."
     )
     list: String = "",
+    @NativeBlockData(
+        description = "The length of the list determines the number of repetitions of the content. The default value of -1 means no repetition.",
+        defaultValue = "-1"
+    )
+    length: Int = -1,
     @NativeBlockProp(
         description = "The width of the row (e.g., 'match' or 'wrap').",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
@@ -177,12 +182,6 @@ fun NativeRow(
         description = "Slot for composing child content within the row."
     ) content: @Composable (index: BlockIndex) -> Unit
 ) {
-    val listItems: List<*>? = try {
-        NativeJsonPath().query(list, "$") as List<*>
-    } catch (e: Exception) {
-        null
-    }
-
     val shape = shapeMapper(
         "rectangle",
         radiusTopStart,
@@ -218,8 +217,8 @@ fun NativeRow(
         verticalAlignment = verticalAlignment,
         horizontalArrangement = horizontalArrangement
     ) {
-        if (listItems != null) {
-            listItems.forEachIndexed { index, _ ->
+        if (length >= 0) {
+            for (index in 0 until length) {
                 content.invoke(index)
             }
         } else {

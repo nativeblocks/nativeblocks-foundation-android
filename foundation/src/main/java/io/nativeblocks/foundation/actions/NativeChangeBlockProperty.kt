@@ -5,46 +5,31 @@ import io.nativeblocks.compiler.type.NativeActionEvent
 import io.nativeblocks.compiler.type.NativeActionFunction
 import io.nativeblocks.compiler.type.NativeActionParameter
 import io.nativeblocks.compiler.type.NativeActionProp
+import io.nativeblocks.compiler.type.NativeActionValuePicker
 import io.nativeblocks.compiler.type.Then
 import io.nativeblocks.core.api.provider.action.ActionProps
-import io.nativeblocks.core.util.evaluateMixConditionOperator
-import io.nativeblocks.core.util.getVariableValue
-import io.nativeblocks.core.util.replaceNativeVariable
+import io.nativeblocks.core.api.util.actionHandleVariableValue
+import io.nativeblocks.core.api.util.cast
 
 /**
- * Evaluates a propertyValue that may contain mixed conditions and operators based on a property type
- * specified by propertyKey. If the string contains conditions, it evaluates them and converts the result
- * to a boolean string if the property type is "BOOLEAN". If the string contains operators, it evaluates
- * the expression and converts the result to the specified numeric type.
- *
- * Supported types: "BOOLEAN", "INT", "DOUBLE", "LONG", "FLOAT".
- *
- * The evaluated propertyValue is returned as a string, or the original value if no conditions or operators are found.
- *
- * A class responsible for changing the properties of a block within the Nativeblocks system.
+ * An Action responsible for changing the properties of a block within the Nativeblocks system.
  * This action allows modification of a block's properties across different device types (Mobile, Tablet, and Desktop).
  *
- * Example 1 (for BOOLEAN type):
- * - propertyValue: "(4 / 2 != 0) && (true == true)"
- * - Evaluated value: "true" (evaluates the condition and returns boolean as string)
+ * Changes the specified property of a block.
  *
- * Example 2 (for INT type):
- * - propertyValue: "(3+1)/2"
- * - Evaluated value: "2" (evaluates the arithmetic expression and returns the result as an integer)
+ * This function updates the mobile, tablet, and desktop values of a block's property.
+ * It supports variable substitution and conditional evaluation for the property values.
  *
- * Example 3 (for STRING type):
- * - propertyValue: "\"test\" == \"test\""
- * - Evaluated value: "true" (evaluates string equality and returns the result as string)
- *
- * Example 4 (for FLOAT type):
- * - propertyValue: "2 * 2.5"
- * - Evaluated value: "5.0" (evaluates multiplication and returns the result as float)
+ * Property Value Supported Formats:
+ *   - `{var:variable-key}`: Replaces with the value of the variable.
+ *   - `{index}`: Replaces with the list item index.
+ *   - `#SCRIPT 2 + 2 #ENDSCRIPT`: The string with evaluated JavaScript code replacing the script tags.
  */
 @NativeAction(
     keyType = "NATIVE_CHANGE_BLOCK_PROPERTY",
     name = "Native Change Block Property",
     description = "Native Change Block Property",
-    version = 1
+    version = 2
 )
 class NativeChangeBlockProperty {
     /**
@@ -63,18 +48,27 @@ class NativeChangeBlockProperty {
         val blockKey: String,
         @NativeActionProp(description = "key of the block's property")
         val propertyKey: String,
-        @NativeActionProp(description = "new value for the block's Mobile property")
+        @NativeActionProp(
+            description = "new value for the block's Mobile property",
+            valuePicker = NativeActionValuePicker.SCRIPT_AREA_INPUT
+        )
         val propertyValueMobile: String,
-        @NativeActionProp(description = "new value for the block's Tablet property")
+        @NativeActionProp(
+            description = "new value for the block's Tablet property",
+            valuePicker = NativeActionValuePicker.SCRIPT_AREA_INPUT
+        )
         val propertyValueTablet: String,
-        @NativeActionProp(description = "new value for the block's Desktop property")
+        @NativeActionProp(
+            description = "new value for the block's Desktop property",
+            valuePicker = NativeActionValuePicker.SCRIPT_AREA_INPUT
+        )
         val propertyValueDesktop: String,
         @NativeActionEvent(then = Then.NEXT)
         val onNext: () -> Unit
     )
 
     @NativeActionFunction
-    fun invoke(param: Parameter) {
+    suspend fun invoke(param: Parameter) {
         var valueMobile = param.propertyValueMobile
         var valueTablet = param.propertyValueTablet
         var valueDesktop = param.propertyValueDesktop
@@ -84,19 +78,18 @@ class NativeChangeBlockProperty {
         var currentProperty = blockProperties[param.propertyKey]
         if (currentProperty != null) {
             if (param.propertyValueMobile.isNotEmpty()) {
-                valueMobile = valueMobile.replaceNativeVariable(param.actionProps.variables)
-                valueMobile = valueMobile.evaluateMixConditionOperator(type = currentProperty.type)
+                valueMobile = actionHandleVariableValue(param.actionProps, valueMobile) ?: ""
+                valueMobile = cast(valueMobile, currentProperty.type) ?: ""
                 currentProperty = currentProperty.copy(valueMobile = valueMobile)
             }
             if (param.propertyValueTablet.isNotEmpty()) {
-                valueTablet = valueTablet.replaceNativeVariable(param.actionProps.variables)
-                valueTablet = valueTablet.evaluateMixConditionOperator(type = currentProperty.type)
+                valueTablet = actionHandleVariableValue(param.actionProps, valueTablet) ?: ""
+                valueTablet = cast(valueTablet, currentProperty.type) ?: ""
                 currentProperty = currentProperty.copy(valueTablet = valueTablet)
             }
             if (param.propertyValueDesktop.isNotEmpty()) {
-                valueDesktop = valueDesktop.replaceNativeVariable(param.actionProps.variables)
-                valueDesktop =
-                    valueDesktop.evaluateMixConditionOperator(type = currentProperty.type)
+                valueDesktop = actionHandleVariableValue(param.actionProps, valueDesktop) ?: ""
+                valueDesktop = cast(valueDesktop, currentProperty.type) ?: ""
                 currentProperty = currentProperty.copy(valueDesktop = valueDesktop)
             }
             blockProperties[currentProperty.key] = currentProperty
