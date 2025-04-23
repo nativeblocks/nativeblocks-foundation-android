@@ -16,7 +16,7 @@ import io.nativeblocks.compiler.type.NativeBlockProp
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
-import io.nativeblocks.core.util.fontFamilyMapper
+import io.nativeblocks.core.api.util.fontFamilyMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 
 /**
