@@ -76,7 +76,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param onTextChange Callback triggered when the text content changes.
  */
 @NativeBlock(
-    keyType = "NATIVE_TEXT_FIELD",
+    keyType = "nativeblocks/TEXT_FIELD",
     name = "Native TextField",
     description = "Nativeblocks textField block",
     version = 2

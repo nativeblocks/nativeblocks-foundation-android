@@ -71,7 +71,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param onClick The callback triggered when the button is clicked.
  */
 @NativeBlock(
-    keyType = "NATIVE_BUTTON",
+    keyType = "nativeblocks/BUTTON",
     name = "Native Button",
     description = "Nativeblocks button block",
     version = 1

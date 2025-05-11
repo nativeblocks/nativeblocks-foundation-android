@@ -33,7 +33,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param contentDescription A description of the image content for accessibility purposes. Default is an empty string.
  */
 @NativeBlock(
-    keyType = "NATIVE_IMAGE",
+    keyType = "nativeblocks/IMAGE",
     name = "Native Image",
     description = "Nativeblocks image block",
     version = 1

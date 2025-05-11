@@ -24,7 +24,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param height The height of the spacer (e.g., "match" or "wrap"). Default is "wrap".
  */
 @NativeBlock(
-    keyType = "NATIVE_SPACER",
+    keyType = "nativeblocks/SPACER",
     name = "Native Spacer",
     description = "Nativeblocks spacer block",
     version = 1

@@ -51,7 +51,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param content Slot for composing child content within the column.
  */
 @NativeBlock(
-    keyType = "NATIVE_COLUMN",
+    keyType = "nativeblocks/COLUMN",
     name = "Native Column",
     description = "Nativeblocks column block",
     version = 3
