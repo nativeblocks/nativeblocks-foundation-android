@@ -27,7 +27,7 @@ import io.nativeblocks.core.api.util.cast
     keyType = "nativeblocks/CHANGE_VARIABLE",
     name = "Native Change Variable",
     description = "Native Change Variable",
-    version = 2
+    version = 1
 )
 class NativeChangeVariable {
     /**

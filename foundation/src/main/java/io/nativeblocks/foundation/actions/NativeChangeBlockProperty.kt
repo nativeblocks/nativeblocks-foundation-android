@@ -29,7 +29,7 @@ import io.nativeblocks.core.api.util.cast
     keyType = "nativeblocks/CHANGE_BLOCK_PROPERTY",
     name = "Native Change Block Property",
     description = "Native Change Block Property",
-    version = 2
+    version = 1
 )
 class NativeChangeBlockProperty {
     /**

@@ -52,7 +52,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "nativeblocks/LAZY_COLUMN",
     name = "Native Lazy Column",
     description = "Nativeblocks lazy column block",
-    version = 3
+    version = 1
 )
 @Composable
 fun NativeLazyColumn(

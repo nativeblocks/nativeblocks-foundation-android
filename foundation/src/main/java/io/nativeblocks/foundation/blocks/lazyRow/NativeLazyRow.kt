@@ -55,7 +55,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "nativeblocks/LAZY_ROW",
     name = "Native Lazy Row",
     description = "Nativeblocks lazy row block",
-    version = 3
+    version = 1
 )
 @Composable
 fun NativeLazyRow(

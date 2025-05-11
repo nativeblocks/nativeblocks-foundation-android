@@ -55,7 +55,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "nativeblocks/ROW",
     name = "Native Row",
     description = "Nativeblocks row block",
-    version = 3
+    version = 1
 )
 @Composable
 fun NativeRow(

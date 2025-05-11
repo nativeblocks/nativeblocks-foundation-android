@@ -79,7 +79,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "nativeblocks/TEXT_FIELD",
     name = "Native TextField",
     description = "Nativeblocks textField block",
-    version = 2
+    version = 1
 )
 @Composable
 fun NativeTextField(
