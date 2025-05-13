@@ -218,7 +218,7 @@ fun NativeButton(
         valuePickerGroup = NativeBlockValuePickerPosition("Font"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "The font size of the button text in SP.",
-        defaultValue = "14.sp"
+        defaultValue = "14"
     ) fontSize: TextUnit = 14.sp,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Font"),
