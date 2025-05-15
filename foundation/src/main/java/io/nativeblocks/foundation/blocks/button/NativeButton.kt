@@ -31,7 +31,9 @@ import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
+import io.nativeblocks.core.api.provider.block.BlockProps
 import io.nativeblocks.core.api.util.fontFamilyMapper
+import io.nativeblocks.foundation.util.blockWeight
 import io.nativeblocks.foundation.util.widthAndHeight
 
 /**
@@ -44,6 +46,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param enable Whether the button is enabled. Default is true.
  * @param width The width of the button (e.g., "match" or "wrap"). Default is "wrap".
  * @param height The height of the button (e.g., "match" or "wrap"). Default is "wrap".
+ * @param weight Specifies the weight of the layout in row or column. Default is 0.0 means not set.
  * @param contentColor The color of the button's text/content. Default is white (#FFFFFFFF).
  * @param disabledContentColor The color of the content when the button is disabled. Default is #FFFFFFB2.
  * @param backgroundColor The background color of the button. Default is #FF212121.
@@ -78,6 +81,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
 )
 @Composable
 fun NativeButton(
+    blockProps: BlockProps? = null,
     @NativeBlockData(
         description = "The text displayed on the button."
     ) text: String,
@@ -105,6 +109,12 @@ fun NativeButton(
         description = "The height of the button (e.g., 'match' or 'wrap').",
         defaultValue = "wrap"
     ) height: String = "wrap",
+    @NativeBlockProp(
+        description = "Specifies the weight of the layout in row or column. Default is 0.0 means not set.",
+        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0F"
+    ) weight: Float = 0F,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Content color"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
@@ -280,6 +290,7 @@ fun NativeButton(
                 bottom = paddingBottom
             )
         )
+        .blockWeight(weight, blockProps?.hierarchy?.last()?.scope)
 
     Button(
         onClick = onClick,
