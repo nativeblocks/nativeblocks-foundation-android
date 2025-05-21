@@ -1,6 +1,8 @@
 package io.nativeblocks.foundation.util
 
 import android.util.Patterns
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -115,4 +117,24 @@ fun String?.isHttpUrl(): Boolean {
         e.printStackTrace()
         false
     }
+}
+
+fun Modifier.blockWeight(weight: Float, scope: Any?): Modifier {
+    var modifier = this
+    if (weight > 0f) {
+        when (scope) {
+            is RowScope -> {
+                scope.apply {
+                    modifier = modifier.weight(weight)
+                }
+            }
+
+            is ColumnScope -> {
+                scope.apply {
+                    modifier = modifier.weight(weight)
+                }
+            }
+        }
+    }
+    return modifier
 }

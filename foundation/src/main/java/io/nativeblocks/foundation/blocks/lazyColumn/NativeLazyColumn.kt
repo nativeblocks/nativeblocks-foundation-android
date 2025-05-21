@@ -22,6 +22,8 @@ import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
+import io.nativeblocks.core.api.provider.block.BlockProps
+import io.nativeblocks.foundation.util.blockWeight
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 
@@ -32,6 +34,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  *
  * @param length The Length of list determines the number of repetitions of the content.
  * @param width The width of the column (e.g., "match" or "wrap"). Default is "wrap".
+ * @param weight Specifies the weight of the layout in row or column. Default is 0.0 means not set..
  * @param scrollable Determines if the column should be scrollable. Default is false.
  * @param height The height of the column (e.g., "match" or "wrap"). Default is "wrap".
  * @param paddingStart Padding on the start (left) side in DP. Default is 0.0.
@@ -49,19 +52,14 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param content Slot for composing child content within the column.
  */
 @NativeBlock(
-    keyType = "NATIVE_LAZY_COLUMN",
+    keyType = "nativeblocks/LAZY_COLUMN",
     name = "Native Lazy Column",
     description = "Nativeblocks lazy column block",
-    version = 3
+    version = 1
 )
 @Composable
 fun NativeLazyColumn(
-    @NativeBlockData(
-        description = "A JSON array (e.g., '[{},{},...]') used for repeating the content based on its size.",
-        deprecated = true,
-        deprecatedReason = "For better performance, use the 'length' instead."
-    )
-    list: String = "",
+    blockProps: BlockProps? = null,
     @NativeBlockData(
         description = "The Length of list determines the number of repetitions of the content.",
         defaultValue = "0"
@@ -78,15 +76,6 @@ fun NativeLazyColumn(
         defaultValue = "wrap"
     ) width: String = "wrap",
     @NativeBlockProp(
-        description = "Determines if the column should be scrollable.",
-        valuePicker = NativeBlockValuePicker.DROPDOWN,
-        valuePickerOptions = [
-            NativeBlockValuePickerOption("false", "false"),
-            NativeBlockValuePickerOption("true", "true")
-        ],
-        defaultValue = "true"
-    ) scrollable: Boolean = true,
-    @NativeBlockProp(
         description = "The height of the column (e.g., 'match' or 'wrap').",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
@@ -96,6 +85,22 @@ fun NativeLazyColumn(
         ],
         defaultValue = "wrap"
     ) height: String = "wrap",
+    @NativeBlockProp(
+        description = "Specifies the weight of the layout in row or column. Default is 0.0 means not set.",
+        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0F"
+    ) weight: Float = 0F,
+    @NativeBlockProp(
+        description = "Determines if the column should be scrollable.",
+        valuePicker = NativeBlockValuePicker.DROPDOWN,
+        valuePickerOptions = [
+            NativeBlockValuePickerOption("false", "false"),
+            NativeBlockValuePickerOption("true", "true")
+        ],
+        defaultValue = "true"
+    ) scrollable: Boolean = true,
+
     @NativeBlockProp(
         description = "Padding on the start (left) side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
@@ -177,7 +182,7 @@ fun NativeLazyColumn(
     ) onClick: (() -> Unit)? = null,
     @NativeBlockSlot(
         description = "Slot for composing child content within the column."
-    ) content: @Composable (index: BlockIndex) -> Unit
+    ) content: @Composable (index: BlockIndex, scope: Any) -> Unit
 ) {
     val shape = shapeMapper(
         "rectangle",
@@ -196,6 +201,7 @@ fun NativeLazyColumn(
             end = paddingEnd,
             bottom = paddingBottom,
         )
+        .blockWeight(weight, blockProps?.hierarchy?.last()?.scope)
 
     if (onClick != null) {
         modifier = Modifier.clickable(
@@ -213,7 +219,9 @@ fun NativeLazyColumn(
         horizontalAlignment = horizontalAlignment
     ) {
         items(count = length) { index ->
-            content.invoke(index)
+
+
+            content.invoke(index, this@LazyColumn)
         }
     }
 }
