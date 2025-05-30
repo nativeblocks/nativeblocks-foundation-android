@@ -51,7 +51,8 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "nativeblocks/BOX",
     name = "Native Box",
     description = "Nativeblocks box block",
-    version = 1
+    version = 1,
+    versionName = "1"
 )
 @Composable
 fun NativeBox(

@@ -57,7 +57,8 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "nativeblocks/COLUMN",
     name = "Native Column",
     description = "Nativeblocks column block",
-    version = 1
+    version = 1,
+    versionName = "1"
 )
 @Composable
 fun NativeColumn(

@@ -82,7 +82,8 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "nativeblocks/TEXT_FIELD",
     name = "Native TextField",
     description = "Nativeblocks textField block",
-    version = 1
+    version = 1,
+    versionName = "1"
 )
 @Composable
 fun NativeTextField(
@@ -289,10 +290,10 @@ fun NativeTextField(
     ) keyboardType: KeyboardType = KeyboardType.Text,
     @NativeBlockSlot(
         description = "Defines the leading icon for the text field."
-    ) onLeadingIcon: (@Composable (index: BlockIndex) -> Unit)? = null,
+    ) onLeadingIcon: (@Composable (index: BlockIndex, scope: Any?) -> Unit)? = null,
     @NativeBlockSlot(
         description = "Defines the trailing icon for the text field."
-    ) onTrailingIcon: (@Composable (index: BlockIndex) -> Unit)? = null,
+    ) onTrailingIcon: (@Composable (index: BlockIndex, scope: Any?) -> Unit)? = null,
     @NativeBlockEvent(
         description = "Callback triggered when the text field value changes.",
         dataBinding = ["text"]
@@ -355,12 +356,12 @@ fun NativeTextField(
         readOnly = readOnly,
         enabled = enable,
         leadingIcon = if (onLeadingIcon != null) {
-            { onLeadingIcon.invoke(-1) }
+            { onLeadingIcon.invoke(-1, null) }
         } else {
             null
         },
         trailingIcon = if (onTrailingIcon != null) {
-            { onTrailingIcon.invoke(-1) }
+            { onTrailingIcon.invoke(-1, null) }
         } else {
             null
         },

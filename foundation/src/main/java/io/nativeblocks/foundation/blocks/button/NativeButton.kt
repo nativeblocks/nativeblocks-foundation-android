@@ -77,7 +77,8 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "nativeblocks/BUTTON",
     name = "Native Button",
     description = "Nativeblocks button block",
-    version = 1
+    version = 1,
+    versionName = "1"
 )
 @Composable
 fun NativeButton(
@@ -266,10 +267,10 @@ fun NativeButton(
     ) fontWeight: FontWeight = FontWeight.Normal,
     @NativeBlockSlot(
         description = "Slot for adding a leading icon to the button."
-    ) onLeadingIcon: (@Composable (index: BlockIndex) -> Unit)? = null,
+    ) onLeadingIcon: (@Composable (index: BlockIndex, scope: Any?) -> Unit)? = null,
     @NativeBlockSlot(
         description = "Slot for adding a trailing icon to the button."
-    ) onTrailingIcon: (@Composable (index: BlockIndex) -> Unit)? = null,
+    ) onTrailingIcon: (@Composable (index: BlockIndex, scope: Any?) -> Unit)? = null,
     @NativeBlockEvent(
         description = "Callback triggered when the button is clicked."
     ) onClick: () -> Unit,
@@ -324,7 +325,7 @@ fun NativeButton(
             ),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            onLeadingIcon?.let { it(-1) }
+            onLeadingIcon?.let { it(-1, null) }
             Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
             Text(
                 modifier = Modifier,
@@ -337,7 +338,7 @@ fun NativeButton(
                 maxLines = 9999,
             )
             Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
-            onTrailingIcon?.let { it(-1) }
+            onTrailingIcon?.let { it(-1, null) }
         }
     }
 }
