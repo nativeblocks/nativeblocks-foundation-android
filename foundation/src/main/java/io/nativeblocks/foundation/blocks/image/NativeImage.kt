@@ -13,6 +13,8 @@ import io.nativeblocks.compiler.type.NativeBlockProp
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
+import io.nativeblocks.core.api.provider.block.BlockProps
+import io.nativeblocks.foundation.util.blockWeight
 import io.nativeblocks.foundation.util.isHttpUrl
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
@@ -25,6 +27,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param imageUrl The URL of the image to display. Must be a valid HTTP or HTTPS URL.
  * @param width The width of the image (e.g., "match" or "wrap"). Default is "wrap".
  * @param height The height of the image (e.g., "match" or "wrap"). Default is "wrap".
+ * @param weight Specifies the weight of the layout in row or column. Default is 0.0 means not set..
  * @param radiusTopStart The radius for the top-start corner in DP. Default is 0.0.
  * @param radiusTopEnd The radius for the top-end corner in DP. Default is 0.0.
  * @param radiusBottomStart The radius for the bottom-start corner in DP. Default is 0.0.
@@ -33,13 +36,15 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param contentDescription A description of the image content for accessibility purposes. Default is an empty string.
  */
 @NativeBlock(
-    keyType = "NATIVE_IMAGE",
+    keyType = "nativeblocks/IMAGE",
     name = "Native Image",
     description = "Nativeblocks image block",
-    version = 1
+    version = 1,
+    versionName = "1"
 )
 @Composable
 fun NativeImage(
+    blockProps: BlockProps? = null,
     @NativeBlockData(
         description = "The URL of the image to display. Must be a valid HTTP or HTTPS URL."
     ) imageUrl: String,
@@ -63,6 +68,12 @@ fun NativeImage(
         ],
         defaultValue = "wrap"
     ) height: String = "wrap",
+    @NativeBlockProp(
+        description = "Specifies the weight of the layout in row or column. Default is 0.0 means not set.",
+        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0F"
+    ) weight: Float = 0F,
     @NativeBlockProp(
         description = "The radius for the top-start corner in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
@@ -121,6 +132,7 @@ fun NativeImage(
             modifier = Modifier
                 .widthAndHeight(width, height)
                 .clip(shape)
+                .blockWeight(weight, blockProps?.hierarchy?.last()?.scope)
         )
     }
 }

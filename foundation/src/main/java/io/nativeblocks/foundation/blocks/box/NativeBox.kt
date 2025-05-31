@@ -20,6 +20,8 @@ import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
+import io.nativeblocks.core.api.provider.block.BlockProps
+import io.nativeblocks.foundation.util.blockWeight
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 
@@ -31,6 +33,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  *
  * @param width Specifies the width of the box (e.g., "match" or "wrap"). Default is "wrap".
  * @param height Specifies the height of the box (e.g., "match" or "wrap"). Default is "wrap".
+ * @param weight Specifies the weight of the layout in row or column. Default is "0.0" means not set.
  * @param paddingStart Padding on the start side in DP. Default is 0.0.
  * @param paddingTop Padding on the top side in DP. Default is 0.0.
  * @param paddingEnd Padding on the end side in DP. Default is 0.0.
@@ -45,13 +48,15 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param content Slot for composing child content within the box.
  */
 @NativeBlock(
-    keyType = "NATIVE_BOX",
+    keyType = "nativeblocks/BOX",
     name = "Native Box",
     description = "Nativeblocks box block",
-    version = 1
+    version = 1,
+    versionName = "1"
 )
 @Composable
 fun NativeBox(
+    blockProps: BlockProps? = null,
     @NativeBlockProp(
         description = "Specifies the width of the box (e.g., 'match' or 'wrap').",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
@@ -72,6 +77,12 @@ fun NativeBox(
         ],
         defaultValue = "wrap"
     ) height: String = "wrap",
+    @NativeBlockProp(
+        description = "Specifies the weight of the layout in row or column. Default is 0.0 means not set.",
+        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0F"
+    ) weight: Float = 0F,
     @NativeBlockProp(
         description = "Padding on the start side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
@@ -146,39 +157,46 @@ fun NativeBox(
     ) onClick: (() -> Unit)? = null,
     @NativeBlockSlot(
         description = "Slot for placing dynamic child content inside the box."
-    ) content: @Composable (index: BlockIndex) -> Unit
+    ) content: @Composable (index: BlockIndex, scope: Any) -> Unit
 ) {
-    val shape = shapeMapper(
-        "rectangle",
-        radiusTopStart,
-        radiusTopEnd,
-        radiusBottomStart,
-        radiusBottomEnd,
-    )
-
-    var modifier = Modifier
+    val modifier = Modifier
         .widthAndHeight(width, height)
-        .background(background, shape)
+        .background(
+            background, shapeMapper(
+                "rectangle",
+                radiusTopStart,
+                radiusTopEnd,
+                radiusBottomStart,
+                radiusBottomEnd,
+            )
+        )
         .padding(
             start = paddingStart,
             top = paddingTop,
             end = paddingEnd,
             bottom = paddingBottom,
         )
-
-    if (onClick != null) {
-        modifier = Modifier.clickable(
-            enabled = true,
-            indication = null,
-            interactionSource = remember { MutableInteractionSource() }) {
-            onClick.invoke()
-        }
-    }
+        .then(
+            if (onClick != null) {
+                Modifier.clickable(
+                    enabled = true,
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }) {
+                    onClick.invoke()
+                }
+            } else {
+                Modifier
+            })
+        .blockWeight(weight, blockProps?.hierarchy?.last()?.scope)
 
     Box(
         modifier = modifier,
         contentAlignment = verticalAlignment,
     ) {
-        content(-1)
+        content(-1, this)
     }
 }
+
+
+
+

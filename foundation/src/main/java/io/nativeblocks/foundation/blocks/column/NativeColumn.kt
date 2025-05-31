@@ -24,6 +24,8 @@ import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
+import io.nativeblocks.core.api.provider.block.BlockProps
+import io.nativeblocks.foundation.util.blockWeight
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 
@@ -36,6 +38,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param width The width of the column (e.g., "match" or "wrap"). Default is "wrap".
  * @param scrollable Determines if the column should be scrollable. Default is false.
  * @param height The height of the column (e.g., "match" or "wrap"). Default is "wrap".
+ * @param weight Specifies the weight of the layout in row or column. Default is 0.0 means not set..
  * @param paddingStart Padding on the start (left) side in DP. Default is 0.0.
  * @param paddingTop Padding on the top side in DP. Default is 0.0.
  * @param paddingEnd Padding on the end (right) side in DP. Default is 0.0.
@@ -51,20 +54,15 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param content Slot for composing child content within the column.
  */
 @NativeBlock(
-    keyType = "NATIVE_COLUMN",
+    keyType = "nativeblocks/COLUMN",
     name = "Native Column",
     description = "Nativeblocks column block",
-    version = 3
+    version = 1,
+    versionName = "1"
 )
 @Composable
 fun NativeColumn(
-    @NativeBlockData(
-        description = "A JSON array (e.g., '[{},{},...]') used for repeating the content based on its size. If the list value is invalid, the default content slot is invoked.",
-        deprecated = true,
-        deprecatedReason = "For better performance, use the 'length' instead."
-
-    )
-    list: String = "",
+    blockProps: BlockProps? = null,
     @NativeBlockData(
         description = "The length of the list determines the number of repetitions of the content. The default value of -1 means no repetition.",
         defaultValue = "-1"
@@ -81,15 +79,6 @@ fun NativeColumn(
         defaultValue = "wrap"
     ) width: String = "wrap",
     @NativeBlockProp(
-        description = "Determines if the column should be scrollable.",
-        valuePicker = NativeBlockValuePicker.DROPDOWN,
-        valuePickerOptions = [
-            NativeBlockValuePickerOption("false", "false"),
-            NativeBlockValuePickerOption("true", "true")
-        ],
-        defaultValue = "false"
-    ) scrollable: Boolean = false,
-    @NativeBlockProp(
         description = "The height of the column (e.g., 'match' or 'wrap').",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
@@ -99,6 +88,21 @@ fun NativeColumn(
         ],
         defaultValue = "wrap"
     ) height: String = "wrap",
+    @NativeBlockProp(
+        description = "Specifies the weight of the layout in row or column. Default is 0.0 means not set.",
+        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0F"
+    ) weight: Float = 0F,
+    @NativeBlockProp(
+        description = "Determines if the column should be scrollable.",
+        valuePicker = NativeBlockValuePicker.DROPDOWN,
+        valuePickerOptions = [
+            NativeBlockValuePickerOption("false", "false"),
+            NativeBlockValuePickerOption("true", "true")
+        ],
+        defaultValue = "false"
+    ) scrollable: Boolean = false,
     @NativeBlockProp(
         description = "Padding on the start (left) side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
@@ -180,7 +184,7 @@ fun NativeColumn(
     ) onClick: (() -> Unit)? = null,
     @NativeBlockSlot(
         description = "Slot for composing child content within the column."
-    ) content: @Composable (index: BlockIndex) -> Unit
+    ) content: @Composable (index: BlockIndex, scope: Any) -> Unit
 ) {
     val shape = shapeMapper(
         "rectangle",
@@ -199,6 +203,7 @@ fun NativeColumn(
             end = paddingEnd,
             bottom = paddingBottom,
         )
+        .blockWeight(weight, blockProps?.hierarchy?.last()?.scope)
 
     if (onClick != null) {
         modifier = Modifier.clickable(
@@ -212,6 +217,7 @@ fun NativeColumn(
     if (scrollable) {
         modifier = modifier.verticalScroll(rememberScrollState())
     }
+
     Column(
         modifier = modifier,
         verticalArrangement = verticalArrangement,
@@ -219,10 +225,10 @@ fun NativeColumn(
     ) {
         if (length >= 0) {
             for (index in 0 until length) {
-                content.invoke(index)
+                content.invoke(index, this)
             }
         } else {
-            content(-1)
+            content(-1, this)
         }
     }
 }

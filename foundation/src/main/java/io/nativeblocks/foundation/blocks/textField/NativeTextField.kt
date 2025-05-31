@@ -33,7 +33,9 @@ import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
+import io.nativeblocks.core.api.provider.block.BlockProps
 import io.nativeblocks.core.api.util.fontFamilyMapper
+import io.nativeblocks.foundation.util.blockWeight
 import io.nativeblocks.foundation.util.widthAndHeight
 
 /**
@@ -49,6 +51,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param readOnly Whether the text field is read-only. Default is false.
  * @param width Specifies the width of the text field (e.g., "match" or "wrap"). Default is "wrap".
  * @param height Specifies the height of the text field (e.g., "match" or "wrap"). Default is "wrap".
+ * @param weight Specifies the weight of the layout in row or column. Default is 0.0 means not set..
  * @param contentColor The color of the text content. Default is white (#FFFFFFFF).
  * @param disabledContentColor The color of the text when disabled. Default is a lighter white (#FFFFFFB2).
  * @param backgroundColor The background color of the text field. Default is dark gray (#FF212121).
@@ -76,13 +79,15 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param onTextChange Callback triggered when the text content changes.
  */
 @NativeBlock(
-    keyType = "NATIVE_TEXT_FIELD",
+    keyType = "nativeblocks/TEXT_FIELD",
     name = "Native TextField",
     description = "Nativeblocks textField block",
-    version = 2
+    version = 1,
+    versionName = "1"
 )
 @Composable
 fun NativeTextField(
+    blockProps: BlockProps? = null,
     @NativeBlockData(description = "The initial text content of the text field.") text: String,
     @NativeBlockData(description = "The placeholder text displayed when the field is empty.") placeholder: String,
     @NativeBlockData(description = "The label displayed above the text field.") label: String,
@@ -114,6 +119,12 @@ fun NativeTextField(
         ],
         defaultValue = "wrap"
     ) height: String = "wrap",
+    @NativeBlockProp(
+        description = "Specifies the weight of the layout in row or column. Default is 0.0 means not set.",
+        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0F"
+    ) weight: Float = 0F,
     @NativeBlockProp(
         description = "The color of the text content.",
         valuePickerGroup = NativeBlockValuePickerPosition("Content color"),
@@ -279,10 +290,10 @@ fun NativeTextField(
     ) keyboardType: KeyboardType = KeyboardType.Text,
     @NativeBlockSlot(
         description = "Defines the leading icon for the text field."
-    ) onLeadingIcon: (@Composable (index: BlockIndex) -> Unit)? = null,
+    ) onLeadingIcon: (@Composable (index: BlockIndex, scope: Any?) -> Unit)? = null,
     @NativeBlockSlot(
         description = "Defines the trailing icon for the text field."
-    ) onTrailingIcon: (@Composable (index: BlockIndex) -> Unit)? = null,
+    ) onTrailingIcon: (@Composable (index: BlockIndex, scope: Any?) -> Unit)? = null,
     @NativeBlockEvent(
         description = "Callback triggered when the text field value changes.",
         dataBinding = ["text"]
@@ -307,6 +318,7 @@ fun NativeTextField(
                 bottom = paddingBottom
             )
         )
+        .blockWeight(weight, blockProps?.hierarchy?.last()?.scope)
         .focusable()
 
     OutlinedTextField(
@@ -344,12 +356,12 @@ fun NativeTextField(
         readOnly = readOnly,
         enabled = enable,
         leadingIcon = if (onLeadingIcon != null) {
-            { onLeadingIcon.invoke(-1) }
+            { onLeadingIcon.invoke(-1, null) }
         } else {
             null
         },
         trailingIcon = if (onTrailingIcon != null) {
-            { onTrailingIcon.invoke(-1) }
+            { onTrailingIcon.invoke(-1, null) }
         } else {
             null
         },

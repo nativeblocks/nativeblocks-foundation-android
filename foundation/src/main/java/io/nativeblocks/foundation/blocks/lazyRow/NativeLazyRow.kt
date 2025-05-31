@@ -2,12 +2,10 @@ package io.nativeblocks.foundation.blocks.lazyRow
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -24,6 +22,8 @@ import io.nativeblocks.compiler.type.NativeBlockSlot
 import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
+import io.nativeblocks.core.api.provider.block.BlockProps
+import io.nativeblocks.foundation.util.blockWeight
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 
@@ -36,6 +36,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param length The Length of list determines the number of repetitions of the content.
  * @param width The width of the row (e.g., "match" or "wrap"). Default is "wrap".
  * @param height The height of the row (e.g., "match" or "wrap"). Default is "wrap".
+ * @param weight Specifies the weight of the layout in row or column. Default is 0.0 means not set..
  * @param scrollable Determines if the row should be scrollable horizontally. Default is false.
  * @param paddingStart Padding on the start (left) side in DP. Default is 0.0.
  * @param paddingTop Padding on the top side in DP. Default is 0.0.
@@ -52,19 +53,15 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param content Slot for composing child content within the row.
  */
 @NativeBlock(
-    keyType = "NATIVE_LAZY_ROW",
+    keyType = "nativeblocks/LAZY_ROW",
     name = "Native Lazy Row",
     description = "Nativeblocks lazy row block",
-    version = 3
+    version = 1,
+    versionName = "1"
 )
 @Composable
 fun NativeLazyRow(
-    @NativeBlockData(
-        description = "A JSON array (e.g., '[{},{},...]') used for repeating the content based on its size.",
-        deprecated = true,
-        deprecatedReason = "For better performance, use the 'length' instead."
-    )
-    list: String = "",
+    blockProps: BlockProps? = null,
     @NativeBlockData(
         description = "The Length of list determines the number of repetitions of the content.",
         defaultValue = "0"
@@ -90,6 +87,12 @@ fun NativeLazyRow(
         ],
         defaultValue = "wrap"
     ) height: String = "wrap",
+    @NativeBlockProp(
+        description = "Specifies the weight of the layout in row or column. Default is 0.0 means not set.",
+        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0F"
+    ) weight: Float = 0F,
     @NativeBlockProp(
         description = "Determines if the row should be scrollable horizontally.",
         valuePicker = NativeBlockValuePicker.DROPDOWN,
@@ -180,7 +183,7 @@ fun NativeLazyRow(
     ) onClick: (() -> Unit)? = null,
     @NativeBlockSlot(
         description = "Slot for composing child content within the row."
-    ) content: @Composable (index: BlockIndex) -> Unit
+    ) content: @Composable (index: BlockIndex, scope: Any) -> Unit
 ) {
     val shape = shapeMapper(
         "rectangle",
@@ -198,6 +201,7 @@ fun NativeLazyRow(
             end = paddingEnd,
             bottom = paddingBottom,
         )
+        .blockWeight(weight, blockProps?.hierarchy?.last()?.scope)
 
     if (onClick != null) {
         modifier = Modifier.clickable(
@@ -208,10 +212,6 @@ fun NativeLazyRow(
         }
     }
 
-    if (scrollable) {
-        modifier = modifier.horizontalScroll(rememberScrollState())
-    }
-
     LazyRow(
         modifier = modifier,
         userScrollEnabled = scrollable,
@@ -219,7 +219,7 @@ fun NativeLazyRow(
         horizontalArrangement = horizontalArrangement
     ) {
         items(count = length) { index ->
-            content.invoke(index)
+            content.invoke(index, this)
         }
     }
 }

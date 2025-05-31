@@ -24,10 +24,11 @@ import io.nativeblocks.core.api.util.cast
  *   - `#SCRIPT 2 + 2 #ENDSCRIPT`: The string with evaluated JavaScript code replacing the script tags.
  */
 @NativeAction(
-    keyType = "NATIVE_CHANGE_VARIABLE",
+    keyType = "nativeblocks/CHANGE_VARIABLE",
     name = "Native Change Variable",
     description = "Native Change Variable",
-    version = 2
+    version = 1,
+    versionName = "1"
 )
 class NativeChangeVariable {
     /**
