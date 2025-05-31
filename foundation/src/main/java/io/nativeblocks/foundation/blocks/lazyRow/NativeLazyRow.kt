@@ -2,12 +2,10 @@ package io.nativeblocks.foundation.blocks.lazyRow
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -212,10 +210,6 @@ fun NativeLazyRow(
             interactionSource = remember { MutableInteractionSource() }) {
             onClick.invoke()
         }
-    }
-
-    if (scrollable) {
-        modifier = modifier.horizontalScroll(rememberScrollState())
     }
 
     LazyRow(

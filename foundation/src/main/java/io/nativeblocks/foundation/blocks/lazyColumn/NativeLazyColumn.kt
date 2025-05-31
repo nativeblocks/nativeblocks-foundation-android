@@ -220,8 +220,6 @@ fun NativeLazyColumn(
         horizontalAlignment = horizontalAlignment
     ) {
         items(count = length) { index ->
-
-
             content.invoke(index, this@LazyColumn)
         }
     }
