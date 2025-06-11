@@ -1,6 +1,7 @@
 package io.nativeblocks.foundation.blocks.box
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -38,7 +39,8 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param paddingTop Padding on the top side in DP. Default is 0.0.
  * @param paddingEnd Padding on the end side in DP. Default is 0.0.
  * @param paddingBottom Padding on the bottom side in DP. Default is 0.0.
- * @param background Background color of the box in hexadecimal format. Default is "#00000000".
+ * @param backgroundColor Background color of the box in hexadecimal format. Default is "#00000000".
+ * @param borderColor border color of the box in hexadecimal format. Default is "#00000000".
  * @param radiusTopStart Top-start corner radius in DP. Default is 0.0.
  * @param radiusTopEnd Top-end corner radius in DP. Default is 0.0.
  * @param radiusBottomStart Bottom-start corner radius in DP. Default is 0.0.
@@ -111,7 +113,12 @@ fun NativeBox(
         description = "Background color of the box in hexadecimal format (e.g., '#FFFFFF').",
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         defaultValue = "#00000000"
-    ) background: Color = Color.Transparent,
+    ) backgroundColor: Color = Color.Transparent,
+    @NativeBlockProp(
+        description = "Border color of the box in hexadecimal format (e.g., '#FFFFFF').",
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
+        defaultValue = "#00000000"
+    ) borderColor: Color = Color.Transparent,
     @NativeBlockProp(
         description = "Top-start corner radius of the box in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
@@ -159,17 +166,19 @@ fun NativeBox(
         description = "Slot for placing dynamic child content inside the box."
     ) content: @Composable (index: BlockIndex, scope: Any) -> Unit
 ) {
+
+    val shape = shapeMapper(
+        "rectangle",
+        radiusTopStart,
+        radiusTopEnd,
+        radiusBottomStart,
+        radiusBottomEnd,
+    )
+
     val modifier = Modifier
         .widthAndHeight(width, height)
-        .background(
-            background, shapeMapper(
-                "rectangle",
-                radiusTopStart,
-                radiusTopEnd,
-                radiusBottomStart,
-                radiusBottomEnd,
-            )
-        )
+        .background(backgroundColor, shape)
+        .border(1.dp, borderColor, shape)
         .padding(
             start = paddingStart,
             top = paddingTop,

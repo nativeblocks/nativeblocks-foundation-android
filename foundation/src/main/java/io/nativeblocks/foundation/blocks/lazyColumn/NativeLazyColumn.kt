@@ -1,6 +1,7 @@
 package io.nativeblocks.foundation.blocks.lazyColumn
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -41,7 +42,8 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param paddingTop Padding on the top side in DP. Default is 0.0.
  * @param paddingEnd Padding on the end (right) side in DP. Default is 0.0.
  * @param paddingBottom Padding on the bottom side in DP. Default is 0.0.
- * @param background Background color of the column in hexadecimal format. Default is "#00000000".
+ * @param backgroundColor Background color of the column in hexadecimal format. Default is "#00000000".
+ * @param borderColor border color of the column in hexadecimal format. Default is "#00000000".
  * @param radiusTopStart Top-start corner radius in DP. Default is 0.0.
  * @param radiusTopEnd Top-end corner radius in DP. Default is 0.0.
  * @param radiusBottomStart Bottom-start corner radius in DP. Default is 0.0.
@@ -130,7 +132,12 @@ fun NativeLazyColumn(
         description = "Background color of the column in hexadecimal format.",
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         defaultValue = "#00000000"
-    ) background: Color = Color.Transparent,
+    ) backgroundColor: Color = Color.Transparent,
+    @NativeBlockProp(
+        description = "border color of the column in hexadecimal format.",
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
+        defaultValue = "#00000000"
+    ) borderColor: Color = Color.Transparent,
     @NativeBlockProp(
         description = "Top-start corner radius in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
@@ -195,7 +202,8 @@ fun NativeLazyColumn(
 
     var modifier = Modifier
         .widthAndHeight(width, height)
-        .background(background, shape)
+        .background(backgroundColor, shape)
+        .border(1.dp, borderColor, shape)
         .padding(
             start = paddingStart,
             top = paddingTop,
