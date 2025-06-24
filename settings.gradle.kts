@@ -18,7 +18,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "nativeblocks-foundation-android"
 include(
-    ":sampleapp",
+    ":app",
     ":foundation",
 )
  

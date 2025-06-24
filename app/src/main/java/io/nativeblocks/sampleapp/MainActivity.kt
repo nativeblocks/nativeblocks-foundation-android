@@ -16,11 +16,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         lifecycleScope.launch {
-            NativeblocksManager.getInstance().getScaffold({
+            val scaffold = NativeblocksManager.getInstance().getScaffold()
+            if (scaffold.isSuccess) {
                 // register frames in graph for owning navigation
-            }, {
+            }
+            if (scaffold.isFailure) {
                 // there is no frame to register
-            })
+            }
         }
 
         setContent {
