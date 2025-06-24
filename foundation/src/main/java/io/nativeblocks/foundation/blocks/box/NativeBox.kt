@@ -50,7 +50,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param content Slot for composing child content within the box.
  */
 @NativeBlock(
-    keyType = "nativeblocks/BOX",
+    keyType = "nativeblocks/box",
     name = "Native Box",
     description = "Nativeblocks box block",
     version = 1,

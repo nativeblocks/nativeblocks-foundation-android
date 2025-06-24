@@ -27,7 +27,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param weight Specifies the weight of the layout in row or column. Default is 0.0 means not set..
  */
 @NativeBlock(
-    keyType = "nativeblocks/SPACER",
+    keyType = "nativeblocks/spacer",
     name = "Native Spacer",
     description = "Nativeblocks spacer block",
     version = 1,

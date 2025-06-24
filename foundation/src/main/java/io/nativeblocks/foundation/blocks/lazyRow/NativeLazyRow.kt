@@ -55,7 +55,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param content Slot for composing child content within the row.
  */
 @NativeBlock(
-    keyType = "nativeblocks/LAZY_ROW",
+    keyType = "nativeblocks/lazy_row",
     name = "Native Lazy Row",
     description = "Nativeblocks lazy row block",
     version = 1,

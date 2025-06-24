@@ -42,7 +42,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param maxLines The maximum number of lines to display. Default is 9999.
  */
 @NativeBlock(
-    keyType = "nativeblocks/TEXT",
+    keyType = "nativeblocks/text",
     name = "Native Text",
     description = "Nativeblocks text block",
     version = 1,

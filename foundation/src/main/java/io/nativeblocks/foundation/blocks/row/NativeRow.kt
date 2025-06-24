@@ -56,7 +56,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param content Slot for composing child content within the row.
  */
 @NativeBlock(
-    keyType = "nativeblocks/ROW",
+    keyType = "nativeblocks/row",
     name = "Native Row",
     description = "Nativeblocks row block",
     version = 1,

@@ -54,7 +54,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param content Slot for composing child content within the column.
  */
 @NativeBlock(
-    keyType = "nativeblocks/LAZY_COLUMN",
+    keyType = "nativeblocks/lazy_column",
     name = "Native Lazy Column",
     description = "Nativeblocks lazy column block",
     version = 1,
