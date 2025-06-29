@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             NativeblocksFrame(
-                frameRoute = "/",
+                frameRoute = "/welcome",
                 routeArguments = hashMapOf(),
                 loading = {
                     NativeblocksLoading()
