@@ -126,13 +126,13 @@ fun NativeTextField(
     ) weight: Float = 0F,
     @NativeBlockProp(
         description = "The color of the text content.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Content"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Content color"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         defaultValue = "#FFFFFFFF"
     ) contentColor: Color = Color.White,
     @NativeBlockProp(
         description = "The color of the text when disabled.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Content"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Content color"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         defaultValue = "#FFFFFFB2"
     ) disabledContentColor: Color = Color(0xFFFFFFB2),

@@ -117,13 +117,13 @@ fun NativeButton(
         defaultValue = "0F"
     ) weight: Float = 0F,
     @NativeBlockProp(
-        valuePickerGroup = NativeBlockValuePickerPosition("Content"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Content color"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         description = "The color of the button's text or content.",
         defaultValue = "#FFFFFFFF"
     ) contentColor: Color = Color.White,
     @NativeBlockProp(
-        valuePickerGroup = NativeBlockValuePickerPosition("Content"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Content color"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         description = "The color of the button's content when it is disabled.",
         defaultValue = "#FFFFFFB2"
