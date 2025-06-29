@@ -72,7 +72,6 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param textAlign Specifies the alignment of the text (e.g., "start", "center"). Default is "start".
  * @param fontWeight Specifies the font weight of the text (e.g., "normal", "bold"). Default is "normal".
  * @param maxLines The maximum number of lines allowed for the text. Default is 100.
- * @param letterSpacing The letter spacing for the text in SP. Default is 1.25.
  * @param keyboardType The type of keyboard to display (e.g., "text", "number"). Default is "normal".
  * @param onLeadingIcon The leading icon slot, if any.
  * @param onTrailingIcon The trailing icon slot, if any.
@@ -100,7 +99,7 @@ fun NativeTextField(
         defaultValue = "false"
     ) readOnly: Boolean = false,
     @NativeBlockProp(
-        description = "Specifies the width of the text field (e.g., 'match' or 'wrap').",
+        description = "Specifies the width of the text field (e.g., 'match' or 'wrap' or number).",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -110,7 +109,7 @@ fun NativeTextField(
         defaultValue = "wrap"
     ) width: String = "wrap",
     @NativeBlockProp(
-        description = "Specifies the height of the text field (e.g., 'match' or 'wrap').",
+        description = "Specifies the height of the text field (e.g., 'match' or 'wrap' or number).",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -127,62 +126,61 @@ fun NativeTextField(
     ) weight: Float = 0F,
     @NativeBlockProp(
         description = "The color of the text content.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Content color"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Content"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         defaultValue = "#FFFFFFFF"
     ) contentColor: Color = Color.White,
     @NativeBlockProp(
         description = "The color of the text when disabled.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Content color"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Content"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         defaultValue = "#FFFFFFB2"
     ) disabledContentColor: Color = Color(0xFFFFFFB2),
     @NativeBlockProp(
         description = "The background color of the text field.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Background color"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Background"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         defaultValue = "#FF212121"
     ) backgroundColor: Color = Color(0xFF212121),
     @NativeBlockProp(
         description = "The background color of the text field when disabled.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Background color"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Background"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         defaultValue = "#212121B2"
     ) disableBackgroundColor: Color = Color(0x212121B2),
     @NativeBlockProp(
         description = "The border color of the text field.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Border color"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         defaultValue = "#FF212121"
     ) borderColor: Color = Color(0xFF212121),
     @NativeBlockProp(
         description = "The border color of the text field when disabled.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Border color"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         defaultValue = "#212121B2"
     ) disableBorderColor: Color = Color(0x212121B2),
     @NativeBlockProp(
         description = "The border color of the text field when focused.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Border color"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         defaultValue = "#FF212121"
     ) borderFocusColor: Color = Color(0xFF212121),
-
     @NativeBlockProp(
         description = "The radius for the top-start corner of the text field in DP.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "4.0"
     ) radiusTopStart: Dp = 4.dp,
     @NativeBlockProp(
         description = "The radius for the top-end corner of the text field in DP.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "4.0"
     ) radiusTopEnd: Dp = 4.dp,
     @NativeBlockProp(
         description = "The radius for the bottom-start corner of the text field in DP.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "4.0"
     ) radiusBottomStart: Dp = 4.dp,
@@ -192,32 +190,30 @@ fun NativeTextField(
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "4.0"
     ) radiusBottomEnd: Dp = 4.dp,
-
     @NativeBlockProp(
         description = "The padding on the start (left) side of the text field in DP.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Padding"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "4.0"
     ) paddingStart: Dp = 4.dp,
     @NativeBlockProp(
         description = "The padding on the top side of the text field in DP.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Padding"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "4.0"
     ) paddingTop: Dp = 4.dp,
     @NativeBlockProp(
         description = "The padding on the end (right) side of the text field in DP.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Padding"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "4.0"
     ) paddingEnd: Dp = 4.dp,
     @NativeBlockProp(
         description = "The padding on the bottom side of the text field in DP.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Padding"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "4.0"
     ) paddingBottom: Dp = 4.dp,
-
     @NativeBlockProp(
         description = "The font size of the text in SP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Font"),
@@ -258,19 +254,12 @@ fun NativeTextField(
         ],
         defaultValue = "normal"
     ) fontWeight: FontWeight = FontWeight.Normal,
-
     @NativeBlockProp(
         description = "The maximum number of lines for the text field.",
         valuePickerGroup = NativeBlockValuePickerPosition("Font"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        defaultValue = "100"
-    ) maxLines: Int = 100,
-    @NativeBlockProp(
-        description = "The letter spacing for the text in SP.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Font"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        defaultValue = "1.25"
-    ) letterSpacing: TextUnit = 1.25.sp,
+        defaultValue = "1"
+    ) maxLines: Int = 1,
     @NativeBlockProp(
         description = "The type of keyboard to display for the text field (e.g., 'text', 'number', 'email').",
         valuePickerGroup = NativeBlockValuePickerPosition("Keyboard"),
@@ -335,7 +324,6 @@ fun NativeTextField(
             focusManager.clearFocus()
         }),
         textStyle = textStyle.copy(
-            letterSpacing = letterSpacing,
             textAlign = textAlign
         ),
         shape = RoundedCornerShape(
@@ -377,7 +365,6 @@ fun NativeTextField(
                 fontWeight = textStyle.fontWeight,
                 fontFamily = textStyle.fontFamily,
                 textAlign = textAlign,
-                letterSpacing = letterSpacing
             )
         },
         label = {

@@ -55,7 +55,7 @@ fun NativeText(
     text: String,
 
     @NativeBlockProp(
-        description = "The width of the text block (e.g., 'match' or 'wrap').",
+        description = "The width of the text block (e.g., 'match' or 'wrap' or number).",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -66,7 +66,7 @@ fun NativeText(
     )
     width: String = "wrap",
     @NativeBlockProp(
-        description = "The height of the text block (e.g., 'match' or 'wrap').",
+        description = "The height of the text block (e.g., 'match' or 'wrap' or number).",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -154,9 +154,9 @@ fun NativeText(
         description = "The maximum number of lines to display.",
         valuePickerGroup = NativeBlockValuePickerPosition("Font"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        defaultValue = "9999"
+        defaultValue = "1"
     )
-    maxLines: Int = 9999,
+    maxLines: Int = 1,
 ) {
     val textStyle = TextStyle(
         fontFamily = fontFamilyMapper(fontFamily),
