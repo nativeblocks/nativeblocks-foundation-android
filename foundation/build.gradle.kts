@@ -27,8 +27,12 @@ android {
 
     buildTypes {
         getByName("release") {
+            buildConfigField("String", "VERSION", "\"${ModuleInfo.VERSION}\"")
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+        }
+        getByName("debug") {
+            buildConfigField("String", "VERSION", "\"${ModuleInfo.VERSION}\"")
         }
     }
     compileOptions {
