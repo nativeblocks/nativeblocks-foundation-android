@@ -1,13 +1,12 @@
 package io.nativeblocks.foundation.blocks.row
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -39,12 +38,12 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param width The width of the row (e.g., "match" or "wrap"). Default is "wrap".
  * @param height The height of the row (e.g., "match" or "wrap"). Default is "wrap".
  * @param weight Specifies the weight of the layout in row or column. Default is 0.0 means not set..
- * @param scrollable Determines if the row should be scrollable horizontally. Default is false.
  * @param paddingStart Padding on the start (left) side in DP. Default is 0.0.
  * @param paddingTop Padding on the top side in DP. Default is 0.0.
  * @param paddingEnd Padding on the end (right) side in DP. Default is 0.0.
  * @param paddingBottom Padding on the bottom side in DP. Default is 0.0.
- * @param background Background color of the row in hexadecimal format. Default is "#00000000".
+ * @param borderColor border color of the row in hexadecimal format. Default is "#00000000".
+ * @param borderWidth border width of the column in DP.
  * @param radiusTopStart Top-start corner radius in DP. Default is 0.0.
  * @param radiusTopEnd Top-end corner radius in DP. Default is 0.0.
  * @param radiusBottomStart Bottom-start corner radius in DP. Default is 0.0.
@@ -55,7 +54,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param content Slot for composing child content within the row.
  */
 @NativeBlock(
-    keyType = "nativeblocks/ROW",
+    keyType = "nativeblocks/row",
     name = "Native Row",
     description = "Nativeblocks row block",
     version = 1,
@@ -70,7 +69,7 @@ fun NativeRow(
     )
     length: Int = -1,
     @NativeBlockProp(
-        description = "The width of the row (e.g., 'match' or 'wrap').",
+        description = "The width of the row (e.g., 'match' or 'wrap' or number).",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -80,7 +79,7 @@ fun NativeRow(
         defaultValue = "wrap"
     ) width: String = "wrap",
     @NativeBlockProp(
-        description = "The height of the row (e.g., 'match' or 'wrap').",
+        description = "The height of the row (e.g., 'match' or 'wrap' or number).",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -95,15 +94,6 @@ fun NativeRow(
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "0F"
     ) weight: Float = 0F,
-    @NativeBlockProp(
-        description = "Determines if the row should be scrollable horizontally.",
-        valuePicker = NativeBlockValuePicker.DROPDOWN,
-        valuePickerOptions = [
-            NativeBlockValuePickerOption("false", "false"),
-            NativeBlockValuePickerOption("true", "true")
-        ],
-        defaultValue = "false"
-    ) scrollable: Boolean = false,
     @NativeBlockProp(
         description = "Padding on the start (left) side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
@@ -132,32 +122,44 @@ fun NativeRow(
         description = "Background color of the row in hexadecimal format.",
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         defaultValue = "#00000000"
-    ) background: Color = Color.Transparent,
+    ) backgroundColor: Color = Color.Transparent,
+    @NativeBlockProp(
+        description = "border color of the row in hexadecimal format.",
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
+        defaultValue = "#00000000"
+    ) borderColor: Color = Color.Transparent,
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
+        description = "border width of the column in DP.",
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0"
+    ) borderWidth: Dp = 0.dp,
     @NativeBlockProp(
         description = "Top-start corner radius in DP.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "0.0"
     ) radiusTopStart: Dp = 0.dp,
     @NativeBlockProp(
         description = "Top-end corner radius in DP.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "0.0"
     ) radiusTopEnd: Dp = 0.dp,
     @NativeBlockProp(
         description = "Bottom-start corner radius in DP.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "0.0"
     ) radiusBottomStart: Dp = 0.dp,
     @NativeBlockProp(
         description = "Bottom-end corner radius in DP.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "0.0"
     ) radiusBottomEnd: Dp = 0.dp,
     @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Alignment"),
         description = "Horizontal arrangement of child components inside the row.",
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -171,6 +173,7 @@ fun NativeRow(
         defaultValue = "start"
     ) horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Alignment"),
         description = "Vertical alignment of child components inside the row.",
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -196,7 +199,8 @@ fun NativeRow(
     )
     var modifier = Modifier
         .widthAndHeight(width, height)
-        .background(background, shape)
+        .background(backgroundColor, shape)
+        .border(borderWidth, borderColor, shape)
         .padding(
             start = paddingStart,
             top = paddingTop,
@@ -212,10 +216,6 @@ fun NativeRow(
             interactionSource = remember { MutableInteractionSource() }) {
             onClick.invoke()
         }
-    }
-
-    if (scrollable) {
-        modifier = modifier.horizontalScroll(rememberScrollState())
     }
 
     Row(

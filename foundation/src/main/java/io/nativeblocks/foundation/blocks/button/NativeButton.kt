@@ -74,7 +74,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param onClick The callback triggered when the button is clicked.
  */
 @NativeBlock(
-    keyType = "nativeblocks/BUTTON",
+    keyType = "nativeblocks/button",
     name = "Native Button",
     description = "Nativeblocks button block",
     version = 1,
@@ -97,7 +97,7 @@ fun NativeButton(
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
         ],
-        description = "The width of the button (e.g., 'match' or 'wrap').",
+        description = "The width of the button (e.g., 'match' or 'wrap' or number).",
         defaultValue = "wrap"
     ) width: String = "wrap",
     @NativeBlockProp(
@@ -107,7 +107,7 @@ fun NativeButton(
             NativeBlockValuePickerOption("match", "Match parent"),
             NativeBlockValuePickerOption("wrap", "Wrap content")
         ],
-        description = "The height of the button (e.g., 'match' or 'wrap').",
+        description = "The height of the button (e.g., 'match' or 'wrap' or number).",
         defaultValue = "wrap"
     ) height: String = "wrap",
     @NativeBlockProp(
@@ -129,98 +129,103 @@ fun NativeButton(
         defaultValue = "#FFFFFFB2"
     ) disabledContentColor: Color = Color(0xFFFFFFB2),
     @NativeBlockProp(
-        valuePickerGroup = NativeBlockValuePickerPosition("Background color"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Background"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         description = "The background color of the button.",
         defaultValue = "#FF212121"
     ) backgroundColor: Color = Color(0xFF212121),
     @NativeBlockProp(
-        valuePickerGroup = NativeBlockValuePickerPosition("Background color"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Background"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         description = "The background color when the button is disabled.",
         defaultValue = "#212121B2"
     ) disableBackgroundColor: Color = Color(0x212121B2),
     @NativeBlockProp(
-        valuePickerGroup = NativeBlockValuePickerPosition("Border color"),
-        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
-        description = "The border color of the button.",
-        defaultValue = "#FF212121"
-    ) borderColor: Color = Color(0xFF212121),
-    @NativeBlockProp(
-        valuePickerGroup = NativeBlockValuePickerPosition("Border color"),
-        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
-        description = "The border color when the button is disabled.",
-        defaultValue = "#212121B2"
-    ) disableBorderColor: Color = Color(0x212121B2),
-    @NativeBlockProp(
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Padding"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "Padding on the start (left) side in DP.",
         defaultValue = "4.0"
     ) paddingStart: Dp = 4.dp,
     @NativeBlockProp(
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Padding"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "Padding on the top side in DP.",
         defaultValue = "4.0"
     ) paddingTop: Dp = 4.dp,
     @NativeBlockProp(
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Padding"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "Padding on the end (right) side in DP.",
         defaultValue = "4.0"
     ) paddingEnd: Dp = 4.dp,
     @NativeBlockProp(
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Padding"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "Padding on the bottom side in DP.",
         defaultValue = "4.0"
     ) paddingBottom: Dp = 4.dp,
-
     @NativeBlockProp(
-        valuePickerGroup = NativeBlockValuePickerPosition("Content spacing"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Content padding"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "Content padding on the start (left) side in DP.",
         defaultValue = "4.0"
     ) contentPaddingStart: Dp = 4.dp,
     @NativeBlockProp(
-        valuePickerGroup = NativeBlockValuePickerPosition("Content spacing"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Content padding"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "Content padding on the top side in DP.",
         defaultValue = "4.0"
     ) contentPaddingTop: Dp = 4.dp,
     @NativeBlockProp(
-        valuePickerGroup = NativeBlockValuePickerPosition("Content spacing"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Content padding"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "Content padding on the end (right) side in DP.",
         defaultValue = "4.0"
     ) contentPaddingEnd: Dp = 4.dp,
     @NativeBlockProp(
-        valuePickerGroup = NativeBlockValuePickerPosition("Content spacing"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Content padding"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "Content padding on the bottom side in DP.",
         defaultValue = "4.0"
     ) contentPaddingBottom: Dp = 4.dp,
     @NativeBlockProp(
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
+        description = "The border color of the button.",
+        defaultValue = "#FF212121"
+    ) borderColor: Color = Color(0xFF212121),
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
+        description = "The border color when the button is disabled.",
+        defaultValue = "#212121B2"
+    ) disableBorderColor: Color = Color(0x212121B2),
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
+        description = "border width of the column in DP.",
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0"
+    ) borderWidth: Dp = 0.dp,
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "The radius for the top-start corner in DP.",
         defaultValue = "4.0"
     ) radiusTopStart: Dp = 4.dp,
     @NativeBlockProp(
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "The radius for the top-end corner in DP.",
         defaultValue = "4.0"
     ) radiusTopEnd: Dp = 4.dp,
     @NativeBlockProp(
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "The radius for the bottom-start corner in DP.",
         defaultValue = "4.0"
     ) radiusBottomStart: Dp = 4.dp,
     @NativeBlockProp(
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         description = "The radius for the bottom-end corner in DP.",
         defaultValue = "4.0"
@@ -308,10 +313,7 @@ fun NativeButton(
             bottomStart = radiusBottomStart,
             bottomEnd = radiusBottomEnd
         ),
-        border = BorderStroke(
-            1.dp,
-            if (enable) borderColor else disableBorderColor
-        ),
+        border = BorderStroke(borderWidth, if (enable) borderColor else disableBorderColor),
         enabled = enable
     ) {
         Row(
@@ -335,7 +337,7 @@ fun NativeButton(
                 textAlign = textAlign,
                 overflow = TextOverflow.Clip,
                 minLines = 1,
-                maxLines = 9999,
+                maxLines = 2,
             )
             Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
             onTrailingIcon?.let { it(-1, null) }

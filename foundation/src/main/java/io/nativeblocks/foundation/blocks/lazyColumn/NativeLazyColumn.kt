@@ -1,6 +1,7 @@
 package io.nativeblocks.foundation.blocks.lazyColumn
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -35,13 +36,14 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param length The Length of list determines the number of repetitions of the content.
  * @param width The width of the column (e.g., "match" or "wrap"). Default is "wrap".
  * @param weight Specifies the weight of the layout in row or column. Default is 0.0 means not set..
- * @param scrollable Determines if the column should be scrollable. Default is false.
  * @param height The height of the column (e.g., "match" or "wrap"). Default is "wrap".
  * @param paddingStart Padding on the start (left) side in DP. Default is 0.0.
  * @param paddingTop Padding on the top side in DP. Default is 0.0.
  * @param paddingEnd Padding on the end (right) side in DP. Default is 0.0.
  * @param paddingBottom Padding on the bottom side in DP. Default is 0.0.
- * @param background Background color of the column in hexadecimal format. Default is "#00000000".
+ * @param backgroundColor Background color of the column in hexadecimal format. Default is "#00000000".
+ * @param borderColor border color of the row in hexadecimal format. Default is "#00000000".
+ * @param borderWidth border width of the column in DP.
  * @param radiusTopStart Top-start corner radius in DP. Default is 0.0.
  * @param radiusTopEnd Top-end corner radius in DP. Default is 0.0.
  * @param radiusBottomStart Bottom-start corner radius in DP. Default is 0.0.
@@ -52,7 +54,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param content Slot for composing child content within the column.
  */
 @NativeBlock(
-    keyType = "nativeblocks/LAZY_COLUMN",
+    keyType = "nativeblocks/lazy_column",
     name = "Native Lazy Column",
     description = "Nativeblocks lazy column block",
     version = 1,
@@ -67,7 +69,7 @@ fun NativeLazyColumn(
     )
     length: Int = 0,
     @NativeBlockProp(
-        description = "The width of the column (e.g., 'match' or 'wrap').",
+        description = "The width of the column (e.g., 'match' or 'wrap' or number).",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -77,7 +79,7 @@ fun NativeLazyColumn(
         defaultValue = "wrap"
     ) width: String = "wrap",
     @NativeBlockProp(
-        description = "The height of the column (e.g., 'match' or 'wrap').",
+        description = "The height of the column (e.g., 'match' or 'wrap' or number).",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -93,69 +95,72 @@ fun NativeLazyColumn(
         defaultValue = "0F"
     ) weight: Float = 0F,
     @NativeBlockProp(
-        description = "Determines if the column should be scrollable.",
-        valuePicker = NativeBlockValuePicker.DROPDOWN,
-        valuePickerOptions = [
-            NativeBlockValuePickerOption("false", "false"),
-            NativeBlockValuePickerOption("true", "true")
-        ],
-        defaultValue = "true"
-    ) scrollable: Boolean = true,
-
-    @NativeBlockProp(
         description = "Padding on the start (left) side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Padding"),
         defaultValue = "0.0"
     ) paddingStart: Dp = 0.dp,
     @NativeBlockProp(
         description = "Padding on the top side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Padding"),
         defaultValue = "0.0"
     ) paddingTop: Dp = 0.dp,
     @NativeBlockProp(
         description = "Padding on the end (right) side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Padding"),
         defaultValue = "0.0"
     ) paddingEnd: Dp = 0.dp,
     @NativeBlockProp(
         description = "Padding on the bottom side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Spacing"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Padding"),
         defaultValue = "0.0"
     ) paddingBottom: Dp = 0.dp,
     @NativeBlockProp(
         description = "Background color of the column in hexadecimal format.",
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         defaultValue = "#00000000"
-    ) background: Color = Color.Transparent,
+    ) backgroundColor: Color = Color.Transparent,
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
+        description = "border color of the column in hexadecimal format.",
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
+        defaultValue = "#00000000"
+    ) borderColor: Color = Color.Transparent,
+    @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
+        description = "border width of the column in DP.",
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
+        defaultValue = "0"
+    ) borderWidth: Dp = 0.dp,
     @NativeBlockProp(
         description = "Top-start corner radius in DP.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "0.0"
     ) radiusTopStart: Dp = 0.dp,
     @NativeBlockProp(
         description = "Top-end corner radius in DP.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "0.0"
     ) radiusTopEnd: Dp = 0.dp,
     @NativeBlockProp(
         description = "Bottom-start corner radius in DP.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "0.0"
     ) radiusBottomStart: Dp = 0.dp,
     @NativeBlockProp(
         description = "Bottom-end corner radius in DP.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         defaultValue = "0.0"
     ) radiusBottomEnd: Dp = 0.dp,
     @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Alignment"),
         description = "Vertical arrangement of child components inside the column.",
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -169,6 +174,7 @@ fun NativeLazyColumn(
         defaultValue = "top"
     ) verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     @NativeBlockProp(
+        valuePickerGroup = NativeBlockValuePickerPosition("Alignment"),
         description = "Horizontal alignment of child components inside the column.",
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -195,7 +201,8 @@ fun NativeLazyColumn(
 
     var modifier = Modifier
         .widthAndHeight(width, height)
-        .background(background, shape)
+        .background(backgroundColor, shape)
+        .border(borderWidth, borderColor, shape)
         .padding(
             start = paddingStart,
             top = paddingTop,
@@ -215,7 +222,6 @@ fun NativeLazyColumn(
 
     LazyColumn(
         modifier = modifier,
-        userScrollEnabled = scrollable,
         verticalArrangement = verticalArrangement,
         horizontalAlignment = horizontalAlignment
     ) {

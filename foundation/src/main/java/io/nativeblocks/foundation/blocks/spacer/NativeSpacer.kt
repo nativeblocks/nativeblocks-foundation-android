@@ -27,7 +27,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param weight Specifies the weight of the layout in row or column. Default is 0.0 means not set..
  */
 @NativeBlock(
-    keyType = "nativeblocks/SPACER",
+    keyType = "nativeblocks/spacer",
     name = "Native Spacer",
     description = "Nativeblocks spacer block",
     version = 1,
@@ -37,7 +37,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
 fun NativeSpacer(
     blockProps: BlockProps? = null,
     @NativeBlockProp(
-        description = "The width of the spacer (e.g., 'match' or 'wrap').",
+        description = "The width of the spacer (e.g., 'match' or 'wrap' or number).",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -47,7 +47,7 @@ fun NativeSpacer(
         defaultValue = "wrap"
     ) width: String = "wrap",
     @NativeBlockProp(
-        description = "The height of the spacer (e.g., 'match' or 'wrap').",
+        description = "The height of the spacer (e.g., 'match' or 'wrap' or number).",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [

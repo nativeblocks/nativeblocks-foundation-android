@@ -36,7 +36,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param contentDescription A description of the image content for accessibility purposes. Default is an empty string.
  */
 @NativeBlock(
-    keyType = "nativeblocks/IMAGE",
+    keyType = "nativeblocks/image",
     name = "Native Image",
     description = "Nativeblocks image block",
     version = 1,
@@ -49,7 +49,7 @@ fun NativeImage(
         description = "The URL of the image to display. Must be a valid HTTP or HTTPS URL."
     ) imageUrl: String,
     @NativeBlockProp(
-        description = "The width of the image (e.g., 'match' or 'wrap').",
+        description = "The width of the image (e.g., 'match' or 'wrap' or number).",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [
@@ -59,7 +59,7 @@ fun NativeImage(
         defaultValue = "wrap"
     ) width: String = "wrap",
     @NativeBlockProp(
-        description = "The height of the image (e.g., 'match' or 'wrap').",
+        description = "The height of the image (e.g., 'match' or 'wrap' or number).",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         valuePicker = NativeBlockValuePicker.COMBOBOX_INPUT,
         valuePickerOptions = [

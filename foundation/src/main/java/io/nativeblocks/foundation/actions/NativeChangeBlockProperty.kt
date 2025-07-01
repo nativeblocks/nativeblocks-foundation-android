@@ -26,7 +26,7 @@ import io.nativeblocks.core.api.util.cast
  *   - `#SCRIPT 2 + 2 #ENDSCRIPT`: The string with evaluated JavaScript code replacing the script tags.
  */
 @NativeAction(
-    keyType = "nativeblocks/CHANGE_BLOCK_PROPERTY",
+    keyType = "nativeblocks/change_block_property",
     name = "Native Change Block Property",
     description = "Native Change Block Property",
     version = 1,
