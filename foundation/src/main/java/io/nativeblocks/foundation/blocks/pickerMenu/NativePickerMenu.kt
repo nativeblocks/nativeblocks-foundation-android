@@ -7,8 +7,8 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
@@ -218,22 +218,27 @@ fun NativePickerMenu(
                 bottom = paddingBottom
             )
     ) {
-        Row(
-            modifier = Modifier.clickable(
-                enabled = enable,
-                indication = null,
-                interactionSource = remember { MutableInteractionSource() }) {
-                expanded = true
-            },
+        LazyRow(
+            modifier = Modifier
+                .clickable(
+                    enabled = enable,
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }) {
+                    expanded = true
+                },
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            itemContent(selectedIndex)
-            Icon(
-                imageVector = Icons.Default.ArrowDropDown,
-                contentDescription = null,
-                tint = iconColor
-            )
+            item(key = selectedIndex) {
+                itemContent(selectedIndex)
+            }
+            item(key = "ICON") {
+                Icon(
+                    imageVector = Icons.Default.ArrowDropDown,
+                    contentDescription = null,
+                    tint = iconColor
+                )
+            }
         }
 
         DropdownMenu(
