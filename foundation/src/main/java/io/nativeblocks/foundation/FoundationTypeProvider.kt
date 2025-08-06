@@ -28,20 +28,21 @@ import io.nativeblocks.foundation.types.VerticalAlignmentNativeType
 import io.nativeblocks.foundation.types.VerticalArrangementNativeType
 
 object FoundationTypeProvider {
-    fun provideTypes() {
-        NativeblocksManager.getInstance().provideTypeConverter(Dp::class, DpNativeType())
-        NativeblocksManager.getInstance().provideTypeConverter(Color::class, ColorNativeType())
-        NativeblocksManager.getInstance().provideTypeConverter(LayoutDirection::class, LayoutDirectionNativeType())
-        NativeblocksManager.getInstance().provideTypeConverter(TextUnit::class, TextUnitNativeType())
-        NativeblocksManager.getInstance().provideTypeConverter(Alignment::class, AlignmentNativeType())
-        NativeblocksManager.getInstance().provideTypeConverter(FontWeight::class, FontWeightNativeType())
-        NativeblocksManager.getInstance().provideTypeConverter(TextAlign::class, TextAlignNativeType())
-        NativeblocksManager.getInstance().provideTypeConverter(ContentScale::class, ContentScaleNativeType())
-        NativeblocksManager.getInstance().provideTypeConverter(Arrangement.Horizontal::class, HorizontalArrangementNativeType())
-        NativeblocksManager.getInstance().provideTypeConverter(Alignment.Horizontal::class, HorizontalAlignmentNativeType())
-        NativeblocksManager.getInstance().provideTypeConverter(Arrangement.Vertical::class, VerticalArrangementNativeType())
-        NativeblocksManager.getInstance().provideTypeConverter(Alignment.Vertical::class, VerticalAlignmentNativeType())
-        NativeblocksManager.getInstance().provideTypeConverter(TextOverflow::class, TextOverflowNativeType())
-        NativeblocksManager.getInstance().provideTypeConverter(KeyboardType::class, KeyboardTypeNativeType())
+    fun provideTypes(instanceName: String = "default") {
+        NativeblocksManager.getInstance(instanceName)
+            .provideTypeConverter(Dp::class, DpNativeType())
+            .provideTypeConverter(Color::class, ColorNativeType())
+            .provideTypeConverter(LayoutDirection::class, LayoutDirectionNativeType())
+            .provideTypeConverter(TextUnit::class, TextUnitNativeType())
+            .provideTypeConverter(Alignment::class, AlignmentNativeType())
+            .provideTypeConverter(FontWeight::class, FontWeightNativeType())
+            .provideTypeConverter(TextAlign::class, TextAlignNativeType())
+            .provideTypeConverter(ContentScale::class, ContentScaleNativeType())
+            .provideTypeConverter(Arrangement.Horizontal::class, HorizontalArrangementNativeType())
+            .provideTypeConverter(Alignment.Horizontal::class, HorizontalAlignmentNativeType())
+            .provideTypeConverter(Arrangement.Vertical::class, VerticalArrangementNativeType())
+            .provideTypeConverter(Alignment.Vertical::class, VerticalAlignmentNativeType())
+            .provideTypeConverter(TextOverflow::class, TextOverflowNativeType())
+            .provideTypeConverter(KeyboardType::class, KeyboardTypeNativeType())
     }
 }

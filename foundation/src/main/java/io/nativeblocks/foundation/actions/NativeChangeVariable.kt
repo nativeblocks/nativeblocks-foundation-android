@@ -56,7 +56,7 @@ class NativeChangeVariable {
     @NativeActionFunction
     suspend fun invoke(param: Parameter) {
         val data = param.actionProps.trigger?.data.orEmpty()
-        val variable = param.actionProps.variables?.get(data["variableKey"]?.value.orEmpty()) ?: return
+        val variable = param.actionProps.variables[data["variableKey"]?.value.orEmpty()] ?: return
 
         var value = actionHandleVariableValue(param.actionProps, param.variableValue) ?: ""
         value = cast(value, variable.type) ?: ""
