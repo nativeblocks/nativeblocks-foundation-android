@@ -1,4 +1,4 @@
-package io.nativeblocks.foundation.blocks.pickerMenu
+package io.nativeblocks.foundation.blocks.dropdown
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -44,14 +44,14 @@ import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 
 @NativeBlock(
-    name = "Native Picker Menu",
-    keyType = "nativeblocks/picker_menu",
+    name = "Native Dropdown",
+    keyType = "nativeblocks/dropdown",
     description = "A dropdown-style menu that displays a list of selectable items.",
     version = 1,
     versionName = "1.0.0"
 )
 @Composable
-fun NativePickerMenu(
+fun NativeDropdown(
     blockProps: BlockProps? = null,
 
     @NativeBlockData(
@@ -84,7 +84,7 @@ fun NativePickerMenu(
     @NativeBlockProp(
         description = "Picker icon color",
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
-        valuePickerGroup = NativeBlockValuePickerPosition("Colors"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Icon"),
         defaultValue = "#CCCCCC"
     )
     pickerIconColor: Color = Color.Gray,
@@ -92,7 +92,7 @@ fun NativePickerMenu(
     @NativeBlockProp(
         description = "Disabled icon color",
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
-        valuePickerGroup = NativeBlockValuePickerPosition("Colors"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Icon"),
         defaultValue = "#88CCCCCC"
     )
     disablePickerIconColor: Color = Color.Gray.copy(alpha = 0.3f),
@@ -263,11 +263,11 @@ fun NativePickerMenu(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun NativePickerMenuPreview() {
+fun NativeDropdownPreview() {
     var selectedIndex by remember { mutableIntStateOf(0) }
     Column {
         Text("$selectedIndex")
-        NativePickerMenu(
+        NativeDropdown(
             length = 3,
             selectedIndex = selectedIndex,
             onSelect = { selectedIndex = it },

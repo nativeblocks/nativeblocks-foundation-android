@@ -38,7 +38,7 @@ import io.nativeblocks.foundation.util.widthAndHeight
 
 @NativeBlock(
     name = "Native Radio Group",
-    keyType = "nativeblocks/radiogroup",
+    keyType = "nativeblocks/radio_group",
     description = "Displays a list of radio options. Only one item can be selected at a time.",
     version = 1,
     versionName = "1.0.0"
@@ -128,23 +128,27 @@ fun NativeRadioGroup(
 
     @NativeBlockProp(
         description = "Padding top values",
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Padding"),
         defaultValue = "8"
     ) paddingTop: Dp = 8.dp,
     @NativeBlockProp(
         description = "Padding start values",
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Padding"),
         defaultValue = "8"
     )
     paddingStart: Dp = 8.dp,
     @NativeBlockProp(
         description = "Padding bottom values",
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Padding"),
         defaultValue = "8"
     )
     paddingBottom: Dp = 8.dp,
     @NativeBlockProp(
         description = "Padding end values",
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Padding"),
         defaultValue = "8"
     )
@@ -152,48 +156,56 @@ fun NativeRadioGroup(
 
     @NativeBlockProp(
         description = "Background color.",
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         valuePickerGroup = NativeBlockValuePickerPosition("Background"),
         defaultValue = "#00000000"
     ) backgroundColor: Color = Color.Transparent,
 
     @NativeBlockProp(
         description = "Background color when disabled.",
-        valuePickerGroup = NativeBlockValuePickerPosition("State"),
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
+        valuePickerGroup = NativeBlockValuePickerPosition("Background"),
         defaultValue = "#FFCCCCCC"
     ) disabledBackgroundColor: Color = Color.LightGray,
 
     @NativeBlockProp(
         description = "Selected color.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Colors"),
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
+        valuePickerGroup = NativeBlockValuePickerPosition("State"),
         defaultValue = "#FF0000FF"
     ) selectedColor: Color = Color.Blue,
 
     @NativeBlockProp(
         description = "Unselected color.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Colors"),
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
+        valuePickerGroup = NativeBlockValuePickerPosition("State"),
         defaultValue = "#FF0000FF"
     ) unselectedColor: Color = Color.Blue,
 
     @NativeBlockProp(
         description = "Color when disabled.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Colors"),
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
+        valuePickerGroup = NativeBlockValuePickerPosition("State"),
         defaultValue = "#FF888888"
     ) disabledColor: Color = Color.Gray,
 
     @NativeBlockProp(
         description = "Corner radius.",
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         defaultValue = "8"
     ) cornerRadius: Dp = 8.dp,
 
     @NativeBlockProp(
         description = "Border color.",
+        valuePicker = NativeBlockValuePicker.COLOR_PICKER,
         valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         defaultValue = "#FF888888"
     ) borderColor: Color = Color.Gray,
 
     @NativeBlockProp(
         description = "Border width.",
+        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
         valuePickerGroup = NativeBlockValuePickerPosition("Border"),
         defaultValue = "1"
     ) borderWidth: Dp = 1.dp

@@ -50,7 +50,7 @@ fun NativeCheckbox(
     @NativeBlockProp(
         description = "Color when checked. Example: #007AFF",
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
-        valuePickerGroup = NativeBlockValuePickerPosition("Colors"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Check"),
         defaultValue = "#007AFF"
     )
     checkedColor: Color = Color(0xFF007AFF),
@@ -58,7 +58,7 @@ fun NativeCheckbox(
     @NativeBlockProp(
         description = "Color when unchecked. Example: #888888",
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
-        valuePickerGroup = NativeBlockValuePickerPosition("Colors"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Check"),
         defaultValue = "#FF888888"
     )
     uncheckedColor: Color = Color.Gray,
@@ -66,7 +66,7 @@ fun NativeCheckbox(
     @NativeBlockProp(
         description = "Color of the checkmark icon. Example: #FFFFFF",
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
-        valuePickerGroup = NativeBlockValuePickerPosition("Colors"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Check"),
         defaultValue = "#FFFFFF"
     )
     checkmarkColor: Color = Color.White,
@@ -74,7 +74,7 @@ fun NativeCheckbox(
     @NativeBlockProp(
         description = "Color when disabled. Example: #CCCCCC",
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
-        valuePickerGroup = NativeBlockValuePickerPosition("Colors"),
+        valuePickerGroup = NativeBlockValuePickerPosition("Check"),
         defaultValue = "#FFCCCCCC"
     )
     disabledColor: Color = Color.LightGray,
