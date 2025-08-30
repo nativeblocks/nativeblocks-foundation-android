@@ -74,7 +74,7 @@ class NativeChangeBlockProperty {
         var valueTablet = param.propertyValueTablet
         var valueDesktop = param.propertyValueDesktop
 
-        val block = param.actionProps.blocks?.get(param.blockKey)
+        val block = param.actionProps.onFindBlock.invoke(param.blockKey)
         val blockProperties = block?.properties.orEmpty().toMutableMap()
         var currentProperty = blockProperties[param.propertyKey]
         if (currentProperty != null) {
@@ -96,7 +96,7 @@ class NativeChangeBlockProperty {
             blockProperties[currentProperty.key] = currentProperty
         }
         if (block != null) {
-            param.actionProps.onChangeBlock?.invoke(block.copy(properties = blockProperties))
+            param.actionProps.onChangeBlock.invoke(block.copy(properties = blockProperties))
         }
         param.onNext()
     }

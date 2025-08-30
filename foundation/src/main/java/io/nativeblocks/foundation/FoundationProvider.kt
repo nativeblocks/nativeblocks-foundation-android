@@ -24,12 +24,13 @@ object FoundationProvider {
      * Call this method to ensure that the foundation module's functionalities are properly
      * integrated into the Nativeblocks framework.
      */
-    fun provide() {
-        FoundationTypeProvider.provideTypes()
+    fun provide(instanceName: String = "default") {
+        FoundationTypeProvider.provideTypes(instanceName = instanceName)
         FoundationActionProvider.provideActions(
+            instanceName = instanceName,
             nativeChangeVariable = NativeChangeVariable(),
             nativeChangeBlockProperty = NativeChangeBlockProperty()
         )
-        FoundationBlockProvider.provideBlocks()
+        FoundationBlockProvider.provideBlocks(instanceName = instanceName)
     }
 }

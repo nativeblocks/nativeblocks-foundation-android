@@ -27,8 +27,12 @@ android {
 
     buildTypes {
         getByName("release") {
+            buildConfigField("String", "VERSION", "\"${ModuleInfo.VERSION}\"")
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+        }
+        getByName("debug") {
+            buildConfigField("String", "VERSION", "\"${ModuleInfo.VERSION}\"")
         }
     }
     compileOptions {
@@ -111,15 +115,15 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling:1.7.4")
     implementation("io.coil-kt:coil-compose:2.6.0")
     //==========================nativeblocks=======================
-    implementation("io.nativeblocks:nativeblocks-android:1.4.0")
-    ksp("io.nativeblocks:nativeblocks-compiler-android:1.2.2")
-    implementation("io.nativeblocks:nativeblocks-compiler-android:1.2.2")
+    implementation("io.nativeblocks:nativeblocks-android:1.5.0")
+    ksp("io.nativeblocks:nativeblocks-compiler-android:1.3.0")
+    implementation("io.nativeblocks:nativeblocks-compiler-android:1.3.0")
 }
 
 object ModuleInfo {
     const val GROUP_ID = "io.nativeblocks"
     const val ARTIFACT_ID = "nativeblocks-foundation-android"
-    const val VERSION = "1.2.0"
+    const val VERSION = "1.2.1"
     const val DESCRIPTION = "Nativeblocks foundation SDK for Android"
     const val URL = "https://nativeblocks.io"
 }
