@@ -123,7 +123,7 @@ dependencies {
 object ModuleInfo {
     const val GROUP_ID = "io.nativeblocks"
     const val ARTIFACT_ID = "nativeblocks-foundation-android"
-    const val VERSION = "1.2.0"
+    const val VERSION = "1.2.1"
     const val DESCRIPTION = "Nativeblocks foundation SDK for Android"
     const val URL = "https://nativeblocks.io"
 }
