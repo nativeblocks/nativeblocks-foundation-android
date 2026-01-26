@@ -8,10 +8,6 @@ plugins {
     id("io.nativeblocks.nativeblocks-gradle-plugin").version("1.2.1")
 }
 
-val nativeblocksProps = Properties().apply {
-    load(FileInputStream(File(rootProject.rootDir, "sample.nativeblocks.properties")))
-}
-
 android {
     namespace = "io.nativeblocks.sampleapp"
     compileSdk = 34

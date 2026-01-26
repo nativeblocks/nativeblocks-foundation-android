@@ -12,10 +12,6 @@ plugins {
     id("io.nativeblocks.nativeblocks-gradle-plugin").version("1.2.1")
 }
 
-val nativeblocksProps = Properties().apply {
-    load(FileInputStream(File(rootProject.rootDir, "sample.nativeblocks.properties")))
-}
-
 android {
     namespace = "io.nativeblocks.foundation"
     compileSdk = 34
@@ -54,7 +50,7 @@ android {
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
     coordinates(ModuleInfo.GROUP_ID, ModuleInfo.ARTIFACT_ID, ModuleInfo.VERSION)
-//    signAllPublications()
+    signAllPublications()
     configure(
         AndroidSingleVariantLibrary(
             variant = "release",
@@ -110,7 +106,7 @@ dependencies {
 object ModuleInfo {
     const val GROUP_ID = "io.nativeblocks"
     const val ARTIFACT_ID = "nativeblocks-foundation-android"
-    const val VERSION = "1.2.1"
+    const val VERSION = "1.3.0"
     const val DESCRIPTION = "Nativeblocks foundation SDK for Android"
     const val URL = "https://nativeblocks.io"
 }
