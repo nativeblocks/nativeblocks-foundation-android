@@ -10,6 +10,8 @@ server-driven blocks that are highly customizable. Below is an overview of the b
 For comprehensive details about Nativeblocks, please refer to the
 main [Nativeblocks documentation](https://nativeblocks.io/docs/get-started/introduction/).
 
+⚠️ Foundation blocks/actions are reference examples for learning Nativeblocks' patterns. For production apps, we recommend copying and customizing these blocks/actions to match your specific needs.
+
 ---
 
 ## Available Blocks
