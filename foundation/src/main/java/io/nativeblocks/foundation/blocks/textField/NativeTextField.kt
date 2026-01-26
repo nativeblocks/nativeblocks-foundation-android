@@ -35,7 +35,6 @@ import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.api.provider.block.BlockProps
 import io.nativeblocks.core.api.util.fontFamilyMapper
-import io.nativeblocks.foundation.util.blockWeight
 import io.nativeblocks.foundation.util.widthAndHeight
 
 /**
@@ -51,7 +50,6 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param readOnly Whether the text field is read-only. Default is false.
  * @param width Specifies the width of the text field (e.g., "match" or "wrap"). Default is "wrap".
  * @param height Specifies the height of the text field (e.g., "match" or "wrap"). Default is "wrap".
- * @param weight Specifies the weight of the layout in row or column. Default is 0.0 means not set..
  * @param contentColor The color of the text content. Default is white (#FFFFFFFF).
  * @param disabledContentColor The color of the text when disabled. Default is a lighter white (#FFFFFFB2).
  * @param backgroundColor The background color of the text field. Default is dark gray (#FF212121).
@@ -81,8 +79,8 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "nativeblocks/text_field",
     name = "Native TextField",
     description = "Nativeblocks textField block",
-    version = 1,
-    versionName = "1"
+    version = 2,
+    versionName = "2"
 )
 @Composable
 fun NativeTextField(
@@ -118,12 +116,6 @@ fun NativeTextField(
         ],
         defaultValue = "wrap"
     ) height: String = "wrap",
-    @NativeBlockProp(
-        description = "Specifies the weight of the layout in row or column. Default is 0.0 means not set.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        defaultValue = "0F"
-    ) weight: Float = 0F,
     @NativeBlockProp(
         description = "The color of the text content.",
         valuePickerGroup = NativeBlockValuePickerPosition("Content color"),
@@ -307,7 +299,6 @@ fun NativeTextField(
                 bottom = paddingBottom
             )
         )
-        .blockWeight(weight, blockProps?.hierarchy?.last()?.scope)
         .focusable()
 
     OutlinedTextField(

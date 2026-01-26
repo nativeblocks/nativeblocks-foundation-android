@@ -32,7 +32,6 @@ import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.api.provider.block.BlockProps
-import io.nativeblocks.foundation.util.blockWeight
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 
@@ -40,8 +39,8 @@ import io.nativeblocks.foundation.util.widthAndHeight
     name = "Native Radio Group",
     keyType = "nativeblocks/radio_group",
     description = "Displays a list of radio options. Only one item can be selected at a time.",
-    version = 1,
-    versionName = "1.0.0"
+    version = 2,
+    versionName = "2"
 )
 @Composable
 fun NativeRadioGroup(
@@ -106,13 +105,6 @@ fun NativeRadioGroup(
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
         defaultValue = "wrap"
     ) height: String = "wrap",
-
-    @NativeBlockProp(
-        description = "A layout weight that determines how much space this view should occupy relative to siblings.",
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
-        defaultValue = "0.0f"
-    ) weight: Float = 0f,
 
     @NativeBlockProp(
         description = "Horizontal alignment of items.",
@@ -216,7 +208,6 @@ fun NativeRadioGroup(
     Column(
         modifier = Modifier
             .widthAndHeight(width, height)
-            .blockWeight(weight, blockProps?.hierarchy?.last()?.scope)
             .background(bgColor, shape)
             .border(borderWidth, borderColor, shape)
             .padding(

@@ -7,8 +7,8 @@ import android.widget.Toast
 import io.nativeblocks.core.api.NativeblocksEdition
 import io.nativeblocks.core.api.NativeblocksManager
 import io.nativeblocks.core.api.provider.logger.INativeLogger
+import io.nativeblocks.core.api.provider.logger.LoggerEventLevel
 import io.nativeblocks.foundation.FoundationProvider
-import io.nativeblocks.wandkit.liveKit
 import kotlinx.coroutines.runBlocking
 import kotlin.system.exitProcess
 
@@ -37,9 +37,8 @@ class App : Application() {
             */
         )
         NativeblocksManager.getInstance().setLocalization("EN")
-        NativeblocksManager.getInstance().liveKit()
         FoundationProvider.provide()
-        NativeblocksManager.getInstance().provideEventLogger("LOGGER", AppLogger())
+        NativeblocksManager.getInstance().provideEventLogger("LOGGER", AppLogger("default"))
     }
 
     override fun onTerminate() {
@@ -59,8 +58,32 @@ class ExceptionHandler(private val context: Context) : Thread.UncaughtExceptionH
     }
 }
 
-class AppLogger : INativeLogger {
-    override fun log(eventName: String, parameters: Map<String, String>) {
-        Log.d(eventName, "log: $parameters")
+private class AppLogger(val name: String) : INativeLogger {
+    override fun log(
+        level: LoggerEventLevel,
+        event: String,
+        message: String,
+        parameters: Map<String, String>,
+    ) {
+        val paramsText = if (parameters.isNotEmpty()) {
+            parameters.entries.joinToString("\n") { "║   ${it.key}: ${it.value}" }
+        } else {
+            "║   (none)"
+        }
+        val logString = """
+            |╔═══════════════════════════════════════════════════════════
+            |║ Nativeblocks Log
+            |╠═══════════════════════════════════════════════════════════
+            |║ Instance: $name
+            |║ Level   : ${level.name}
+            |║ Event   : $event
+            |║ Message : 
+            |║   $message
+            |║ Parameters:
+            |$paramsText
+            |╚═══════════════════════════════════════════════════════════
+        """.trimMargin()
+
+        Log.d("Nativeblocks_$name", logString)
     }
 }

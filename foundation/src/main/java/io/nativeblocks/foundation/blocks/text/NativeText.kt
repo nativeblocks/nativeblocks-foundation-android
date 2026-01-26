@@ -18,7 +18,6 @@ import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.api.provider.block.BlockProps
 import io.nativeblocks.core.api.util.fontFamilyMapper
-import io.nativeblocks.foundation.util.blockWeight
 import io.nativeblocks.foundation.util.widthAndHeight
 
 /**
@@ -31,7 +30,6 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param text The text content to display.
  * @param width The width of the text block (e.g., "match" or "wrap"). Default is "wrap".
  * @param height The height of the text block (e.g., "match" or "wrap"). Default is "wrap".
- * @param weight Specifies the weight of the layout in row or column. Default is 0.0 means not set..
  * @param fontFamily The font family for the text. Default is "default".
  * @param fontSize The font size for the text in SP. Default is 14.0.
  * @param textColor The color of the text in hexadecimal format. Default is "#ff000000".
@@ -45,8 +43,8 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "nativeblocks/text",
     name = "Native Text",
     description = "Nativeblocks text block",
-    version = 1,
-    versionName = "1"
+    version = 2,
+    versionName = "2"
 )
 @Composable
 fun NativeText(
@@ -76,12 +74,6 @@ fun NativeText(
         defaultValue = "wrap"
     )
     height: String = "wrap",
-    @NativeBlockProp(
-        description = "Specifies the weight of the layout in row or column. Default is 0.0 means not set.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        defaultValue = "0F"
-    ) weight: Float = 0F,
     @NativeBlockProp(
         description = "The font family for the text.",
         valuePickerGroup = NativeBlockValuePickerPosition("Font"),
@@ -165,7 +157,6 @@ fun NativeText(
     )
     val modifier = Modifier
         .widthAndHeight(width, height)
-        .blockWeight(weight, blockProps?.hierarchy?.last()?.scope)
     Text(
         modifier = modifier,
         text = text,

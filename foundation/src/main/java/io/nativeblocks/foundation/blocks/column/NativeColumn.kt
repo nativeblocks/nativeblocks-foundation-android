@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.nativeblocks.compiler.type.BlockIndex
 import io.nativeblocks.compiler.type.NativeBlock
-import io.nativeblocks.compiler.type.NativeBlockData
 import io.nativeblocks.compiler.type.NativeBlockEvent
 import io.nativeblocks.compiler.type.NativeBlockProp
 import io.nativeblocks.compiler.type.NativeBlockSlot
@@ -24,7 +23,7 @@ import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.api.provider.block.BlockProps
-import io.nativeblocks.foundation.util.blockWeight
+import io.nativeblocks.core.api.provider.block.NONE_INDEX
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 
@@ -33,10 +32,8 @@ import io.nativeblocks.foundation.util.widthAndHeight
  *
  * This block supports dynamic properties, events, and slots, making it ideal for server-driven UI.
  *
- * @param length The Length of list determines the number of repetitions of the content. The default value of -1 means no repetition.
  * @param width The width of the column (e.g., "match" or "wrap"). Default is "wrap".
  * @param height The height of the column (e.g., "match" or "wrap"). Default is "wrap".
- * @param weight Specifies the weight of the layout in row or column. Default is 0.0 means not set..
  * @param paddingStart Padding on the start (left) side in DP. Default is 0.0.
  * @param paddingTop Padding on the top side in DP. Default is 0.0.
  * @param paddingEnd Padding on the end (right) side in DP. Default is 0.0.
@@ -57,17 +54,12 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "nativeblocks/column",
     name = "Native Column",
     description = "Nativeblocks column block",
-    version = 1,
-    versionName = "1"
+    version = 2,
+    versionName = "2"
 )
 @Composable
 fun NativeColumn(
     blockProps: BlockProps? = null,
-    @NativeBlockData(
-        description = "The length of the list determines the number of repetitions of the content. The default value of -1 means no repetition.",
-        defaultValue = "-1"
-    )
-    length: Int = -1,
     @NativeBlockProp(
         description = "The width of the column (e.g., 'match' or 'wrap' or number).",
         valuePickerGroup = NativeBlockValuePickerPosition("Size"),
@@ -88,12 +80,6 @@ fun NativeColumn(
         ],
         defaultValue = "wrap"
     ) height: String = "wrap",
-    @NativeBlockProp(
-        description = "Specifies the weight of the layout in row or column. Default is 0.0 means not set.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        defaultValue = "0F"
-    ) weight: Float = 0F,
     @NativeBlockProp(
         description = "Padding on the start (left) side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
@@ -210,7 +196,6 @@ fun NativeColumn(
             end = paddingEnd,
             bottom = paddingBottom,
         )
-        .blockWeight(weight, blockProps?.hierarchy?.last()?.scope)
 
     if (onClick != null) {
         modifier = Modifier.clickable(
@@ -226,12 +211,6 @@ fun NativeColumn(
         verticalArrangement = verticalArrangement,
         horizontalAlignment = horizontalAlignment
     ) {
-        if (length >= 0) {
-            for (index in 0 until length) {
-                content.invoke(index, this)
-            }
-        } else {
-            content(-1, this)
-        }
+        content(NONE_INDEX, this)
     }
 }

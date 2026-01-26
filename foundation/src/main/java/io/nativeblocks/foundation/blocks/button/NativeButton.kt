@@ -33,7 +33,6 @@ import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.api.provider.block.BlockProps
 import io.nativeblocks.core.api.util.fontFamilyMapper
-import io.nativeblocks.foundation.util.blockWeight
 import io.nativeblocks.foundation.util.widthAndHeight
 
 /**
@@ -77,8 +76,8 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "nativeblocks/button",
     name = "Native Button",
     description = "Nativeblocks button block",
-    version = 1,
-    versionName = "1"
+    version = 2,
+    versionName = "2"
 )
 @Composable
 fun NativeButton(
@@ -110,12 +109,6 @@ fun NativeButton(
         description = "The height of the button (e.g., 'match' or 'wrap' or number).",
         defaultValue = "wrap"
     ) height: String = "wrap",
-    @NativeBlockProp(
-        description = "Specifies the weight of the layout in row or column. Default is 0.0 means not set.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        defaultValue = "0F"
-    ) weight: Float = 0F,
     @NativeBlockProp(
         valuePickerGroup = NativeBlockValuePickerPosition("Content color"),
         valuePicker = NativeBlockValuePicker.COLOR_PICKER,
@@ -296,7 +289,6 @@ fun NativeButton(
                 bottom = paddingBottom
             )
         )
-        .blockWeight(weight, blockProps?.hierarchy?.last()?.scope)
 
     Button(
         onClick = onClick,

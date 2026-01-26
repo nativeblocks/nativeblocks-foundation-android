@@ -22,7 +22,6 @@ import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.api.provider.block.BlockProps
-import io.nativeblocks.foundation.util.blockWeight
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 
@@ -54,8 +53,8 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "nativeblocks/box",
     name = "Native Box",
     description = "Nativeblocks box block",
-    version = 1,
-    versionName = "1"
+    version = 2,
+    versionName = "2"
 )
 @Composable
 fun NativeBox(
@@ -80,12 +79,6 @@ fun NativeBox(
         ],
         defaultValue = "wrap"
     ) height: String = "wrap",
-    @NativeBlockProp(
-        description = "Specifies the weight of the layout in row or column. Default is 0.0 means not set.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        defaultValue = "0F"
-    ) weight: Float = 0F,
     @NativeBlockProp(
         description = "Padding on the start side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
@@ -195,7 +188,6 @@ fun NativeBox(
             end = paddingEnd,
             bottom = paddingBottom,
         )
-        .blockWeight(weight, blockProps?.hierarchy?.last()?.scope)
 
     if (onClick != null) {
         modifier = Modifier.clickable(

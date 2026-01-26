@@ -9,7 +9,6 @@ import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.api.provider.block.BlockProps
-import io.nativeblocks.foundation.util.blockWeight
 import io.nativeblocks.foundation.util.widthAndHeight
 
 /**
@@ -24,14 +23,13 @@ import io.nativeblocks.foundation.util.widthAndHeight
  *
  * @param width The width of the spacer (e.g., "match" or "wrap"). Default is "wrap".
  * @param height The height of the spacer (e.g., "match" or "wrap"). Default is "wrap".
- * @param weight Specifies the weight of the layout in row or column. Default is 0.0 means not set..
  */
 @NativeBlock(
     keyType = "nativeblocks/spacer",
     name = "Native Spacer",
     description = "Nativeblocks spacer block",
-    version = 1,
-    versionName = "1"
+    version = 2,
+    versionName = "2"
 )
 @Composable
 fun NativeSpacer(
@@ -56,16 +54,6 @@ fun NativeSpacer(
         ],
         defaultValue = "wrap"
     ) height: String = "wrap",
-    @NativeBlockProp(
-        description = "Specifies the weight of the layout in row or column. Default is 0.0 means not set.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        defaultValue = "0F"
-    ) weight: Float = 0F,
 ) {
-    Spacer(
-        modifier = Modifier
-            .widthAndHeight(width, height)
-            .blockWeight(weight, blockProps?.hierarchy?.last()?.scope)
-    )
+    Spacer(modifier = Modifier.widthAndHeight(width, height))
 }
