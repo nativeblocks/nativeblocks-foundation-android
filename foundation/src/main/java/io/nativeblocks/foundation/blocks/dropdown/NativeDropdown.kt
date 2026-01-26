@@ -40,7 +40,6 @@ import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.api.provider.block.BlockProps
 import io.nativeblocks.foundation.R
-import io.nativeblocks.foundation.util.blockWeight
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 
@@ -48,8 +47,8 @@ import io.nativeblocks.foundation.util.widthAndHeight
     name = "Native Dropdown",
     keyType = "nativeblocks/dropdown",
     description = "A dropdown-style menu that displays a list of selectable items.",
-    version = 1,
-    versionName = "1.0.0"
+    version = 2,
+    versionName = "2"
 )
 @Composable
 fun NativeDropdown(
@@ -121,14 +120,6 @@ fun NativeDropdown(
         defaultValue = "wrap"
     )
     height: String = "wrap",
-
-    @NativeBlockProp(
-        description = "Weight for layout",
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
-        defaultValue = "0.0f"
-    )
-    weight: Float = 0f,
 
     @NativeBlockProp(
         description = "Corner radius",
@@ -209,7 +200,6 @@ fun NativeDropdown(
     Box(
         modifier = Modifier
             .widthAndHeight(width, height)
-            .blockWeight(weight, blockProps?.hierarchy?.last()?.scope)
             .background(bgColor, shape)
             .border(borderWidth, borderColor, shape)
             .padding(

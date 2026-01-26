@@ -7,6 +7,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -24,7 +25,6 @@ import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.api.provider.block.BlockProps
-import io.nativeblocks.foundation.util.blockWeight
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
 
@@ -37,7 +37,6 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param length The Length of list determines the number of repetitions of the content.
  * @param width The width of the row (e.g., "match" or "wrap"). Default is "wrap".
  * @param height The height of the row (e.g., "match" or "wrap"). Default is "wrap".
- * @param weight Specifies the weight of the layout in row or column. Default is 0.0 means not set..
  * @param paddingStart Padding on the start (left) side in DP. Default is 0.0.
  * @param paddingTop Padding on the top side in DP. Default is 0.0.
  * @param paddingEnd Padding on the end (right) side in DP. Default is 0.0.
@@ -58,8 +57,8 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "nativeblocks/lazy_row",
     name = "Native Lazy Row",
     description = "Nativeblocks lazy row block",
-    version = 1,
-    versionName = "1"
+    version = 2,
+    versionName = "2"
 )
 @Composable
 fun NativeLazyRow(
@@ -89,12 +88,6 @@ fun NativeLazyRow(
         ],
         defaultValue = "wrap"
     ) height: String = "wrap",
-    @NativeBlockProp(
-        description = "Specifies the weight of the layout in row or column. Default is 0.0 means not set.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        defaultValue = "0F"
-    ) weight: Float = 0F,
     @NativeBlockProp(
         description = "Padding on the start (left) side in DP.",
         valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
@@ -209,7 +202,6 @@ fun NativeLazyRow(
             end = paddingEnd,
             bottom = paddingBottom,
         )
-        .blockWeight(weight, blockProps?.hierarchy?.last()?.scope)
 
     if (onClick != null) {
         modifier = Modifier.clickable(
@@ -222,6 +214,7 @@ fun NativeLazyRow(
 
     LazyRow(
         modifier = modifier,
+        state = rememberLazyListState(),
         verticalAlignment = verticalAlignment,
         horizontalArrangement = horizontalArrangement
     ) {

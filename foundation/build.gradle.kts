@@ -9,7 +9,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("com.vanniktech.maven.publish")
-    id("io.nativeblocks.nativeblocks-gradle-plugin").version("1.1.2")
+    id("io.nativeblocks.nativeblocks-gradle-plugin").version("1.2.1")
 }
 
 val nativeblocksProps = Properties().apply {
@@ -54,7 +54,7 @@ android {
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
     coordinates(ModuleInfo.GROUP_ID, ModuleInfo.ARTIFACT_ID, ModuleInfo.VERSION)
-    signAllPublications()
+//    signAllPublications()
     configure(
         AndroidSingleVariantLibrary(
             variant = "release",
@@ -88,19 +88,6 @@ mavenPublishing {
     }
 }
 
-nativeblocks {
-    endpoint = nativeblocksProps["endpoint"] as String
-    authToken = nativeblocksProps["authToken"] as String
-    organizationId = nativeblocksProps["organizationId"] as String
-    basePackageName = "io.nativeblocks.foundation"
-    moduleName = "Foundation"
-}
-
-ksp {
-    arg("basePackageName", "io.nativeblocks.foundation")
-    arg("moduleName", "Foundation")
-}
-
 dependencies {
     //==========================kotlin===========================
     implementation("androidx.core:core-ktx:1.13.1")
@@ -115,9 +102,9 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling:1.7.4")
     implementation("io.coil-kt:coil-compose:2.6.0")
     //==========================nativeblocks=======================
-    implementation("io.nativeblocks:nativeblocks-android:1.5.0")
-    ksp("io.nativeblocks:nativeblocks-compiler-android:1.3.0")
-    implementation("io.nativeblocks:nativeblocks-compiler-android:1.3.0")
+    implementation("io.nativeblocks:nativeblocks-android:1.8.0")
+    ksp("io.nativeblocks:nativeblocks-compiler-android:1.3.2")
+    implementation("io.nativeblocks:nativeblocks-compiler-android:1.3.2")
 }
 
 object ModuleInfo {

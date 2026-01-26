@@ -4,9 +4,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import coil.size.Dimension
+import coil.size.Size
 import io.nativeblocks.compiler.type.NativeBlock
 import io.nativeblocks.compiler.type.NativeBlockData
 import io.nativeblocks.compiler.type.NativeBlockProp
@@ -14,7 +20,6 @@ import io.nativeblocks.compiler.type.NativeBlockValuePicker
 import io.nativeblocks.compiler.type.NativeBlockValuePickerOption
 import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
 import io.nativeblocks.core.api.provider.block.BlockProps
-import io.nativeblocks.foundation.util.blockWeight
 import io.nativeblocks.foundation.util.isHttpUrl
 import io.nativeblocks.foundation.util.shapeMapper
 import io.nativeblocks.foundation.util.widthAndHeight
@@ -27,7 +32,6 @@ import io.nativeblocks.foundation.util.widthAndHeight
  * @param imageUrl The URL of the image to display. Must be a valid HTTP or HTTPS URL.
  * @param width The width of the image (e.g., "match" or "wrap"). Default is "wrap".
  * @param height The height of the image (e.g., "match" or "wrap"). Default is "wrap".
- * @param weight Specifies the weight of the layout in row or column. Default is 0.0 means not set..
  * @param radiusTopStart The radius for the top-start corner in DP. Default is 0.0.
  * @param radiusTopEnd The radius for the top-end corner in DP. Default is 0.0.
  * @param radiusBottomStart The radius for the bottom-start corner in DP. Default is 0.0.
@@ -39,8 +43,8 @@ import io.nativeblocks.foundation.util.widthAndHeight
     keyType = "nativeblocks/image",
     name = "Native Image",
     description = "Nativeblocks image block",
-    version = 1,
-    versionName = "1"
+    version = 2,
+    versionName = "2"
 )
 @Composable
 fun NativeImage(
@@ -68,12 +72,6 @@ fun NativeImage(
         ],
         defaultValue = "wrap"
     ) height: String = "wrap",
-    @NativeBlockProp(
-        description = "Specifies the weight of the layout in row or column. Default is 0.0 means not set.",
-        valuePickerGroup = NativeBlockValuePickerPosition("Size"),
-        valuePicker = NativeBlockValuePicker.NUMBER_INPUT,
-        defaultValue = "0F"
-    ) weight: Float = 0F,
     @NativeBlockProp(
         description = "The radius for the top-start corner in DP.",
         valuePickerGroup = NativeBlockValuePickerPosition("Radius"),
@@ -125,14 +123,38 @@ fun NativeImage(
     )
 
     if (imageUrl.isHttpUrl()) {
+        val density = LocalDensity.current
+        val imageSize = imageSize(width, height, density)
         AsyncImage(
-            model = imageUrl.trim(),
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(imageUrl.trim())
+                .size(imageSize)
+                .crossfade(true)
+                .build(),
             contentDescription = contentDescription,
             contentScale = scaleType,
             modifier = Modifier
                 .widthAndHeight(width, height)
                 .clip(shape)
-                .blockWeight(weight, blockProps?.hierarchy?.last()?.scope)
         )
     }
+}
+
+private fun String.toCoilDimension(density: Density): Dimension {
+    val dpValue = when (lowercase()) {
+        "match", "wrap" -> null
+        else -> toFloatOrNull()?.dp
+    }
+    return if (dpValue != null) {
+        Dimension(with(density) { (dpValue / 2).roundToPx() })
+    } else {
+        Dimension.Undefined
+    }
+}
+
+private fun imageSize(width: String, height: String, density: Density): Size {
+    return Size(
+        width = width.toCoilDimension(density),
+        height = height.toCoilDimension(density)
+    )
 }

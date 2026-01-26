@@ -24,8 +24,8 @@ import io.nativeblocks.compiler.type.NativeBlockValuePickerPosition
     name = "Native Checkbox",
     keyType = "nativeblocks/checkbox",
     description = "A simple checkbox component for Nativeblocks.",
-    version = 1,
-    versionName = "1.0.0"
+    version = 2,
+    versionName = "2"
 )
 @Composable
 fun NativeCheckbox(
